@@ -6,7 +6,8 @@ import {
   Route,
   useLocation
 } from "react-router-dom";
-
+import UserState from './context/User/UserState';
+import Home from './pages/Home'
 import Products from './pages/Products';
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
       <UserState>
         <Router >
           <Switch>
+            <Route exact path="/">
+              <Home useScrollToTop={useScrollToTop} />
+            </Route>
             <Route exact path="/products">
               <Products useScrollToTop={useScrollToTop} />
             </Route>

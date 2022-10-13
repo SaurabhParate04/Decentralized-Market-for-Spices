@@ -2,12 +2,13 @@ import React, { useEffect, useState, useContext } from 'react'
 import userContext from '../context/User/userContext';
 import ProductCard from '../components/ProductCard';
 import './Products.css'
+import './Home.css'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 // import Dropdown from '../components/Dropdown';
 
-const CharityZone = (props) => {
+const Products = (props) => {
 
     //state declaration
     props.useScrollToTop();
@@ -75,27 +76,27 @@ const CharityZone = (props) => {
         <>   
             <Navbar/>
 
-            <div className="mapContainer">
-                <Map coords={coords} handleOnClick={handleOnClick}  /> 
-                <div className="mapStateContainer">
-                {/* <div className="dropdown-container align-items-center" id="dd-1">
-                    <Dropdown categoryFilter={categoryFilter}  setcategoryFilter={setcategoryFilter} />
-                </div> */}
-                <h3 className="mapState" id="map-2">{categoryFilter}</h3>
-                    <div className="mt-4 " id="filterCharityWrapper">
+            {/* <div className="mapContainer"> */}
+                {/* <Map coords={coords} handleOnClick={handleOnClick}  />  */}
+                {/* <div className="mapStateContainer"> */}
+                    {/* <div className="dropdown-container align-items-center" id="dd-1">
+                        <Dropdown categoryFilter={categoryFilter}  setcategoryFilter={setcategoryFilter} />
+                    </div> */}
+                    {/* <h3 className="mapState" id="map-2">{categoryFilter}</h3> */}
+                    {/* <div className="mt-4 " id="filterCharityWrapper">
                     {
                         allCardsInfo.filter(card =>{
                             return cardFilter(card.category);
                         }).map((category,idx,arr) => (
                 
-                             <p key={idx} className="text-start">{" >  " + category.productName}</p>
+                                <p key={idx} className="text-start">{" >  " + category.productName}</p>
                         )) 
                     }{' '}
-                      
-                    </div>
-                </div>  
-            </div>
-                <div className="filler_map"></div>
+                        
+                    </div> */}
+                {/* </div>   */}
+            {/* </div> */}
+            {/* <div className="filler_map"></div> */}
             {/* SVG background */}
             <div className="svg_background_2">
                 <div className="tilt_svg_2">
@@ -134,4 +135,4 @@ const CharityZone = (props) => {
     )
 }
 
-export default CharityZone
+export default Products
