@@ -39,7 +39,7 @@ const Products = (props) => {
             });
             const data = await response.json();
             setAllCardsInfo(data)
-            //console.log(allCardsInfo)
+            console.log(allCardsInfo)
         } catch(error) {
             console.log(error)
         }
@@ -97,19 +97,10 @@ const Products = (props) => {
                 {/* </div>   */}
             {/* </div> */}
             {/* <div className="filler_map"></div> */}
-            {/* SVG background */}
-            <div className="svg_background_2">
-                <div className="tilt_svg_2">
-                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" className="shape-fill"></path>
-                    </svg>
-                </div>
-            </div>
-
-            {/* section 2 */}
+            
             <section className="card-conatiner-warpper">
-                <div className="cards-container-title top-0">
-                    Philanthropy zone
+                <div className="cards-container-title top-0 ">
+                    Popular Products
                 </div>
                 <button className="clear-btn top-0 end-0" onClick={clearFilter}> clear filter</button>
                 <div className=" row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mx-0 justify-content-evenly card-container gx-5">
@@ -120,10 +111,10 @@ const Products = (props) => {
                             <ProductCard
                                 key={card._id + "5"}
                                 id={card._id}
-                                title={card.productName}
+                                title={card.productBrand + ' ' + card.productName}
                                 description={card.description}
                                 price={card.price}
-                                qrcode={card.qrcode}
+                                // qrcode={card.qrcode}
                             />
                         ))
                     }{' '}
