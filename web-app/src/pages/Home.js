@@ -11,7 +11,7 @@ const Home = (props) => {
         <div>
             <Navbar />
                         
-            {/* <Footer />             */}
+            <Footer />            
         </div>
     )
 }
