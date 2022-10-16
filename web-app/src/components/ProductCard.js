@@ -43,7 +43,9 @@ const ProductCard = (props) => {
             <div class="ct-product-thumbnail">
                 <a href="#"><img src={Image}></img></a>
                 <div class="ct-product-controls">
-                    <a href="#" class="btn-custom secondary">Buy Now <i class="fas fa-arrow-right"></i> </a>
+                    <Link to={{pathname:"/productdetails", state:props}} >
+                        <a href="#" class="btn-custom secondary">Buy Now <i class="fas fa-arrow-right"></i> </a>
+                    </Link>
                 </div>
             </div>
             <div class="ct-product-body">

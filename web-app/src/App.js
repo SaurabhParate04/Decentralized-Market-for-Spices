@@ -9,6 +9,7 @@ import {
 import UserState from './context/User/UserState';
 import Home from './pages/Home'
 import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   const useScrollToTop = () => {
@@ -32,6 +33,7 @@ function App() {
             <Route exact path="/products">
               <Products useScrollToTop={useScrollToTop} />
             </Route>
+            <Route exact path="/productdetails" component={ProductDetails} />
           </Switch>
         </Router>
       </UserState>

@@ -113,6 +113,13 @@ const Products = (props) => {
                                 title={card.productBrand + ' ' + card.productName}
                                 description={card.description}
                                 price={card.price}
+                                ratingPts={card.ratingPts}
+                                ratingCnt={card.ratingCnt}
+                                sizes={card.sizes}
+                                avilableQty={card.avilableQty}
+                                category={card.category}
+                                reviews={card.reviews}
+                                reviewsCnt={card.reviewsCnt}
                                 // qrcode={card.qrcode}
                             />
                         ))
