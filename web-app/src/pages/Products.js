@@ -97,11 +97,11 @@ const Products = (props) => {
             {/* </div> */}
             {/* <div className="filler_map"></div> */}
             
-            <section className="card-conatiner-warpper">
-                <div className="cards-container-title top-0 ">
+            <section style={{marginTop:"180px"}} className="card-conatiner-warpper">
+                {/* <div className="cards-container-title top-0 ">
                     Popular Products
                 </div>
-                <button className="clear-btn top-0 end-0" onClick={clearFilter}> clear filter</button>
+                <button className="clear-btn top-0 end-0" onClick={clearFilter}> clear filter</button> */}
                 <div className=" row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mx-0 justify-content-evenly card-container gx-5">
                     {
                         allCardsInfo.filter(card =>{

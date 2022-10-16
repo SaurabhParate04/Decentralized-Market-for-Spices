@@ -125,7 +125,7 @@ const Navbar = () => {
                                     <li className="menu-item"> <a href="register.html">Sign Up</a> </li>
                                     <li className="menu-item"> <a href="checkout.html">Checkout</a> </li>
                                     <li className="menu-item"> <a href="cart.html">Cart</a> </li>
-                                    <li className="menu-item"> <a href="product-details.html">Product Details</a> </li>
+                                    <li className="menu-item"> <a href="/products">Product Details</a> </li>
                                 </ul>
                             </li>
                             <li className="logo-wrapper">

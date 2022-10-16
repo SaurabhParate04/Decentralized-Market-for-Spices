@@ -28,12 +28,12 @@ const ProductCard = (props) => {
 
     const getCardInfo = async() => {
         try {
-            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `productcover/${title}`))
+            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `Products/${title}.png`))
             setImage(imgLoaded)
         } catch(FirebaseError) {
             setImage(coverImg)
         } finally {
-            
+
         }
     }
 
@@ -41,15 +41,15 @@ const ProductCard = (props) => {
         <>
         <div class="ct-product">
             <div class="ct-product-thumbnail">
-                <a href="#"><img src="http://metropolitanhost.com/themes/templatemoster/html/masala/assets/img/products/2.png"></img></a>
+                <a href="#"><img src={Image}></img></a>
                 <div class="ct-product-controls">
                     <a href="#" class="btn-custom secondary">Buy Now <i class="fas fa-arrow-right"></i> </a>
                 </div>
             </div>
             <div class="ct-product-body">
-                <h5 class="product-title"> <a href="#">Agro</a> </h5>
-                <p class="product-price custom-secondary">20.00 ₹</p>
-                <p class="product-text">Agro always a good in tast, grab it  ....</p>
+                <h5 class="product-title"> <a href="#">{title}</a> </h5>
+                <p class="product-price custom-secondary">{price} ₹</p>
+                <p class="product-text">{description}</p>
             </div>
         </div>
         </>
