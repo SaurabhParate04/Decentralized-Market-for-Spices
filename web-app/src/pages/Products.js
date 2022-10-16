@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import userContext from '../context/User/userContext';
 import ProductCard from '../components/ProductCard';
-import './Products.css'
-import './Home.css'
+import '../Styles.css'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
