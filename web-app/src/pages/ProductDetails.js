@@ -11,6 +11,7 @@ export default function ProductDetails(props) {
     const description = props.location.state.description
     const title = props.location.state.title
     const price = props.location.state.price
+    const options = props.location.state.options
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
@@ -63,25 +64,18 @@ export default function ProductDetails(props) {
                             <p>{description}</p>
                             {/* <!-- /Product Short Description --> */}
 
-                            {/* <!-- Variations --> */}
-                            <div className="product-variations-wrapper">
-                                <div className="form-group">
-                                    <label>Size</label>
-                                    <select className="form-control">
-                                        <option value="">Select a Size</option>
-                                        <option value="100g">100g</option>
-                                        <option value="200g">200g</option>
-                                        <option value="500g">500g</option>
-                                    </select>
-                                </div>
-                            </div>
-                            {/* <!-- /Variations --> */}
-
                             {/* <!-- Add To Cart Form --> */}
                             <form className="atc-form" method="post">
                                 <div className="form-group">
                                     <label>Quantity</label>
-                                    <input type="number" className="qty form-control" name="quantity" value="1"></input>
+                                    <select className="form-control">
+                                        <option defaultValue="">Select Quantity</option>
+                                        {
+                                            options.map((e, key) => {
+                                                return <option key={key} value={e}>{e}</option>
+                                            }
+                                        )}
+                                    </select>
                                 </div>
                                 <button type="submit" name="button" className="btn-custom secondary"> Add to Cart <i className="flaticon-shopping-basket"></i> </button>
                             </form>
@@ -176,10 +170,10 @@ export default function ProductDetails(props) {
                                 <form method="post">
                                     <div className="row">
                                         <div className="col-md-6 form-group">
-                                            <input type="text" className="form-control" placeholder="Full Name" name="fname" value=""></input>
+                                            <input type="text" className="form-control" placeholder="Full Name" name="fname" defaultValue=""></input>
                                         </div>
                                         <div className="col-md-6 form-group">
-                                            <input type="email" className="form-control" placeholder="Email Address" name="email" value=""></input>
+                                            <input type="email" className="form-control" placeholder="Email Address" name="email" defaultValue=""></input>
                                         </div>
                                         <div className="col-md-12 form-group">
                                             <textarea className="form-control" placeholder="Type your comment..." name="comment" rows="7"></textarea>

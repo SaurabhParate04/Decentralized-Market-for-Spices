@@ -20,7 +20,11 @@ const productSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
-    }
+    },
+    options: [{
+        type: String,
+        required: true
+    }]
 })
 
 module.exports = mongoose.model("Product", productSchema)

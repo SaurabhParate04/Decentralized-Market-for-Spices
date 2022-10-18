@@ -38,7 +38,6 @@ const Products = (props) => {
             });
             const data = await response.json();
             setAllCardsInfo(data)
-            console.log(allCardsInfo)
         } catch(error) {
             console.log(error)
         }
@@ -120,6 +119,7 @@ const Products = (props) => {
                                 category={card.category}
                                 reviews={card.reviews}
                                 reviewsCnt={card.reviewsCnt}
+                                options={card.options}
                                 // qrcode={card.qrcode}
                             />
                         ))
