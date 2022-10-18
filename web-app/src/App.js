@@ -10,6 +10,8 @@ import UserState from './context/User/UserState';
 import Home from './pages/Home'
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 function App() {
   const useScrollToTop = () => {
@@ -34,6 +36,8 @@ function App() {
               <Products useScrollToTop={useScrollToTop} />
             </Route>
             <Route exact path="/productdetails" component={ProductDetails} />
+            <Route exact path="/cart" component={Cart} />
+            <Route exact path="/checkout" component={Checkout} />
           </Switch>
         </Router>
       </UserState>

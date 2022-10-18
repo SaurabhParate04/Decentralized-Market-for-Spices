@@ -79,7 +79,7 @@ const Navbar = () => {
                 <nav className="navbar">
                     <div className="container-fluid">
                         {/* <!-- Logo --> */}
-                        <a className="navbar-brand d-lg-none" href="index.html"> <img src={logo1} alt="logo"></img> </a>
+                        <a className="navbar-brand d-lg-none" href="/"> <img src={logo1} alt="logo"></img> </a>
                         {/* <!-- Menu --> */}
                         <div className="header-control-left">
                             <div className="aside-toggler aside-trigger-right desktop-toggler">
@@ -92,7 +92,7 @@ const Navbar = () => {
                             <li className="menu-item menu-item-has-children">
                                 <a href="/">Home Pages</a>
                                 <ul className="submenu">
-                                    <li className="menu-item"> <a href="index.html">Home v1</a> </li>
+                                    <li className="menu-item"> <a href="/">Home v1</a> </li>
                                     <li className="menu-item"> <a href="home-v2.html">Home v2</a> </li>
                                 </ul>
                             </li>
@@ -123,14 +123,14 @@ const Navbar = () => {
                                     <li className="menu-item"> <a href="about-us.html">About Us</a> </li>
                                     <li className="menu-item"> <a href="login.html">Login</a> </li>
                                     <li className="menu-item"> <a href="register.html">Sign Up</a> </li>
-                                    <li className="menu-item"> <a href="checkout.html">Checkout</a> </li>
-                                    <li className="menu-item"> <a href="cart.html">Cart</a> </li>
+                                    <li className="menu-item"> <a href="/checkout">Checkout</a> </li>
+                                    <li className="menu-item"> <a href="/cart">Cart</a> </li>
                                     <li className="menu-item"> <a href="/products">Product Details</a> </li>
                                 </ul>
                             </li>
                             <li className="logo-wrapper">
                                 {/* <!-- Logo --> */}
-                                <a className="navbar-brand" href="index.html"> <img src={logo1} height="70px" alt="logo"></img> </a>
+                                <a className="navbar-brand" href="/"> <img src={logo1} height="70px" alt="logo"></img> </a>
                             </li>
                             <li className="menu-item menu-item-has-children">
                                 <a href="/">Spicess</a>
