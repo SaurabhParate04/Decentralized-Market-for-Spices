@@ -8,17 +8,9 @@ import thumb from '../images/Cloves.jpg'
 export default function ProductDetails(props) {
 
     // const id = props.location.state.id
-    // const description = props.location.state.description
-    // const title = props.location.state.title
-    // const previousWork = props.location.state.previousWork
-    // const goal = props.location.state.goal
-    // const fundsRaised = props.location.state.fundsRaised
-    // const city = props.location.state.city
-    // const state = props.location.state.state
-    // const cause = props.location.state.cause
-    // const walletAddress = props.location.state.walletAddress
-    // const isVerified = props.location.state.isVerified
-    // const donationHistory = props.location.state.donationHistory
+    const description = props.location.state.description
+    const title = props.location.state.title
+    const price = props.location.state.price
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
@@ -45,7 +37,7 @@ export default function ProductDetails(props) {
                         <div className="product-content">
 
                             {/* <!-- Product Title --> */}
-                            <h2 className="title">Sesame Seeds</h2>
+                            <h2 className="title">{title}</h2>
                             {/* <!-- /Product Title --> */}
 
                             {/* <!-- Rating --> */}
@@ -63,23 +55,23 @@ export default function ProductDetails(props) {
 
                             {/* <!-- Price --> */}
                             <div className="price-wrapper">
-                                <p className="product-price custom-secondary">$8.99 - 21.99$</p>
+                                <p className="product-price custom-secondary">{price} ₹</p>
                             </div>
                             {/* <!-- /Price --> */}
 
                             {/* <!-- Product Short Description --> */}
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                            <p>{description}</p>
                             {/* <!-- /Product Short Description --> */}
 
                             {/* <!-- Variations --> */}
                             <div className="product-variations-wrapper">
                                 <div className="form-group">
-                                    <label>Color</label>
+                                    <label>Size</label>
                                     <select className="form-control">
-                                        <option value="">Select a Color</option>
-                                        <option value="yellow">Yellow</option>
-                                        <option value="red">Red</option>
-                                        <option value="blue">Blue</option>
+                                        <option value="">Select a Size</option>
+                                        <option value="100g">100g</option>
+                                        <option value="200g">200g</option>
+                                        <option value="500g">500g</option>
                                     </select>
                                 </div>
                             </div>
