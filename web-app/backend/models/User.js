@@ -7,8 +7,7 @@ const userSchema = new mongoose.Schema({
     },
     lastname:{
         type:String,
-    }
-    ,
+    },
     username:{
         type:String,
         required:true,
@@ -27,38 +26,25 @@ const userSchema = new mongoose.Schema({
     address:{
         type:String,
     },
-    age:{
-        type:String,
-    },
-    company:{
-        type:String,
-    },
-    superUser:{
-        type:Boolean,
-        default:false
-    },
-    userWallet:{
-        type:String,
-    },
-    donationMade:{
-        type:[{
-            charityId:{
-                type:mongoose.SchemaTypes.ObjectId,
-                default:null,
+    userCart: {
+        type: [{
+            prodName:{
+                type:String,
+                default:null
             },
-            timestamp:{
-                type:Date,
-                default:null,
+            varient:{
+                type:String,
+                default:null
             },
-            amount:{
+            quantity:{
                 type:Number,
-                default:null,
+                default:1
             },
-        }],
-    },
-    dateCreated:{
-        type:Date,
-        default:Date.now
+            price:{
+                type:Number,
+                default:null
+            },
+        }]
     }
     
 

@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { useEffect } from 'react'
 import thumb from '../images/Cloves.jpg'
+import { Link } from 'react-router-dom';
 
 export default function ProductDetails(props) {
 
@@ -77,7 +78,9 @@ export default function ProductDetails(props) {
                                         )}
                                     </select>
                                 </div>
-                                <button type="submit" name="button" className="btn-custom secondary"> Add to Cart <i className="flaticon-shopping-basket"></i> </button>
+                                <Link to={{pathname:"/cart"}}>
+                                    <a href='/' type="submit" name="button" className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </a>
+                                </Link>
                             </form>
                             {/* <!-- /Add To Cart Form --> */}
 
@@ -86,15 +89,15 @@ export default function ProductDetails(props) {
                                 <li>
                                     <span>Categories: </span>
                                     <div className="product-meta-item">
-                                        <a href="#">Utensils</a>
+                                        <a href="/">Utensils</a>
                                     </div>
                                 </li>
                                 <li>
                                     <span>Tags: </span>
                                     <div className="product-meta-item">
-                                        <a href="#">Spice</a>,
-                                        <a href="#">Spiceie</a>,
-                                        <a href="#">Kitchen Ware</a>
+                                        <a href="/">Spice</a>,
+                                        <a href="/">Spiceie</a>,
+                                        <a href="/">Kitchen Ware</a>
                                     </div>
                                 </li>
                                 <li>
@@ -113,13 +116,13 @@ export default function ProductDetails(props) {
                 <div className="product-additional-info">
                     <ul className="nav" id="bordered-tab" role="tablist">
                         <li className="nav-item">
-                            <a className="nav-link active" id="tab-product-desc-tab" data-toggle="pill" href="#tab-product-desc" role="tab" aria-controls="tab-product-desc" aria-selected="true">Description</a>
+                            <a className="nav-link active" id="tab-product-desc-tab" data-toggle="pill" href="/tab-product-desc" role="tab" aria-controls="tab-product-desc" aria-selected="true">Description</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" id="tab-product-info-tab" data-toggle="pill" href="#tab-product-info" role="tab" aria-controls="tab-product-info" aria-selected="false">Additional Information</a>
+                            <a className="nav-link" id="tab-product-info-tab" data-toggle="pill" href="/tab-product-info" role="tab" aria-controls="tab-product-info" aria-selected="false">Additional Information</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" id="tab-product-reviews-tab" data-toggle="pill" href="#tab-product-reviews" role="tab" aria-controls="tab-product-reviews" aria-selected="false">Reviews (25)</a>
+                            <a className="nav-link" id="tab-product-reviews-tab" data-toggle="pill" href="/tab-product-reviews" role="tab" aria-controls="tab-product-reviews" aria-selected="false">Reviews (25)</a>
                         </li>
                     </ul>
                     <div className="tab-content" id="bordered-tabContent">
@@ -135,18 +138,18 @@ export default function ProductDetails(props) {
                             <table>
                                 <thead>
                                     <tr>
-                                    <th scope="col">Attributes</th>
-                                    <th scope="col">Values</th>
+                                        <th scope="col">Attributes</th>
+                                        <th scope="col">Values</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                    <td> <strong>Color</strong> </td>
-                                    <td>blue, red, yellow, green</td>
+                                        <td> <strong>Color</strong> </td>
+                                        <td>blue, red, yellow, green</td>
                                     </tr>
                                     <tr>
-                                    <td> <strong>Material</strong> </td>
-                                    <td>wood, plastic, stainless steel</td>
+                                        <td> <strong>Material</strong> </td>
+                                        <td>wood, plastic, stainless steel</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -202,7 +205,7 @@ export default function ProductDetails(props) {
                                             </div>
                                             <span>Posted on: September 13 2021</span>
                                             <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
-                                            <a href="#" className="reply-link"> Reply </a>
+                                            <a href="/" className="reply-link"> Reply </a>
                                         </div>
                                     </li>
                                     <li className="comment-item">
@@ -218,7 +221,7 @@ export default function ProductDetails(props) {
                                             </div>
                                             <span>Posted on: September 13 2021</span>
                                             <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches</p>
-                                            <a href="#" className="reply-link"> Reply </a>
+                                            <a href="/" className="reply-link"> Reply </a>
                                         </div>
                                     </li>
                                 </ul>

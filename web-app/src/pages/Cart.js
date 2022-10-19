@@ -2,8 +2,9 @@ import React from 'react'
 import '../Styles.css'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import thumb from '../images/Cloves.jpg'
+import userContext from '../context/User/userContext'
 
 export default function ProductDetails(props) {
 
@@ -12,8 +13,13 @@ export default function ProductDetails(props) {
     // const title = props.location.state.title
     // const price = props.location.state.price
 
+    const context = useContext(userContext);
+    const { getProfileInfo, userProfile, profileImg } = context;
+    const { firstname, lastname, username, email, address, phoneNumber, userCart } = userProfile;
+
     useEffect(() => {
         window.scrollTo({ top: 0 })
+        getProfileInfo()
     }, [])
 
     return (
@@ -35,73 +41,35 @@ export default function ProductDetails(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="remove">
-                                <button type="button" className="close-btn close-danger remove-from-cart">
-                                    <span></span>
-                                    <span></span>
-                                </button>
-                            </td>
-                            <td data-title="Product">
-                                <div className="cart-product-wrapper">
-                                    <img src={thumb} alt="prod1"></img>
-                                    <div className="cart-product-body">
-                                        <h6> <a href="/">Clove</a> </h6>
-                                        <p>Red Color</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td data-title="Price">29.99$</td>
-                            <td className="quantity" data-title="Quantity">
-                                <input type="number" className="qty form-control" defaultValue="1"></input>
-                            </td>
-                            <td data-title="Total">29.99$</td>
-                        </tr>
-                        <tr>
-                            <td className="remove">
-                                <button type="button" className="close-btn close-danger remove-from-cart">
-                                    <span></span>
-                                    <span></span>
-                                </button>
-                            </td>
-                            <td data-title="Product">
-                                <div className="cart-product-wrapper">
-                                    <img src={thumb} alt="prod1"></img>
-                                    <div className="cart-product-body">
-                                        <h6> <a href="/">Agro</a> </h6>
-                                        <p>Wood Material</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td data-title="Price">29.99$</td>
-                            <td className="quantity" data-title="Quantity">
-                                <input type="number" className="qty form-control" defaultValue="1"></input>
-                            </td>
-                            <td data-title="Total">29.99$</td>
-                        </tr>
-                        <tr>
-                            <td className="remove">
-                                <button type="button" className="close-btn close-danger remove-from-cart">
-                                <span></span>
-                                <span></span>
-                                </button>
-                            </td>
-                            <td data-title="Product">
-                                <div className="cart-product-wrapper">
-                                    <img src={thumb} alt="prod1"></img>
-                                    <div className="cart-product-body">
-                                        <h6> <a href="/">Sesame Seeds</a> </h6>
-                                        <p>Wood Material</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td data-title="Price">29.99$</td>
-                            <td className="quantity" data-title="Quantity">
-                                <input type="number" className="qty form-control" defaultValue="1"></input>
-                            </td>
-                            <td data-title="Total">29.99$</td>
-                        </tr>
-
+                        {
+                            userCart.map((e) => {
+                                return (
+                                <tr>
+                                    <td className="remove">
+                                        <button type="button" className="close-btn close-danger remove-from-cart">
+                                            <span></span>
+                                            <span></span>
+                                        </button>
+                                    </td>
+                                    <td data-title="Product">
+                                        <div className="cart-product-wrapper">
+                                            <img src={thumb} alt="prod1"></img>
+                                            <div className="cart-product-body">
+                                                <h6> <a href="/">{e.prodName}</a> </h6>
+                                                <p>{e.varient}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td data-title="Price">{e.price} ₹</td>
+                                    <td className="quantity" data-title="Quantity">
+                                        <input type="number" className="qty form-control" defaultValue="1"></input>
+                                    </td>
+                                    <td data-title="Total">{e.quantity * e.price}</td>
+                                </tr>
+                                )
+                            })
+                        }
+                        
                     </tbody>
                 </table>
                 {/* <!-- Cart Table End --> */}

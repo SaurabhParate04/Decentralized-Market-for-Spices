@@ -5569,6 +5569,11 @@ align-items: center;
 
 }
 
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
 @media (max-width: 575px){
 
   /* About Style 3 */
