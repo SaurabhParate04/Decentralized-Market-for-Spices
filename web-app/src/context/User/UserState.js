@@ -7,7 +7,7 @@ const UserState = ({children}) => {
     const [globalCredentials, setglobalCredentials] = useState({email:"", username:"", password:"", rpassword:"", address:"", firstname:"", lastname:"", phoneno:"", usertype:""});
 
     //global login state
-    const [loggedIn, setloggedIn] = useState(localStorage.getItem('PBPjwtToken') ? true :false);
+    const [loggedIn, setloggedIn] = useState(localStorage.getItem('SpiceMarketjwtToken') ? true :false);
 
     //global state for storing profile info, to display userinfo and edit profile
     const [userProfile, setuserProfile] = useState({email:"",username:"", address:"", firstname:"", lastname:"", phoneno:"", userWallet:"", usertype:""});
@@ -23,7 +23,7 @@ const UserState = ({children}) => {
                 headers: {
                 'Content-Type': 'application/json',
                 'accept':'application/json',
-                'auth-token':localStorage.getItem('PBPjwtToken')
+                'auth-token':localStorage.getItem('SpiceMarketjwtToken')
                 }
             });
 
@@ -40,7 +40,7 @@ const UserState = ({children}) => {
     }
 
     const logOutUser = ()=>{
-        localStorage.removeItem('PBPjwtToken');
+        localStorage.removeItem('SpiceMarketjwtToken');
         setloggedIn(false);
         setuserProfile("")
     }

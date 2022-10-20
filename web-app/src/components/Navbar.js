@@ -68,8 +68,14 @@ const Navbar = () => {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <a href="login.html">Login/Signup</a>
+                                    <li className={`${loggedIn ? "d-none": ""}`}>
+                                        <Link to="/login">Login</Link>
+                                    </li>
+                                    <li className={`${loggedIn ? "d-none": ""}`}>
+                                        <Link to="/signup">Signup</Link>
+                                    </li>
+                                    <li className={`${loggedIn ? "": "d-none"}`}>
+                                        <Link onClick={handleLogout} to="/">Logout</Link>
                                     </li>
                                 </ul>
                             </div>
