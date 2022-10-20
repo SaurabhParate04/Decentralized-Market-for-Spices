@@ -39,19 +39,19 @@ const ProductCard = (props) => {
 
     return (
         <>
-        <div class="ct-product">
-            <div class="ct-product-thumbnail">
-                <a href="#"><img src={Image}></img></a>
-                <div class="ct-product-controls">
+        <div className="ct-product">
+            <div className="ct-product-thumbnail">
+                <a href="/"><img src={Image}></img></a>
+                <div className="ct-product-controls">
                     <Link to={{pathname:"/productdetails", state:props}} >
-                        <a href="#" class="btn-custom secondary">Buy Now <i class="fas fa-arrow-right"></i> </a>
+                        <button className="btn-custom secondary">Buy Now <i className="fas fa-arrow-right"></i> </button>
                     </Link>
                 </div>
             </div>
-            <div class="ct-product-body">
-                <h5 class="product-title"> <a href="#">{title}</a> </h5>
-                <p class="product-price custom-secondary">{price} ₹</p>
-                <p class="product-text">{description}</p>
+            <div className="ct-product-body">
+                <h5 className="product-title"> <a href="/">{title}</a> </h5>
+                <p className="product-price custom-secondary">{price} ₹</p>
+                <p className="product-text">{description}</p>
             </div>
         </div>
         </>

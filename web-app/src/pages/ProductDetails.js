@@ -79,7 +79,7 @@ export default function ProductDetails(props) {
                                     </select>
                                 </div>
                                 <Link to={{pathname:"/cart"}}>
-                                    <a href='/' type="submit" name="button" className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </a>
+                                    <button type="submit" name="button" className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button>
                                 </Link>
                             </form>
                             {/* <!-- /Add To Cart Form --> */}

@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
 
     firstname:{
         type:String,
+        required:true,
     },
     lastname:{
         type:String,
@@ -23,31 +24,20 @@ const userSchema = new mongoose.Schema({
     phoneNumber:{
         type:String,
     },
-    address:{
+    addressl1:{
+        type:String,
+        required:true,
+    },
+    addressl2:{
         type:String,
     },
-    userCart: {
-        type: [{
-            prodName:{
-                type:String,
-                default:null
-            },
-            varient:{
-                type:String,
-                default:null
-            },
-            quantity:{
-                type:Number,
-                default:1
-            },
-            price:{
-                type:Number,
-                default:null
-            },
-        }]
-    }
-    
-
+    landmark:{
+        type:String,
+    },
+    pincode:{
+        type:String,
+        required:true,
+    },
 });
 
 module.exports = mongoose.model('user',userSchema);

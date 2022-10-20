@@ -4,13 +4,13 @@ import userContext from './userContext'
 const UserState = ({children}) => {
     
     //state used for 2 step registration / signup
-    const [globalCredentials, setglobalCredentials] = useState({email:"", username:"", password:"", rpassword:"", address:"", firstname:"", lastname:"", phoneno:"", usertype:""});
+    const [globalCredentials, setglobalCredentials] = useState({email:"", username:"", password:"", rpassword:"", addressl1:"", addressl2:"", landmark:"", pincode:"", firstname:"", lastname:"", phoneno:"", usertype:""});
 
     //global login state
     const [loggedIn, setloggedIn] = useState(localStorage.getItem('SpiceMarketjwtToken') ? true :false);
 
     //global state for storing profile info, to display userinfo and edit profile
-    const [userProfile, setuserProfile] = useState({email:"",username:"", address:"", firstname:"", lastname:"", phoneno:"", userWallet:"", usertype:""});
+    const [userProfile, setuserProfile] = useState({email:"",username:"", firstname:"", lastname:"", phoneno:"", addressl1:"", addressl2:"", landmark:"", pincode:"",  usertype:""});
 
     //gets userInfo
     const getProfileInfo = async() =>{
@@ -21,9 +21,9 @@ const UserState = ({children}) => {
             const response = await fetch(url, {
                 method: 'GET', 
                 headers: {
-                'Content-Type': 'application/json',
-                'accept':'application/json',
-                'auth-token':localStorage.getItem('SpiceMarketjwtToken')
+                    'Content-Type': 'application/json',
+                    'accept':'application/json',
+                    'auth-token':localStorage.getItem('SpiceMarketjwtToken')
                 }
             });
 

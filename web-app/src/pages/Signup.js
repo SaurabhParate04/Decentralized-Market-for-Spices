@@ -35,7 +35,7 @@ const Signup = (props) => {
                     <div className="form-group">
                         <button type="submit" className="btn-custom primary btn-block">Sign Up</button>
                     </div>
-                    <p className="form-group text-center">Already have an account? <a href="login.html" className="btn-link">Login</a> </p>
+                    <p className="form-group text-center">Already have an account? <a href="/login" className="btn-link">Login</a> </p>
                 </form>
             </div>
         </section>

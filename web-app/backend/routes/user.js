@@ -86,8 +86,6 @@ router.put('/updateuser',fetchuser,[
 
 // Route 4 authenticate user using POST "api/user/loginuser" --nologin required
 router.post('/loginuser',async (req,res)=>{
-    
-
     try {
 
         //searching for the user via username in db
@@ -102,16 +100,14 @@ router.post('/loginuser',async (req,res)=>{
         if(!passwordCompare)
         {
             return res.status(400).send({error:'please enter valid username or password'});
-
         }
         const data={
             user:{
                 id:currentUser.id,
             }
         }
-       const jwtToken = jwt.sign(data,JWTSECRET_KEY);
+        const jwtToken = jwt.sign(data,JWTSECRET_KEY);
 
-       
         return res.status(200).send({jwtToken})
     }
     
@@ -119,8 +115,6 @@ router.post('/loginuser',async (req,res)=>{
         console.log('error');
         console.error(err.message)
     }
-
-
 })
 
 
