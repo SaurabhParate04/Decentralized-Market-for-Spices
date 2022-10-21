@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import userContext from '../context/User/userContext';
 import ProductCard from '../components/ProductCard';
-import './Products.css'
-import './Home.css'
+import '../Styles.css'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
@@ -39,7 +38,6 @@ const Products = (props) => {
             });
             const data = await response.json();
             setAllCardsInfo(data)
-            console.log(allCardsInfo)
         } catch(error) {
             console.log(error)
         }
@@ -98,11 +96,11 @@ const Products = (props) => {
             {/* </div> */}
             {/* <div className="filler_map"></div> */}
             
-            <section className="card-conatiner-warpper">
-                <div className="cards-container-title top-0 ">
+            <section style={{marginTop:"180px"}} className="card-conatiner-warpper">
+                {/* <div className="cards-container-title top-0 ">
                     Popular Products
                 </div>
-                <button className="clear-btn top-0 end-0" onClick={clearFilter}> clear filter</button>
+                <button className="clear-btn top-0 end-0" onClick={clearFilter}> clear filter</button> */}
                 <div className=" row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mx-0 justify-content-evenly card-container gx-5">
                     {
                         allCardsInfo.filter(card =>{
@@ -114,6 +112,14 @@ const Products = (props) => {
                                 title={card.productBrand + ' ' + card.productName}
                                 description={card.description}
                                 price={card.price}
+                                ratingPts={card.ratingPts}
+                                ratingCnt={card.ratingCnt}
+                                sizes={card.sizes}
+                                avilableQty={card.avilableQty}
+                                category={card.category}
+                                reviews={card.reviews}
+                                reviewsCnt={card.reviewsCnt}
+                                options={card.options}
                                 // qrcode={card.qrcode}
                             />
                         ))

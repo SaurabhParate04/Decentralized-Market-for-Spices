@@ -6,9 +6,8 @@ const fetchuser = (req,res,next) =>{
     if(!JWTtoken)
     {
         return res.status(401).send('please autheticate using a valid token');
-
     }
-    try{
+    try {
         const data = jwt.verify(JWTtoken,JWTSECRET_KEY);
         req.user = data.user;
         next();

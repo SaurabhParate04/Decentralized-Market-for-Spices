@@ -9,6 +9,11 @@ import {
 import UserState from './context/User/UserState';
 import Home from './pages/Home'
 import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   const useScrollToTop = () => {
@@ -32,6 +37,15 @@ function App() {
             <Route exact path="/products">
               <Products useScrollToTop={useScrollToTop} />
             </Route>
+            <Route exact path="/login">
+              <Login useScrollToTop={useScrollToTop} />
+            </Route>
+            <Route exact path="/signup">
+              <Signup useScrollToTop={useScrollToTop} />
+            </Route>
+            <Route exact path="/productdetails" component={ProductDetails} />
+            <Route exact path="/cart" component={Cart} />
+            <Route exact path="/checkout" component={Checkout} />
           </Switch>
         </Router>
       </UserState>
