@@ -5574,6 +5574,11 @@ align-items: center;
   width: 100%;
 }
 
+.select-qty {
+  position: relative;
+  top: 45px;
+}
+
 @media (max-width: 575px){
 
   /* About Style 3 */
