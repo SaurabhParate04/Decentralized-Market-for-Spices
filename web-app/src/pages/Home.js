@@ -2,6 +2,7 @@ import React from 'react'
 import '../Styles.css'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Carousel from '../components/Carousel'
 
 const Home = (props) => {
     props.useScrollToTop();
@@ -9,6 +10,8 @@ const Home = (props) => {
     return (
         <div>
             <Navbar />
+
+            <Carousel/>
                         
             <Footer />            
         </div>
