@@ -16,7 +16,7 @@ import userContext from '../context/User/userContext';
 const ProductCard = (props) => {
     const firebaseApp = initializeApp(firebaseConfig);
     const firebaseStorage = getStorage(firebaseApp);
-    const {title, description, price, qrcode} = props;
+    const {productBrand, productName, description, price, qrcode} = props;
     const [Image, setImage] = useState()
     const context = useContext(userContext);
     const {loggedIn} = context
@@ -28,7 +28,7 @@ const ProductCard = (props) => {
 
     const getCardInfo = async() => {
         try {
-            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `Products/${title}.png`))
+            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `Products/${productBrand + ' ' + productName }.png`))
             setImage(imgLoaded)
         } catch(FirebaseError) {
             setImage(coverImg)
@@ -49,7 +49,7 @@ const ProductCard = (props) => {
                 </div>
             </div>
             <div className="ct-product-body">
-                <h5 className="product-title"> <a href="/">{title}</a> </h5>
+                <h5 className="product-title"> <a href="/">{productBrand + ' ' + productName}</a> </h5>
                 <p className="product-price custom-secondary">{price} ₹</p>
                 <p className="product-text">{description}</p>
             </div>

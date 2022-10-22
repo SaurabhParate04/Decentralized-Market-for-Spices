@@ -32,12 +32,12 @@ router.post('/createcart', async(req,res) => {
 router.put('/updatecart',fetchuser, async(req,res) => {
     const cart = await Cart.findOne({username:req.body.username});
     if (!cart) {
-        return res.status(400).send('Bad Request')
+        return res.status(400).send('Bad Request: cart not found')
     }
     try {
         const newCart = {...req.body}
         const updatedCart = await Cart.findOneAndUpdate({username:req.body.username}, {$set:newCart}, {new:true});
-        console.log('user info update sucessfull');
+        console.log('cart info update sucessfull');
         res.json(updatedCart);
 
     } catch (error) {
@@ -50,8 +50,9 @@ router.put('/updatecart',fetchuser, async(req,res) => {
 //Route 3 get cart data by username GET "api/cart/fetchitems"  --login required
 router.get('/fetchitems', fetchuser, async(req,res)=> {
     try{
-        const cart = await Cart.findOne({username:req.body.username});
+        const cart = await Cart.find({username:req.header('username')});
         res.send(cart);
+        console.log("fetchitems cart: "+cart)  
     } catch(err) {
         console.error(err.message)
         return res.status(500).send('internal server error')

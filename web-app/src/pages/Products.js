@@ -14,7 +14,7 @@ const Products = (props) => {
 
     // Admin Buttons Hide based on superUser
     const context = useContext(userContext);
-    const { getProfileInfo, userProfile, loggedIn} = context;
+    const { getProfileInfo, userProfile, usercart, loggedIn} = context;
     const { usertype } = userProfile;
 
     const [allCardsInfo, setAllCardsInfo] = useState([]);
@@ -109,7 +109,8 @@ const Products = (props) => {
                             <ProductCard
                                 key={card._id + "5"}
                                 id={card._id}
-                                title={card.productBrand + ' ' + card.productName}
+                                productBrand={card.productBrand}
+                                productName={card.productName}
                                 description={card.description}
                                 price={card.price}
                                 ratingPts={card.ratingPts}

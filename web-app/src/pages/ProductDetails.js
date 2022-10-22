@@ -1,20 +1,72 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../Styles.css'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import thumb from '../images/Cloves.jpg'
 import { Link } from 'react-router-dom';
+import userContext from '../context/User/userContext'
 
 export default function ProductDetails(props) {
 
-    // const id = props.location.state.id
+    const context = useContext(userContext);
+    const { getProfileInfo, userProfile, getCartInfo, usercart, profileImg } = context;
+    const { loggedIn } = context;
+
     const description = props.location.state.description
-    const title = props.location.state.title
+    const productBrand = props.location.state.productBrand
+    const productName = props.location.state.productName
     const price = props.location.state.price
     const options = props.location.state.options
+    const [cartItems, setCartItems] = useState([])
+    const [selectedOption, setSelectedOption] = useState('')
+    const [oneclick, setOneclick] = useState(false)
+
+    const handleOptions = (e) => {
+        setSelectedOption(e.target.value)
+    }
+
+    const handleOneClick = (e) => {
+        setOneclick(true);
+    }
+
+    const addToCart = async () => {
+        if(loggedIn) {
+            console.log(usercart)
+            setCartItems(usercart)
+            cartItems.push({
+                'productBrand': productBrand,
+                'productName': productName,
+                'varient': selectedOption,
+                'quantity': 1,
+                'price': price
+            })
+            console.log(cartItems)
+            try {
+                const url = "http://localhost:5000/api/cart/updatecart"
+                const res = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'accept': 'application/json',
+                        'auth-token': localStorage.getItem('SpiceMarketjwtToken')
+                    },
+                    body: JSON.stringify({
+                        username: userProfile.username,
+                        userCart: cartItems
+                    })
+                })
+            } catch(err) {
+                console.error(err.message)
+            }
+        }
+    }
 
     useEffect(() => {
+        if(loggedIn) {
+            getProfileInfo()
+            getCartInfo()
+        }
         window.scrollTo({ top: 0 })
     }, [])
 
@@ -39,7 +91,7 @@ export default function ProductDetails(props) {
                         <div className="product-content">
 
                             {/* <!-- Product Title --> */}
-                            <h2 className="title">{title}</h2>
+                            <h2 className="title">{productBrand + ' ' + productName}</h2>
                             {/* <!-- /Product Title --> */}
 
                             {/* <!-- Rating --> */}
@@ -66,10 +118,10 @@ export default function ProductDetails(props) {
                             {/* <!-- /Product Short Description --> */}
 
                             {/* <!-- Add To Cart Form --> */}
-                            <form className="atc-form" method="post">
+                            <form className="atc-form">
                                 <div className="form-group">
                                     <label>Quantity</label>
-                                    <select className="form-control">
+                                    <select className="form-control" onChange={handleOptions}>
                                         <option defaultValue="">Select Quantity</option>
                                         {
                                             options.map((e, key) => {
@@ -78,9 +130,12 @@ export default function ProductDetails(props) {
                                         )}
                                     </select>
                                 </div>
-                                <Link to={{pathname:"/cart"}}>
-                                    <button type="submit" name="button" className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button>
-                                </Link>
+                                
+                                { loggedIn && selectedOption != '' && <Link to='/products'> <button onClick={addToCart} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> </Link> }
+                                { loggedIn && selectedOption == '' && !oneclick && <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> }
+                                { loggedIn && selectedOption == '' && oneclick && <div className='select-qty'> <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> <p style={{"color":"red"}}>Please select a quantity</p> </div>}
+                                { !loggedIn && <Link to='/login'> <button className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> </Link> }
+                                                                                                
                             </form>
                             {/* <!-- /Add To Cart Form --> */}
 
