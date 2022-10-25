@@ -6,6 +6,8 @@ import { useEffect, useContext } from 'react'
 import thumb from '../images/Cloves.jpg'
 import { Link } from 'react-router-dom';
 import userContext from '../context/User/userContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 export default function ProductDetails(props) {
 
@@ -18,7 +20,6 @@ export default function ProductDetails(props) {
     const productName = props.location.state.productName
     const price = props.location.state.price
     const options = props.location.state.options
-    const [cartItems, setCartItems] = useState([])
     const [selectedOption, setSelectedOption] = useState('')
     const [oneclick, setOneclick] = useState(false)
 
@@ -66,7 +67,6 @@ export default function ProductDetails(props) {
     useEffect(() => {
         if(loggedIn) {
             getProfileInfo()
-            getCartInfo()
         }
         window.scrollTo({ top: 0 })
     }, [])
@@ -132,10 +132,10 @@ export default function ProductDetails(props) {
                                     </select>
                                 </div>
                                 
-                                { loggedIn && selectedOption !== '' && <Link to='/products'> <button onClick={addToCart} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> </Link> }
-                                { loggedIn && selectedOption === '' && !oneclick && <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> }
-                                { loggedIn && selectedOption === '' && oneclick && <div className='select-qty'> <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> <p style={{"color":"red"}}>Please select a quantity</p> </div>}
-                                { !loggedIn && <Link to='/login'> <button className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> </Link> }
+                                { loggedIn && selectedOption !== '' && <Link to='/products'> <button onClick={addToCart} className="btn-custom secondary" > Add to Cart <FontAwesomeIcon icon={faCartShopping} /> </button> </Link> }
+                                { loggedIn && selectedOption === '' && !oneclick && <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <FontAwesomeIcon icon={faCartShopping} /> </button> }
+                                { loggedIn && selectedOption === '' && oneclick && <div className='select-qty'> <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <FontAwesomeIcon icon={faCartShopping} /> </button> <p style={{"color":"red"}}>Please select a quantity</p> </div>}
+                                { !loggedIn && <Link to='/login'> <button className="btn-custom secondary" > Add to Cart <FontAwesomeIcon icon={faCartShopping} /> </button> </Link> }
                                                                                                 
                             </form>
                             {/* <!-- /Add To Cart Form --> */}

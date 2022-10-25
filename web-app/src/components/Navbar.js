@@ -1,20 +1,35 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import userContext from '../context/User/userContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import logo1 from '../images/logo 1.png'
+import UserState from '../context/User/UserState'
 
 const Navbar = () => {
-    //hook declarations
     const context = useContext(userContext);
     let location = useLocation();
 
-    // destructuring
-    const {loggedIn,setloggedIn,setuserProfile, logOutUser} = context;
+    const {loggedIn,setloggedIn,setuserProfile, userProfile, logOutUser, getCartInfo, usercart, getProfileInfo} = context;
+    const [cartToggle, setCartToggle] = useState(false)
 
-    // submit btn handle
     const handleLogout = ()=>{
         logOutUser();
     }
+
+    const handleCartToggle = () => {
+        setCartToggle(!cartToggle)
+    }
+
+    useEffect(() => {
+        if(loggedIn) {
+            getProfileInfo()
+        }
+    },[])
+
+    useEffect(() => {
+        getCartInfo()
+    },[userProfile])
    
     return (
         <>
@@ -154,29 +169,29 @@ const Navbar = () => {
                         </ul>
                         <div className="header-controls">
                             <ul className="header-controls-inner">
-                                <li className="cart-dropdown-wrapper cart-trigger">
-                                    <i className="flaticon-shopping-basket"></i>
+                                <li className={`${cartToggle ? "cart-dropdown-wrapper cart-trigger open": "cart-dropdown-wrapper cart-trigger"}`} >
+                                    <FontAwesomeIcon icon={faCartShopping} style={{fontSize:"1.5em"}} className={`${loggedIn ? "": "d-none"}`} onClick={handleCartToggle} />
                                     <ul className="cart-dropdown">
-                                        <li className="cart-item">
-                                            <img src="../images/products/Cloves.jpg" alt="product"></img>
-                                            <div className="cart-item-body">
-                                                <a href="/">Clove</a>
-                                                <span className="custom-secondary">2x 18.00$</span>
-                                            </div>
-                                        </li>
-                                        <li className="cart-item">
-                                            <img src="../images/products/Cloves.jpg" alt="product"></img>
-                                            <div className="cart-item-body">
-                                                <a href="/">Agro</a>
-                                                <span className="custom-secondary">1x 24.25$</span>
-                                            </div>
-                                        </li>
+                                    {
+                                        usercart.map((e, key) => {
+                                            return (
+                                                <li className="cart-item" key={key}>
+                                                    <img src={logo1}></img>
+                                                    <div className="cart-item-body">
+                                                        <a href="/">{e.productBrand + ' ' + e.productName}</a>
+                                                        <p style={{margin: "0px"}}>{e.varient}</p>
+                                                        <span className="custom-secondary">{e.quantity} x {e.price} ₹</span>
+                                                    </div>
+                                                </li>
+                                            )
+                                        }
+                                    )}
                                         <li className="cart-subtotal">
-                                            <p> <strong>Subtotal: </strong> 54.25$</p>
+                                            <p> <strong>Subtotal: </strong> 450 ₹</p>
                                         </li>
                                         <li className="cart-buttons">
-                                            <a href="checkout.html" className="btn-custom primary btn-sm shadow-none">Checkout</a>
-                                            <a href="cart.html" className="btn-custom secondary btn-sm shadow-none">View Cart</a>
+                                            <a href="/checkout" className="btn-custom primary btn-sm shadow-none" style={{margin:"0 10px"}} >Checkout</a>
+                                            <a href="/cart" className="btn-custom secondary btn-sm shadow-none">View Cart</a>
                                         </li>
                                     </ul>
                                 </li>

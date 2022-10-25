@@ -48,6 +48,7 @@ const UserState = ({children}) => {
 
     const getCartInfo = async() => {
         try {
+            // console.log(userProfile.username)
             const url = "http://localhost:5000/api/cart/fetchitems";
             const response = await fetch(url, {
                 method: 'GET', 
@@ -60,6 +61,7 @@ const UserState = ({children}) => {
             });
             let res = await response.json();
             res = JSON.stringify(res)
+            // console.log(res)
             res = JSON.parse(res)
             res = JSON.stringify(res[0]['userCart'])
             // console.log("getcartinfo: " + res)

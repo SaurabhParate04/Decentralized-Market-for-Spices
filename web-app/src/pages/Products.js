@@ -14,7 +14,7 @@ const Products = (props) => {
 
     // Admin Buttons Hide based on superUser
     const context = useContext(userContext);
-    const { getProfileInfo, userProfile, usercart, loggedIn} = context;
+    const { getProfileInfo, userProfile, usercart, loggedIn, getCartInfo} = context;
     const { usertype } = userProfile;
 
     const [allCardsInfo, setAllCardsInfo] = useState([]);
@@ -23,7 +23,10 @@ const Products = (props) => {
 
     useEffect(() => {
         getAllProducts();
-        getProfileInfo();
+        if(loggedIn) {
+            getProfileInfo()
+            getCartInfo()
+        }
     }, [])
 
     const getAllProducts = async() => {
