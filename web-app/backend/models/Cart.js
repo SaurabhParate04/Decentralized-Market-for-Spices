@@ -7,10 +7,10 @@ const cartSchema = new mongoose.Schema({
         required:true,
     },
     userCart:[{
-        productbrand:{
+        productBrand:{
             type:String
         },
-        productname:{
+        productName:{
             type:String
         },
         varient:{
@@ -18,7 +18,7 @@ const cartSchema = new mongoose.Schema({
             default:null
         },
         quantity:{
-            type:String
+            type:Number
         },
         price:{
             type:Number

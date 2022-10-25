@@ -32,16 +32,17 @@ export default function ProductDetails(props) {
 
     const addToCart = async () => {
         if(loggedIn) {
+            // setCartItems(usercart)
             console.log(usercart)
-            setCartItems(usercart)
-            cartItems.push({
+            // console.log(cartItems)
+            usercart.push({
                 'productBrand': productBrand,
                 'productName': productName,
                 'varient': selectedOption,
                 'quantity': 1,
                 'price': price
             })
-            console.log(cartItems)
+            console.log(usercart)
             try {
                 const url = "http://localhost:5000/api/cart/updatecart"
                 const res = await fetch(url, {
@@ -53,7 +54,7 @@ export default function ProductDetails(props) {
                     },
                     body: JSON.stringify({
                         username: userProfile.username,
-                        userCart: cartItems
+                        userCart: usercart
                     })
                 })
             } catch(err) {
@@ -131,9 +132,9 @@ export default function ProductDetails(props) {
                                     </select>
                                 </div>
                                 
-                                { loggedIn && selectedOption != '' && <Link to='/products'> <button onClick={addToCart} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> </Link> }
-                                { loggedIn && selectedOption == '' && !oneclick && <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> }
-                                { loggedIn && selectedOption == '' && oneclick && <div className='select-qty'> <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> <p style={{"color":"red"}}>Please select a quantity</p> </div>}
+                                { loggedIn && selectedOption !== '' && <Link to='/products'> <button onClick={addToCart} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> </Link> }
+                                { loggedIn && selectedOption === '' && !oneclick && <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> }
+                                { loggedIn && selectedOption === '' && oneclick && <div className='select-qty'> <button onClick={handleOneClick} className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> <p style={{"color":"red"}}>Please select a quantity</p> </div>}
                                 { !loggedIn && <Link to='/login'> <button className="btn-custom secondary" > Add to Cart <i className="flaticon-shopping-basket"></i> </button> </Link> }
                                                                                                 
                             </form>

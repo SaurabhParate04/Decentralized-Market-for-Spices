@@ -62,7 +62,7 @@ const UserState = ({children}) => {
             res = JSON.stringify(res)
             res = JSON.parse(res)
             res = JSON.stringify(res[0]['userCart'])
-            console.log("getcartinfo: " + res)
+            // console.log("getcartinfo: " + res)
             res = JSON.parse(res)
             setUserCart(res)
 
