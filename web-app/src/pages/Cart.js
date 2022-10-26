@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../Styles.css'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -6,21 +6,50 @@ import { useEffect, useContext } from 'react'
 import thumb from '../images/Cloves.jpg'
 import userContext from '../context/User/userContext'
 
-export default function ProductDetails(props) {
-
-    // const id = props.location.state.id
-    // const description = props.location.state.description
-    // const title = props.location.state.title
-    // const price = props.location.state.price
+export default function Cart(props) {
 
     const context = useContext(userContext);
-    const { getProfileInfo, userProfile, profileImg } = context;
-    const { firstname, lastname, username, email, address, phoneNumber, userCart } = userProfile;
+    const { getProfileInfo, userProfile, profileImg, getCartInfo, usercart } = context;
+    const [quantity, setQuantity] = useState({})
+    const [total, setTotal] = useState(0)
+
+    const handleQuantity = (name, price) => (e) => {
+        setQuantity(prev => ({
+            ...prev,
+            [name]: e.target.value * price
+        }))
+        console.log(quantity)
+        handleTotal(name, e.target.value * price)
+    }
+
+    const handleTotal = (name, price) => {
+        let newTotal = 0;
+        for(const element in quantity) {
+            if(element === name) newTotal += price
+            else newTotal += quantity[element]
+        }
+        setTotal(newTotal)
+    }
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
         getProfileInfo()
     }, [])
+
+    useEffect(() => {
+        getCartInfo()
+    }, [userProfile])
+
+    useEffect(() => {
+        let total = 0
+        let quantity = {}
+        usercart.forEach(element => {
+            total += element.price
+            quantity[element.productBrand + ' ' + element.productName + ' ' + element.varient] = element.price
+        });
+        setTotal(total)
+        setQuantity(quantity)
+    }, [usercart])
 
     return (
         <>
@@ -36,15 +65,15 @@ export default function ProductDetails(props) {
                             <th className="remove-item"></th>
                             <th>Product</th>
                             <th>Price</th>
-                            <th>Qunantity</th>
+                            <th>Quantity</th>
                             <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            userCart.map((e) => {
+                            usercart.map((e, key) => {
                                 return (
-                                <tr>
+                                <tr key={key}>
                                     <td className="remove">
                                         <button type="button" className="close-btn close-danger remove-from-cart">
                                             <span></span>
@@ -55,16 +84,16 @@ export default function ProductDetails(props) {
                                         <div className="cart-product-wrapper">
                                             <img src={thumb} alt="prod1"></img>
                                             <div className="cart-product-body">
-                                                <h6> <a href="/">{e.prodName}</a> </h6>
+                                                <h6> <a href="/">{e.productBrand + ' ' + e.productName}</a> </h6>
                                                 <p>{e.varient}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td data-title="Price">{e.price} ₹</td>
                                     <td className="quantity" data-title="Quantity">
-                                        <input type="number" className="qty form-control" defaultValue="1"></input>
+                                        <input type="number" className="qty form-control" min={1} defaultValue="1" onChange={handleQuantity(e.productBrand + ' ' + e.productName + ' ' + e.varient, e.price)}></input>
                                     </td>
-                                    <td data-title="Total">{e.quantity * e.price}</td>
+                                    <td data-title="Total">{quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient] || e.price} ₹ </td>
                                 </tr>
                                 )
                             })
@@ -97,19 +126,19 @@ export default function ProductDetails(props) {
                             <tbody>
                                 <tr>
                                     <th>Subtotal</th>
-                                    <td>90.99$</td>
+                                    <td> {total} ₹</td>
                                 </tr>
                                 <tr>
-                                    <th>Tax</th>
-                                    <td> 9.99$ <span className="small">(11%)</span> </td>
+                                    <th>Shipping Charges</th>
+                                    <td> 40 ₹ </td>
                                 </tr>
                                 <tr>
                                     <th>Total</th>
-                                    <td> <b>99.99$</b> </td>
+                                    <td> <b> {total + 40} ₹</b> </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <a href="/" className="btn-custom primary btn-block">Proceeed to Checkout</a>
+                        <a href="/checkout" className="btn-custom primary btn-block">Proceeed to Checkout</a>
                     </div>
                 </div>
                 {/* <!-- Cart form End --> */}
