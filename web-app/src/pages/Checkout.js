@@ -7,10 +7,9 @@ import thumb from '../images/Cloves.jpg'
 
 export default function ProductDetails(props) {
 
-    // const id = props.location.state.id
-    // const description = props.location.state.description
-    // const title = props.location.state.title
-    // const price = props.location.state.price
+    const usercart = props.location.state.usercart
+    const quantity = props.location.state.quantity
+    const total = props.location.state.total
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
@@ -332,68 +331,41 @@ export default function ProductDetails(props) {
                                 </tr>
                             </thead>
                             <tbody>
+                            {
+                                usercart.map((e, key) => {
+                                    return(
+                                        <tr>
+                                            <td data-title="Product">
+                                            <div className="cart-product-wrapper">
+                                                <img src={thumb} alt="prod1"></img>
+                                                <div className="cart-product-body">
+                                                    <h6> <a href="/">{e.productBrand + ' ' + e.productName}</a> </h6>
+                                                    <p>{e.varient}</p>
+                                                </div>
+                                            </div>
+                                            </td>
+                                            <td data-title="Quantity"> x {quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient] / e.price} </td>
+                                            <td data-title="Total">{quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient]} ₹</td>
+                                        </tr>
+                                    )
+                                })
+                            }
                                 <tr>
                                     <td data-title="Product">
                                     <div className="cart-product-wrapper">
-                                        <img src={thumb} alt="prod1"></img>
                                         <div className="cart-product-body">
-                                        <h6> <a href="/">Clove</a> </h6>
-                                        <p>Red Color</p>
+                                            <h6> <a href="/">Grand Total</a> </h6>
+                                            <p>Shipping Charges: 40 ₹</p>
                                         </div>
                                     </div>
                                     </td>
-                                    <td data-title="Quantity">x1</td>
-                                    <td data-title="Total">499.99$</td>
-                                </tr>
-                                <tr>
-                                    <td data-title="Product">
-                                        <div className="cart-product-wrapper">
-                                            <img src={thumb} alt="prod1"></img>
-                                            <div className="cart-product-body">
-                                            <h6> <a href="/">Agro</a> </h6>
-                                            <p>Wood Material</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td data-title="Quantity">x2</td>
-                                    <td data-title="Total">399.99$</td>
-                                </tr>
-                                <tr>
-                                    <td data-title="Product">
-                                        <div className="cart-product-wrapper">
-                                            <img src={thumb} alt="prod1"></img>
-                                            <div className="cart-product-body">
-                                            <h6> <a href="/">Sesame Seeds</a> </h6>
-                                            <p>Wood Material</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td data-title="Quantity">x1</td>
-                                    <td data-title="Total">1,199.99$</td>
+                                    <td data-title="Quantity"></td>
+                                    <td data-title="Total">{total} ₹</td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <div className="form-group">
-                            <label>Card Number</label>
-                            <input type="text" className="form-control" name="master-number" placeholder="Card Number" defaultValue=""></input>
-                        </div>
-                        <div className="form-group">
-                            <label>Full Name</label>
-                            <input type="text" className="form-control" name="master-name" placeholder="Full Name" defaultValue=""></input>
-                        </div>
-                        <div className="row">
-                            <div className="col-xl-6 form-group">
-                                <label>Expiry Date</label>
-                                <input type="text" className="form-control" name="master-expiry" placeholder="Expiry Date (MM/YY)" defaultValue=""></input>
-                            </div>
-                                <div className="col-xl-6 form-group">
-                                <label>CVV*</label>
-                                <input type="number" className="form-control" name="master-cvv" placeholder="CVV" defaultValue=""></input>
-                            </div>
-                        </div>
-
-                        <p className="small">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a className="btn-link" href="/">privacy policy.</a> </p>
+                        <p style={{"marginTop": "50px"}} className="small">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a className="btn-link" href="/">privacy policy.</a> </p>
                         <button type="submit" className="btn-custom primary btn-block">Place Order</button>
 
                         {/* <!-- /Billing Details --> */}

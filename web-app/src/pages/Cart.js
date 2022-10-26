@@ -5,6 +5,7 @@ import Footer from '../components/Footer'
 import { useEffect, useContext } from 'react'
 import thumb from '../images/Cloves.jpg'
 import userContext from '../context/User/userContext'
+import { Link } from 'react-router-dom'
 
 export default function Cart(props) {
 
@@ -18,7 +19,6 @@ export default function Cart(props) {
             ...prev,
             [name]: e.target.value * price
         }))
-        console.log(quantity)
         handleTotal(name, e.target.value * price)
     }
 
@@ -138,7 +138,7 @@ export default function Cart(props) {
                                 </tr>
                             </tbody>
                         </table>
-                        <a href="/checkout" className="btn-custom primary btn-block">Proceeed to Checkout</a>
+                        <Link to={{pathname:'/checkout', state:{quantity:quantity, total:total + 40, usercart: usercart}}} className="btn-custom primary btn-block">Proceeed to Checkout</Link>
                     </div>
                 </div>
                 {/* <!-- Cart form End --> */}
