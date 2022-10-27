@@ -1,4 +1,5 @@
 import React from "react";
+import footerImg from '../images/footer-bottom-img.png'
 
 const Footer = () => {
     return(
@@ -75,7 +76,7 @@ const Footer = () => {
                         </div>
                         <div className="col-lg-6 footer-widget pb-0 text-center text-lg-right">
                             <div className="payment-image">
-                                <img src="assets/img/footer-bottom-img.png" alt="img"></img>
+                                <img src={footerImg} alt="img"></img>
                             </div>
                         </div>
                     </div>
