@@ -27,6 +27,7 @@ app.listen(port, () => {
     console.log('Server is running on port: ' + port)
 })
 
-app.use('/api/user',require('./routes/user'))
+app.use('/api/user', require('./routes/user'))
 app.use('/api/product', require('./routes/product'))
 app.use('/api/cart', require('./routes/cart'))
+app.use('/api/payment', require('./routes/payment'))

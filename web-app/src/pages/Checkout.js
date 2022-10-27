@@ -11,6 +11,56 @@ export default function ProductDetails(props) {
     const quantity = props.location.state.quantity
     const total = props.location.state.total
 
+    const initiatePayment = async() => {
+        // console.log("Payment initialized")
+        try {
+            const url = "http://localhost:5000/api/payment/orders";
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json',
+                },
+                body: JSON.stringify({ amount: total })
+            });
+            // console.log(response)
+            completePayment()
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+
+    const completePayment = () => {
+        const options = {
+            key: 'rzp_test_tELMr5dwofTrc1',
+            amount: total * 100,
+            currency: 'INR',
+            handler: async(response) => {
+                try {
+                    const verifyurl = 'http://localhost:5000/api/payment/verify'
+                    const res = await fetch(verifyurl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'accept': 'application/json',
+                        },
+                        body: response
+                    })
+                    console.log(res)
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+        }
+        const rzpay = new window.Razorpay(options)
+        rzpay.open()
+    }
+
+    const handlePayment = (e) => {
+        e.preventDefault()
+        initiatePayment()
+    }
+
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
@@ -22,7 +72,7 @@ export default function ProductDetails(props) {
         <section className="section extra-padding">
             <div className="container">
 
-                <form method="post">
+                <form>
                     <div className="row">
                         <div className="col-xl-6">
                             {/* <!-- Buyer Info --> */}
@@ -320,53 +370,53 @@ export default function ProductDetails(props) {
 
                         </div>
                         <div className="col-xl-6 checkout-billing">
-                        {/* <!-- Billing Details --> */}
-                        <h4>Billing Details</h4>
-                        <table className="ct-responsive-table">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Qunantity</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                usercart.map((e, key) => {
-                                    return(
-                                        <tr>
-                                            <td data-title="Product">
-                                            <div className="cart-product-wrapper">
-                                                <img src={thumb} alt="prod1"></img>
-                                                <div className="cart-product-body">
-                                                    <h6> <a href="/">{e.productBrand + ' ' + e.productName}</a> </h6>
-                                                    <p>{e.varient}</p>
+                            {/* <!-- Billing Details --> */}
+                            <h4>Billing Details</h4>
+                            <table className="ct-responsive-table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Qunantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    usercart.map((e, key) => {
+                                        return(
+                                            <tr key={key}>
+                                                <td data-title="Product">
+                                                <div className="cart-product-wrapper">
+                                                    <img src={thumb} alt="prod1"></img>
+                                                    <div className="cart-product-body">
+                                                        <h6> <a href="/">{e.productBrand + ' ' + e.productName}</a> </h6>
+                                                        <p>{e.varient}</p>
+                                                    </div>
                                                 </div>
+                                                </td>
+                                                <td data-title="Quantity"> x {quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient] / e.price} </td>
+                                                <td data-title="Total">{quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient]} ₹</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                                    <tr>
+                                        <td data-title="Product">
+                                        <div className="cart-product-wrapper">
+                                            <div className="cart-product-body">
+                                                <h6> <a href="/">Grand Total</a> </h6>
+                                                <p>Shipping Charges: 40 ₹</p>
                                             </div>
-                                            </td>
-                                            <td data-title="Quantity"> x {quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient] / e.price} </td>
-                                            <td data-title="Total">{quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient]} ₹</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                                <tr>
-                                    <td data-title="Product">
-                                    <div className="cart-product-wrapper">
-                                        <div className="cart-product-body">
-                                            <h6> <a href="/">Grand Total</a> </h6>
-                                            <p>Shipping Charges: 40 ₹</p>
                                         </div>
-                                    </div>
-                                    </td>
-                                    <td data-title="Quantity"></td>
-                                    <td data-title="Total">{total} ₹</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                        <td data-title="Quantity"></td>
+                                        <td data-title="Total">{total} ₹</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                        <p style={{"marginTop": "50px"}} className="small">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a className="btn-link" href="/">privacy policy.</a> </p>
-                        <button type="submit" className="btn-custom primary btn-block">Place Order</button>
+                            <p style={{"marginTop": "50px"}} className="small">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a className="btn-link" href="/">privacy policy.</a> </p>
+                            <button onClick={handlePayment} className="btn-custom primary btn-block">Place Order</button>
 
                         {/* <!-- /Billing Details --> */}
 
