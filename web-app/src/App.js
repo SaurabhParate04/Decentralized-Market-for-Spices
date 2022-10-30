@@ -14,6 +14,9 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import LoginBusiness from './pages/LoginBusiness';
+import SignupBusiness from './pages/SignupBusiness';
+import HomeBusiness from './pages/HomeBusiness';
 
 function App() {
   const useScrollToTop = () => {
@@ -42,6 +45,15 @@ function App() {
             </Route>
             <Route exact path="/signup">
               <Signup useScrollToTop={useScrollToTop} />
+            </Route>
+            <Route exact path="/business/login">
+              <LoginBusiness useScrollToTop={useScrollToTop} />
+            </Route>
+            <Route exact path="/business/signup">
+              <SignupBusiness useScrollToTop={useScrollToTop} />
+            </Route>
+            <Route exact path="/business">
+              <HomeBusiness useScrollToTop={useScrollToTop} />
             </Route>
             <Route exact path="/productdetails" component={ProductDetails} />
             <Route exact path="/cart" component={Cart} />
