@@ -1,7 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-require('dotenv').config()
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, './.env') })
 
 const app = express()
 const port = process.env.port || 5000
@@ -11,12 +12,12 @@ app.use(express.json())
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+		useUnifiedTopology:true,
+		useNewUrlParser: true
     },
 	(err) => {
 		if (err) {
-			console.log("Some Unexpected Error Occured", err);
+			console.log("Cannot connect to Mongodb Atlas: ", err);
 		} else{
 			console.log("Connected to Mongodb Atlas");
 		}
