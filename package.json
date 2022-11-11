@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/SaurabhParate04/Decentralized-Market-for-Spices/issues"
   },
-  "homepage": "https://github.com/SaurabhParate04/Decentralized-Market-for-Spices#readme"
+  "homepage": "https://github.com/SaurabhParate04/Decentralized-Market-for-Spices#readme",
+  "dependencies": {
+    "concurrently": "^7.5.0"
+  }
 }

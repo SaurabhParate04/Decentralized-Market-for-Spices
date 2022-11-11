@@ -3,6 +3,7 @@
 # # dependencies
 /web-app/frontend/node_modules
 /web-app/backend/node_modules
+/node_modules
 /web-app/.pnp
 # .pnp.js
 
