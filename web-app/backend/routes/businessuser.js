@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const JWTSECRET_KEY = 'decentralizedspicemarketproject';
 const fetchuser = require('../middleware/fetchuser')
 
-// // Route 1 add users to db POST "/api/user/adduser" --nologin required
+// Route 1 add users to db POST "/api/user/adduser" --nologin required
 router.post('/createuser',[
     body('email').isEmail()
  ] ,async(req,res)=>{
@@ -54,7 +54,7 @@ router.get('/fetchuser', fetchuser, async(req,res)=>{
     res.send(user);
 })
 
-// //Route 3 update user data using userid PUT "api/user/updateuser"  --login required
+//Route 3 update user data using userid PUT "api/user/updateuser"  --login required
 router.put('/updateuser',fetchuser,[
     body('email').isEmail()
 ], async(req,res)=>{
@@ -103,6 +103,7 @@ router.post('/loginuser',async (req,res)=>{
         const data={
             user:{
                 id:currentUser.id,
+                businessUser:true
             }
         }
         const jwtToken = jwt.sign(data,JWTSECRET_KEY);

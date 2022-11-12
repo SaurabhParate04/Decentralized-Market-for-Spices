@@ -7,6 +7,7 @@ import {
   useLocation
 } from "react-router-dom";
 import UserState from './context/User/UserState';
+import BusinessUserState from './context/User/BusinessUserState';
 import Home from './pages/Home'
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
@@ -46,6 +47,15 @@ function App() {
             <Route exact path="/signup">
               <Signup useScrollToTop={useScrollToTop} />
             </Route>
+            <Route exact path="/productdetails" component={ProductDetails} />
+            <Route exact path="/cart" component={Cart} />
+            <Route exact path="/checkout" component={Checkout} />
+          </Switch>
+        </Router>
+      </UserState>
+      <BusinessUserState>
+        <Router >
+          <Switch>
             <Route exact path="/business/login">
               <LoginBusiness useScrollToTop={useScrollToTop} />
             </Route>
@@ -55,12 +65,9 @@ function App() {
             <Route exact path="/business">
               <HomeBusiness useScrollToTop={useScrollToTop} />
             </Route>
-            <Route exact path="/productdetails" component={ProductDetails} />
-            <Route exact path="/cart" component={Cart} />
-            <Route exact path="/checkout" component={Checkout} />
           </Switch>
         </Router>
-      </UserState>
+      </BusinessUserState>
     </div>
   );
 }

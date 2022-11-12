@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect} from 'react'
 import '../Styles.css'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/NavbarBusiness'
 import Footer from '../components/Footer'
 import { useHistory } from 'react-router'
 import BusinessUserContext from '../context/User/BusinessUserContext'

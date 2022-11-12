@@ -74,7 +74,6 @@ const Login = (props) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        // console.log('submit btn clicked');
         setloginFormErrors(validateLogin(credentialLogin));
         setIsLoginSubmit(true);
         try {
@@ -91,7 +90,7 @@ const Login = (props) => {
             const json = await response.json();
             if (response.ok) {
                 localStorage.setItem('SpiceMarketjwtToken', json.jwtToken);
-                //console.log(json.jwtToken);
+                console.log(credentialLogin.username + " logged in; token: " + json.jwtToken);
                 setloggedIn(true);
                 history.push('/');
             }

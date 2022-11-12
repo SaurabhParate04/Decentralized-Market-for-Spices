@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect} from 'react'
 import '../Styles.css'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/NavbarBusiness'
 import Footer from '../components/Footer'
 import { useHistory } from 'react-router'
 import BusinessUserContext from '../context/User/BusinessUserContext'
@@ -13,7 +13,7 @@ const LoginBusiness = (props) => {
     const [isLoginSubmit, setIsLoginSubmit] = useState(false);
 
     const context = useContext(BusinessUserContext);
-    const { setloggedIn } = context;
+    const { setloggedInBusiness } = context;
 
     const history = useHistory()
 
@@ -90,12 +90,12 @@ const LoginBusiness = (props) => {
             const json = await response.json();
             if (response.ok) {
                 localStorage.setItem('SpiceMarketBusinessjwtToken', json.jwtToken);
-                //console.log(json.jwtToken);
-                setloggedIn(true);
+                console.log(credentialLogin.username + " logged in; token: " + json.jwtToken);
+                setloggedInBusiness(true);
                 history.push('/business');
             }
         } catch (error) {
-            setloggedIn(false);
+            setloggedInBusiness(false);
             console.error(error.message)
         }
     }

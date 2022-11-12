@@ -1,21 +1,21 @@
 import React, {useState} from 'react'
-import userContext from './UserContext'
+import BusinessUserContext from './BusinessUserContext'
 
 const BusinessUserState = ({children}) => {
     
     //state used for 2 step registration / signup
-    const [globalCredentials, setglobalCredentials] = useState({email:"", username:"", password:"", rpassword:"", addressl1:"", addressl2:"", landmark:"", pincode:"", firstname:"", lastname:"", phoneno:"", usertype:""});
+    const [globalBusinessCredentials, setglobalBusinessCredentials] = useState({email:"", username:"", password:"", rpassword:"", addressl1:"", addressl2:"", landmark:"", pincode:"", firstname:"", lastname:"", phoneno:"", usertype:""});
 
     //global login state
-    const [loggedIn, setloggedIn] = useState(localStorage.getItem('SpiceMarketBusinessjwtToken') ? true :false);
+    const [loggedInBusiness, setloggedInBusiness] = useState(localStorage.getItem('SpiceMarketBusinessjwtToken') ? true :false);
 
     //global state for storing profile info, to display userinfo and edit profile
-    const [userProfile, setuserProfile] = useState({email:"",username:"", firstname:"", lastname:"", phoneno:"", addressl1:"", addressl2:"", landmark:"", pincode:"",  usertype:""});
+    const [userProfileBusiness, setuserProfileBusiness] = useState({email:"",username:"", firstname:"", lastname:"", phoneno:"", addressl1:"", addressl2:"", landmark:"", pincode:"",  usertype:""});
 
     //gets userInfo
-    const getProfileInfo = async() =>{
+    const getBusinessProfileInfo = async() =>{
         try {
-            const url = "http://localhost:5000/api/user/fetchuser";
+            const url = "http://localhost:5000/api/businessuser/fetchuser";
 
             //generate fetch request to get user info for the profile
             const response = await fetch(url, {
@@ -31,23 +31,24 @@ const BusinessUserState = ({children}) => {
             const json = await response.json();
 
             //setting user profile state
-            setuserProfile(json)
+            setuserProfileBusiness(json)
+            console.log(json)
         } catch (error) {
             console.error(error.message);
-            console.log('error occured in getprofileinfo');
+            console.log('error occured in getBusinessProfileInfo');
         }
     }
 
     const logOutUser = ()=>{
         localStorage.removeItem('SpiceMarketBusinessjwtToken');
-        setloggedIn(false);
-        setuserProfile("")
+        setloggedInBusiness(false);
+        setuserProfileBusiness("")
     }
             
     return (
-        <userContext.Provider value={{globalCredentials, setglobalCredentials, loggedIn, setloggedIn, getProfileInfo, userProfile, setuserProfile, logOutUser}} >
+        <BusinessUserContext.Provider value={{globalBusinessCredentials, setglobalBusinessCredentials, loggedInBusiness, setloggedInBusiness, getBusinessProfileInfo, userProfileBusiness, setuserProfileBusiness, logOutUser}} >
             {children}
-        </userContext.Provider>
+        </BusinessUserContext.Provider>
     )
 }
 
