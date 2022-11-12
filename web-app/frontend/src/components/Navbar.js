@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import userContext from '../context/User/userContext'
+import userContext from '../context/User/UserContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import logo1 from '../images/logo 1.png'

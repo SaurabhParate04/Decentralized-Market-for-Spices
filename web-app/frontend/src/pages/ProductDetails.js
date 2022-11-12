@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 import { useEffect, useContext } from 'react'
 import thumb from '../images/Cloves.jpg'
 import { Link } from 'react-router-dom';
-import userContext from '../context/User/userContext'
+import userContext from '../context/User/UserContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 

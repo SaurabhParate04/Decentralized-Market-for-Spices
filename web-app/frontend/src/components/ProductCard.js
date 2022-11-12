@@ -10,7 +10,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import userContext from '../context/User/userContext';
+import userContext from '../context/User/UserContext';
 
 
 const ProductCard = (props) => {

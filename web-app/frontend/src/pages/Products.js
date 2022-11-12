@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import userContext from '../context/User/userContext';
+import userContext from '../context/User/UserContext';
 import ProductCard from '../components/ProductCard';
 import '../Styles.css'
 import Navbar from '../components/Navbar';
