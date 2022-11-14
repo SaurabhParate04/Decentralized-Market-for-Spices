@@ -133,7 +133,7 @@ const NavbarBusiness = () => {
                                     <li className="menu-item"> <a href="/business/login">Login</a> </li>
                                     <li className="menu-item"> <a href="/business/signup">Sign Up</a> </li>
                                     <li className="menu-item"> <Link to={{pathname:"/business/productform", state:{button_name:"Add New", info:{productName:"", productBrand:"", category:"", description:"", price:"", quantity:""}}}} >Add new product</Link> </li>
-                                    <li className="menu-item"> <a href="/business/market">Explore market</a> </li>
+                                    <li className="menu-item"> <a href="/business/marketplace">Explore market</a> </li>
                                 </ul>
                             </li>
                             <li className="logo-wrapper">
