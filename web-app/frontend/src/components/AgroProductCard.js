@@ -17,7 +17,7 @@ import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 const AgroProductCard = (props) => {
     const firebaseApp = initializeApp(firebaseConfig);
     const firebaseStorage = getStorage(firebaseApp);
-    const {productName, description, price, quantity, category, action} = props;
+    const {productName, description, price, quantity, category, user} = props;
     const [Image, setImage] = useState()
     const context = useContext(userContext);
     const {getBusinessProfileInfo, userProfileBusiness} = context
@@ -28,9 +28,10 @@ const AgroProductCard = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+
     const getCardInfo = async() => {
         try {
-            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `agroproductcover/${productName + ' ' + userProfileBusiness.username}`))
+            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `agroproductcover/${productName + ' ' + user}`))
             setImage(imgLoaded)
         } catch(FirebaseError) {
             setImage(coverImg)

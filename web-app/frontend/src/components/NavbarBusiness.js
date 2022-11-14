@@ -72,10 +72,10 @@ const NavbarBusiness = () => {
                                         </ul>
                                     </li>
                                     <li className={`${loggedInBusiness ? "d-none": ""}`}>
-                                        <Link to="/login">Login</Link>
+                                        <Link to="/business/login">Login</Link>
                                     </li>
                                     <li className={`${loggedInBusiness ? "d-none": ""}`}>
-                                        <Link to="/signup">Signup</Link>
+                                        <Link to="/business/signup">Signup</Link>
                                     </li>
                                     <li className={`${loggedInBusiness ? "": "d-none"}`}>
                                         <Link onClick={handleLogout} to="/">Logout</Link>

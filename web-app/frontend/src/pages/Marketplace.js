@@ -97,7 +97,7 @@ const MarketPlace = (props) => {
                         allCardsInfo.filter(card =>{
                             return cardFilter(card.category);
                         }).map(card => (
-                            card.action === usertype && <AgroProductCard
+                            card.action !== usertype && <AgroProductCard
                                 key={card._id + "5"}
                                 id={card._id}
                                 productName={card.productName}
@@ -106,6 +106,7 @@ const MarketPlace = (props) => {
                                 quantity={card.quantity}
                                 category={card.category}
                                 action={card.action}
+                                user={card.user}
                             />
                         ))
                     }{' '}

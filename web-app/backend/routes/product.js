@@ -50,7 +50,7 @@ router.put('/updateproduct/:id', async(req, res) => {
     }
 })
 
-//deletecharity delete
+//deleteproduct delete
 router.delete('/deleteproduct/:id', async(req, res) => {
     try {
         let product = await Product.findById(req.params.id)
