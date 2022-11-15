@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { useEffect, useContext } from 'react'
 import thumb from '../images/Cloves.jpg'
-import userContext from '../context/User/userContext'
+import userContext from '../context/User/UserContext'
 import { Link } from 'react-router-dom'
 
 export default function Cart(props) {

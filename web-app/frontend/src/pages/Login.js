@@ -3,7 +3,7 @@ import '../Styles.css'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { useHistory } from 'react-router'
-import userContext from '../context/User/userContext'
+import userContext from '../context/User/UserContext'
 
 const Login = (props) => {
 
@@ -74,7 +74,6 @@ const Login = (props) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        // console.log('submit btn clicked');
         setloginFormErrors(validateLogin(credentialLogin));
         setIsLoginSubmit(true);
         try {
@@ -91,7 +90,7 @@ const Login = (props) => {
             const json = await response.json();
             if (response.ok) {
                 localStorage.setItem('SpiceMarketjwtToken', json.jwtToken);
-                //console.log(json.jwtToken);
+                console.log(credentialLogin.username + " logged in; token: " + json.jwtToken);
                 setloggedIn(true);
                 history.push('/');
             }

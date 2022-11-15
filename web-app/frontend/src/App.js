@@ -7,6 +7,7 @@ import {
   useLocation
 } from "react-router-dom";
 import UserState from './context/User/UserState';
+import BusinessUserState from './context/User/BusinessUserState';
 import Home from './pages/Home'
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
@@ -19,6 +20,8 @@ import {Profile} from './pages/Profile';
 import LoginBusiness from './pages/LoginBusiness';
 import SignupBusiness from './pages/SignupBusiness';
 import HomeBusiness from './pages/HomeBusiness';
+import ProductForm from './pages/ProductForm';
+import MarketPlace from './pages/Marketplace';
 
 function App() {
   const useScrollToTop = () => {
@@ -51,6 +54,15 @@ function App() {
             <Route exact path="/register">
               <Registration/>
             </Route>
+            <Route exact path="/productdetails" component={ProductDetails} />
+            <Route exact path="/cart" component={Cart} />
+            <Route exact path="/checkout" component={Checkout} />
+          </Switch>
+        </Router>
+      </UserState>
+      <BusinessUserState>
+        <Router >
+          <Switch>
             <Route exact path="/business/login">
               <LoginBusiness useScrollToTop={useScrollToTop} />
             </Route>
@@ -61,16 +73,15 @@ function App() {
             <Route exact path="/business">
               <HomeBusiness useScrollToTop={useScrollToTop} />
             </Route>
-            <Route exact path="/productdetails" component={ProductDetails} />
-            <Route exact path="/cart" component={Cart} />
-            <Route exact path="/checkout" component={Checkout} />
-
-            <Route exact path="/profile">
-              <Profile/>
+            <Route exact path="/business/productform">
+              <ProductForm useScrollToTop={useScrollToTop} />
+            </Route>
+            <Route exact path="/business/marketplace">
+              <MarketPlace useScrollToTop={useScrollToTop} />
             </Route>
           </Switch>
         </Router>
-      </UserState>
+      </BusinessUserState>
     </div>
   );
 }

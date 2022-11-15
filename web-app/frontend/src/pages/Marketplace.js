@@ -1,21 +1,19 @@
 import React, { useEffect, useState, useContext } from 'react'
-import userContext from '../context/User/UserContext';
-import ProductCard from '../components/ProductCard';
+import userContext from '../context/User/BusinessUserContext';
+import AgroProductCard from '../components/AgroProductCard';
 import '../Styles.css'
-import Navbar from '../components/Navbar';
+import Navbar from '../components/NavbarBusiness';
 import Footer from '../components/Footer';
-import { Link } from 'react-router-dom';
-// import Dropdown from '../components/Dropdown';
 
-const Products = (props) => {
+const MarketPlace = (props) => {
 
     //state declaration
     props.useScrollToTop();
 
     // Admin Buttons Hide based on superUser
     const context = useContext(userContext);
-    const { getProfileInfo, userProfile, loggedIn, getCartInfo} = context;
-    const { usertype } = userProfile;
+    const { getBusinessProfileInfo, userProfileBusiness, loggedInBusiness} = context;
+    const { usertype } = userProfileBusiness;
 
     const [allCardsInfo, setAllCardsInfo] = useState([]);
     const [categoryFilter, setcategoryFilter] = useState("ALL")
@@ -23,15 +21,14 @@ const Products = (props) => {
 
     useEffect(() => {
         getAllProducts();
-        if(loggedIn) {
-            getProfileInfo()
-            getCartInfo()
+        if(loggedInBusiness) {
+            getBusinessProfileInfo()
         }
     }, [])
 
     const getAllProducts = async() => {
         try {
-            const url = "http://localhost:5000/api/product/fetchallproducts"
+            const url = "http://localhost:5000/api/agroproduct/fetchallproducts"
             const response = await fetch(url, {
                 method: 'GET', 
                 headers: {
@@ -100,22 +97,16 @@ const Products = (props) => {
                         allCardsInfo.filter(card =>{
                             return cardFilter(card.category);
                         }).map(card => (
-                            <ProductCard
+                            card.action !== usertype && <AgroProductCard
                                 key={card._id + "5"}
                                 id={card._id}
-                                productBrand={card.productBrand}
                                 productName={card.productName}
                                 description={card.description}
                                 price={card.price}
-                                ratingPts={card.ratingPts}
-                                ratingCnt={card.ratingCnt}
-                                sizes={card.sizes}
-                                avilableQty={card.avilableQty}
+                                quantity={card.quantity}
                                 category={card.category}
-                                reviews={card.reviews}
-                                reviewsCnt={card.reviewsCnt}
-                                options={card.options}
-                                // qrcode={card.qrcode}
+                                action={card.action}
+                                user={card.user}
                             />
                         ))
                     }{' '}
@@ -127,4 +118,4 @@ const Products = (props) => {
     )
 }
 
-export default Products
+export default MarketPlace

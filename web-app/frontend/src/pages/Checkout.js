@@ -21,7 +21,7 @@ export default function ProductDetails(props) {
                     'Content-Type': 'application/json',
                     'accept': 'application/json',
                 },
-                body: JSON.stringify({ amount: total })
+                body: JSON.parse(JSON.stringify({ amount: total }))
             });
             // console.log(response)
             completePayment()

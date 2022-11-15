@@ -3,7 +3,7 @@ import '../Styles.css'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { useHistory } from 'react-router'
-import userContext from '../context/User/userContext'
+import userContext from '../context/User/UserContext'
 
 const Signup = (props) => {
     const [credentialLogin, setcredentialLogin] = useState({ username: "", password: "" })

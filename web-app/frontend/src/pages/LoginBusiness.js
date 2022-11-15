@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect} from 'react'
 import '../Styles.css'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/NavbarBusiness'
 import Footer from '../components/Footer'
 import { useHistory } from 'react-router'
-import { Redirect } from 'react-router-dom'
-import userContext from '../context/User/userContext'
+import BusinessUserContext from '../context/User/BusinessUserContext'
 
 const LoginBusiness = (props) => {
 
@@ -13,8 +12,8 @@ const LoginBusiness = (props) => {
     const [loginFormErrors, setloginFormErrors] = useState({});
     const [isLoginSubmit, setIsLoginSubmit] = useState(false);
 
-    const context = useContext(userContext);
-    const { setglobalCredentials, setloggedIn } = context;
+    const context = useContext(BusinessUserContext);
+    const { setloggedInBusiness } = context;
 
     const history = useHistory()
 
@@ -90,13 +89,13 @@ const LoginBusiness = (props) => {
             
             const json = await response.json();
             if (response.ok) {
-                localStorage.setItem('SpiceMarketjwtToken', json.jwtToken);
-                //console.log(json.jwtToken);
-                setloggedIn(true);
+                localStorage.setItem('SpiceMarketBusinessjwtToken', json.jwtToken);
+                console.log(credentialLogin.username + " logged in; token: " + json.jwtToken);
+                setloggedInBusiness(true);
                 history.push('/business');
             }
         } catch (error) {
-            setloggedIn(false);
+            setloggedInBusiness(false);
             console.error(error.message)
         }
     }

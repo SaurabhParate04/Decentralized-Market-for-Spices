@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import userContext from './userContext'
+import userContext from './UserContext'
 
 const UserState = ({children}) => {
     
@@ -34,6 +34,7 @@ const UserState = ({children}) => {
 
             //setting user profile state
             setuserProfile(json)
+            console.log(json)
         } catch (error) {
             console.error(error.message);
             console.log('error occured in getprofileinfo');

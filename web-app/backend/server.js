@@ -30,6 +30,7 @@ app.listen(port, () => {
 
 app.use('/api/user', require('./routes/user'))
 app.use('/api/product', require('./routes/product'))
+app.use('/api/agroproduct', require('./routes/agroproduct'))
 app.use('/api/cart', require('./routes/cart'))
 app.use('/api/payment', require('./routes/payment'))
 app.use('/api/businessuser', require('./routes/businessuser'))

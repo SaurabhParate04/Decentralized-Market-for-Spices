@@ -1,21 +1,21 @@
 const express = require('express')
-const Product = require('../models/Product')
+const AgroProduct = require('../models/AgroProduct')
 const router = express.Router()
 
-// Route 1 fetchallproducts get
+// Route 1 fetchallagroproducts get
 router.get('/fetchallproducts', async(req, res) => {
     try {
-        let allProducts = await Product.find();
-        res.json(allProducts);
+        let allAgroProducts = await AgroProduct.find();
+        res.json(allAgroProducts);
     } catch(error) {
         console.log(error);
     }
 })
 
-// Route 2 fetch product from db  GET"api/product/fetchproduct" 
+// Route 2 fetch product from db  GET"api/agroproduct/fetchproduct" 
 router.get('/fetchproduct', async(req, res) => {
     try {
-        let product = await Product.find({category:req.header('category')});
+        let product = await AgroProduct.find({category:req.header('category')});
         res.json(product);
     } catch(error) {
         console.log(error);
@@ -25,7 +25,7 @@ router.get('/fetchproduct', async(req, res) => {
 //createproduct post
 router.post('/createproduct', async(req, res) => {
     try {
-        let product = new Product(req.body)
+        let product = new AgroProduct(req.body)
         const saved = await product.save()
         console.log(saved)
         res.json(saved)
@@ -38,27 +38,27 @@ router.post('/createproduct', async(req, res) => {
 //updateproduct put
 router.put('/updateproduct/:id', async(req, res) => {
     try {
-        let product = await Product.findById(req.params.id)
+        let product = await AgroProduct.findById(req.params.id)
         if(!product) {
             res.status(400).send('Bad request, no such product exists')
         } else {
-            product = await Product.findByIdAndUpdate(req.params.id, req.body)
-            res.send("Updated the product information")
+            product = await AgroProduct.findByIdAndUpdate(req.params.id, req.body)
+            res.send("Updated the agroproduct information")
         }
     } catch(err) {
         console.log(err)
     }
 })
 
-//deleteproduct delete
+//deletecharity delete
 router.delete('/deleteproduct/:id', async(req, res) => {
     try {
-        let product = await Product.findById(req.params.id)
+        let product = await AgroProduct.findById(req.params.id)
         if(!product) {
             res.status(400).send('Bad request, no such product exists')
         } else {
-            product = await Product.findByIdAndDelete(req.params.id)
-            res.send("Product deleted successfully")
+            product = await AgroProduct.findByIdAndDelete(req.params.id)
+            res.send("AgroProduct deleted successfully")
         }
     } catch(err) {
         console.log(err)
