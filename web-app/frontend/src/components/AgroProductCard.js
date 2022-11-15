@@ -17,7 +17,7 @@ import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 const AgroProductCard = (props) => {
     const firebaseApp = initializeApp(firebaseConfig);
     const firebaseStorage = getStorage(firebaseApp);
-    const {productName, description, price, quantity, category, user} = props;
+    const {productName, description, price, quantity, category, user, id, myProducts, usertype} = props;
     const [Image, setImage] = useState()
     const context = useContext(userContext);
     const {getBusinessProfileInfo, userProfileBusiness} = context
@@ -47,7 +47,15 @@ const AgroProductCard = (props) => {
                 <a href="/"><img src={Image} alt="Product Thumbnail"></img></a>
                 <div className="ct-product-controls">
                     <Link to={{pathname:"/business/agroproductdetails", state:props}} >
-                        <button className="btn-custom secondary">Buy Now <i className="fas fa-arrow-right"></i> </button>
+                        {
+                            myProducts && <Link to={{pathname:"/business/productform", state:{button_name:"update", info:{productName:productName, category:category, description:description, price:price, quantity:quantity, id:id}}}} className="btn-custom secondary">Update Now <i className="fas fa-arrow-right"></i> </Link>
+                        }
+                        {
+                            !myProducts && usertype === "Farmer" && <button className="btn-custom secondary">Sell Now <i className="fas fa-arrow-right"></i> </button>
+                        }
+                        {
+                            !myProducts && usertype === "Trader" && <button className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </button>
+                        }
                     </Link>
                 </div>
             </div>
@@ -57,7 +65,7 @@ const AgroProductCard = (props) => {
                     <span className="product-price custom-secondary">Price : {price} ₹ Per KG</span>
                     <span className="product-price custom-secondary">Quantity : {quantity} KG</span>
                 </div>
-                <p className="product-text">{description}</p>
+                <p className="product-text"><strong>Description: </strong>{description.substring(0,200)}...</p>
             </div>
         </div>
         </>

@@ -115,8 +115,6 @@ export default function ProductForm(props) {
                             description: credentialProduct.description,
                             price: credentialProduct.price,
                             quantity: credentialProduct.quantity,
-                            action: action,
-                            user: userid
                         })
                     }
                 );
@@ -241,7 +239,7 @@ export default function ProductForm(props) {
                                 </div>
                                 <div className="input-box">
                                     <span className="details">Quantity</span>
-                                    <input type="number" name="quantity" placeholder="Enter the quantity in KG" defaultValue={info.price || ""} required />
+                                    <input type="number" name="quantity" placeholder="Enter the quantity in KG" defaultValue={info.quantity || ""} required />
                                 </div>
                                 <div className="input-box">
                                     <span className="details">Select Cover Image</span>

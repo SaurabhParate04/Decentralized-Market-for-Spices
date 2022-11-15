@@ -107,6 +107,8 @@ const MarketPlace = (props) => {
                                 category={card.category}
                                 action={card.action}
                                 user={card.user}
+                                myProducts={false}
+                                usertype={usertype}
                             />
                         ))
                     }{' '}
