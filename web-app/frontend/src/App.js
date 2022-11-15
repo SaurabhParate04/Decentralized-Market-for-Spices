@@ -15,6 +15,8 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Registration from './pages/Registration';
+import {Profile} from './pages/Profile';
 import LoginBusiness from './pages/LoginBusiness';
 import SignupBusiness from './pages/SignupBusiness';
 import HomeBusiness from './pages/HomeBusiness';
@@ -50,6 +52,9 @@ function App() {
             <Route exact path="/signup">
               <Signup useScrollToTop={useScrollToTop} />
             </Route>
+            <Route exact path="/register">
+              <Registration/>
+            </Route>
             <Route exact path="/productdetails" component={ProductDetails} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
@@ -65,6 +70,7 @@ function App() {
             <Route exact path="/business/signup">
               <SignupBusiness useScrollToTop={useScrollToTop} />
             </Route>
+            
             <Route exact path="/business">
               <HomeBusiness useScrollToTop={useScrollToTop} />
             </Route>

@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import userContext from '../context/User/UserContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,10 +9,10 @@ const Navbar = () => {
     const context = useContext(userContext);
     let location = useLocation();
 
-    const {loggedIn,setloggedIn,setuserProfile, userProfile, logOutUser, getCartInfo, usercart, getProfileInfo} = context;
+    const { loggedIn, setloggedIn, setuserProfile, userProfile, logOutUser, getCartInfo, usercart, getProfileInfo } = context;
     const [cartToggle, setCartToggle] = useState(false)
 
-    const handleLogout = ()=>{
+    const handleLogout = () => {
         logOutUser();
     }
 
@@ -21,15 +21,15 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        if(loggedIn) {
+        if (loggedIn) {
             getProfileInfo()
         }
-    },[])
+    }, [])
 
     useEffect(() => {
         getCartInfo()
-    },[userProfile])
-   
+    }, [userProfile])
+
     return (
         <>
             <div className="main-header header-1 can-sticky sticky">
@@ -82,13 +82,16 @@ const Navbar = () => {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li className={`${loggedIn ? "d-none": ""}`}>
+                                    <li className={`${loggedIn ? "d-none" : ""}`}>
                                         <Link to="/login">Login</Link>
                                     </li>
-                                    <li className={`${loggedIn ? "d-none": ""}`}>
+                                    <li className={`${loggedIn ? "d-none" : ""}`}>
                                         <Link to="/signup">Signup</Link>
                                     </li>
-                                    <li className={`${loggedIn ? "": "d-none"}`}>
+                                    <li className={`${loggedIn ? "d-none" : ""}`}>
+                                        <Link to="/profile">Profile</Link>
+                                    </li>
+                                    <li className={`${loggedIn ? "" : "d-none"}`}>
                                         <Link onClick={handleLogout} to="/">Logout</Link>
                                     </li>
                                 </ul>
@@ -168,28 +171,28 @@ const Navbar = () => {
                         </ul>
                         <div className="header-controls">
                             <ul className="header-controls-inner">
-                                <li className={`${cartToggle ? "cart-dropdown-wrapper cart-trigger open": "cart-dropdown-wrapper cart-trigger"}`} >
-                                    <FontAwesomeIcon icon={faCartShopping} style={{fontSize:"1.5em"}} className={`${loggedIn ? "": "d-none"}`} onClick={handleCartToggle} />
+                                <li className={`${cartToggle ? "cart-dropdown-wrapper cart-trigger open" : "cart-dropdown-wrapper cart-trigger"}`} >
+                                    <FontAwesomeIcon icon={faCartShopping} style={{ fontSize: "1.5em" }} className={`${loggedIn ? "" : "d-none"}`} onClick={handleCartToggle} />
                                     <ul className="cart-dropdown">
-                                    {
-                                        usercart.map((e, key) => {
-                                            return (
-                                                <li className="cart-item" key={key}>
-                                                    <img src={logo1}></img>
-                                                    <div className="cart-item-body">
-                                                        <a href="/">{e.productBrand + ' ' + e.productName}</a>
-                                                        <p style={{margin: "0px"}}>{e.varient}</p>
-                                                        <span className="custom-secondary">{e.quantity} x {e.price} ₹</span>
-                                                    </div>
-                                                </li>
-                                            )
-                                        }
-                                    )}
+                                        {
+                                            usercart.map((e, key) => {
+                                                return (
+                                                    <li className="cart-item" key={key}>
+                                                        <img src={logo1}></img>
+                                                        <div className="cart-item-body">
+                                                            <a href="/">{e.productBrand + ' ' + e.productName}</a>
+                                                            <p style={{ margin: "0px" }}>{e.varient}</p>
+                                                            <span className="custom-secondary">{e.quantity} x {e.price} ₹</span>
+                                                        </div>
+                                                    </li>
+                                                )
+                                            }
+                                            )}
                                         <li className="cart-subtotal">
                                             <p> <strong>Subtotal: </strong> 450 ₹</p>
                                         </li>
                                         <li className="cart-buttons">
-                                            <a href="/checkout" className="btn-custom primary btn-sm shadow-none" style={{margin:"0 10px"}} >Checkout</a>
+                                            <a href="/checkout" className="btn-custom primary btn-sm shadow-none" style={{ margin: "0 10px" }} >Checkout</a>
                                             <a href="/cart" className="btn-custom secondary btn-sm shadow-none">View Cart</a>
                                         </li>
                                     </ul>
