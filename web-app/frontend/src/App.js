@@ -20,6 +20,7 @@ import SignupBusiness from './pages/SignupBusiness';
 import HomeBusiness from './pages/HomeBusiness';
 import ProductForm from './pages/ProductForm';
 import MarketPlace from './pages/Marketplace';
+import MyProducts from './pages/MyProducts';
 
 function App() {
   const useScrollToTop = () => {
@@ -72,6 +73,9 @@ function App() {
             </Route>
             <Route exact path="/business/marketplace">
               <MarketPlace useScrollToTop={useScrollToTop} />
+            </Route>
+            <Route exact path="/business/myproducts">
+              <MyProducts useScrollToTop={useScrollToTop} />
             </Route>
           </Switch>
         </Router>
