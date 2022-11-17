@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import './Profile.css';
 import { useContext, useEffect } from 'react';
-import userContext from '../context/User/userContext';
+import userContext from '../context/User/UserContext';
 import { Link } from 'react-router-dom';
 
 

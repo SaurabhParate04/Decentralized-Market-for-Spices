@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 // import Navbar from '../components/Navbar'
 import "./Registration.css"
-import userContext from '../context/User/userContext'
+import userContext from '../context/User/UserContext'
 import { useHistory } from 'react-router'
 // import { useForm } from 'react-hook-form';
 

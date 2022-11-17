@@ -5775,3 +5775,18 @@ align-items: center;
 .agro-prod-card {
   background-color:#f7f4ee;
 }
+
+#staticBackdrop{
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.paymentModalHeader{
+  border-radius: 0px;
+  background-color: #00ffc3;
+  /* color: white; */
+}
+
+.modal-body div{
+  margin: 5px;
+}
+

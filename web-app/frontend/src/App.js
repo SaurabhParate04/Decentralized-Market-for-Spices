@@ -70,7 +70,6 @@ function App() {
             <Route exact path="/business/signup">
               <SignupBusiness useScrollToTop={useScrollToTop} />
             </Route>
-            
             <Route exact path="/business">
               <HomeBusiness useScrollToTop={useScrollToTop} />
             </Route>

@@ -28,6 +28,10 @@ const agroProductSchema = new mongoose.Schema({
     action: {
         type: String,
         required: true
+    },
+    quantityRaised: {
+        type: Number,
+        required: false
     }
 })
 

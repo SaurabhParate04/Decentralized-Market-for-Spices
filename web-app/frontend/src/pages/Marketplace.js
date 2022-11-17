@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import userContext from '../context/User/BusinessUserContext';
 import AgroProductCard from '../components/AgroProductCard';
 import '../Styles.css'
@@ -17,7 +17,49 @@ const MarketPlace = (props) => {
 
     const [allCardsInfo, setAllCardsInfo] = useState([]);
     const [categoryFilter, setcategoryFilter] = useState("ALL")
-    //eslint-disable-next-line
+    const checkoutModalToggle = useRef();
+    const [isClicked, setIsClicked] = useState([[{productName: "", quantity:0, quantityRaised:0}]]);
+    const [quantity, setQuantity] = useState(0);
+    const [quantityRaised, setQuantityRaised] = useState(0);
+    const [productName, setProductName] = useState("");
+    const [myAmount, setmyAmount] = useState(0);
+    var date = new Date().toLocaleDateString();
+    var time = new Date().toLocaleTimeString();
+    
+    const handleInputOnChange = (e) =>{
+        setmyAmount(e.target.value)
+    }
+    
+    const openModal = (id) => {
+        setIsClicked(isClicked.push(allCardsInfo.filter(item => item._id === id)));
+        console.log(isClicked[isClicked.length - 1][0]);
+        setQuantity(isClicked[isClicked.length-1][0].quantity)
+        setQuantityRaised(isClicked[isClicked.length-1][0].quantityRaised)
+        setProductName(isClicked[isClicked.length-1][0].productName)
+        checkoutModalToggle.current.click();
+    }
+
+    const rangeOnChange = (e)=>{
+        setmyAmount(e.target.value)
+        //console.log(e.target.value)
+    }
+
+    const updateQuantity = async(oldQty, newQty, id) => {
+        const url = "http://localhost:5000/api/product/updateproduct/" + id;
+        //eslint-disable-next-line
+        const response = await fetch(url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    quantityRaised: oldQty + newQty
+                })
+            }
+        );
+        setmyAmount(0)
+    }
 
     useEffect(() => {
         getAllProducts();
@@ -61,6 +103,11 @@ const MarketPlace = (props) => {
         setcategoryFilter("ALL");
     }
 
+    const clearState = () => {
+        setIsClicked([[{productName: "", quantity:0, quantityRaised:0}]])
+        setmyAmount(0)
+    }
+
     return (
         <>   
             <Navbar/>
@@ -97,19 +144,69 @@ const MarketPlace = (props) => {
                         allCardsInfo.filter(card =>{
                             return cardFilter(card.category);
                         }).map(card => (
-                            card.action !== usertype && <AgroProductCard
-                                key={card._id + "5"}
-                                id={card._id}
-                                productName={card.productName}
-                                description={card.description}
-                                price={card.price}
-                                quantity={card.quantity}
-                                category={card.category}
-                                action={card.action}
-                                user={card.user}
-                                myProducts={false}
-                                usertype={usertype}
-                            />
+                            <>
+                                {
+                                    (card.action !== usertype) && <AgroProductCard
+                                        key={card._id + "5"}
+                                        id={card._id}
+                                        productName={card.productName}
+                                        description={card.description}
+                                        price={card.price}
+                                        quantity={card.quantity}
+                                        quantityRaised={card.quantityRaised}
+                                        category={card.category}
+                                        action={card.action}
+                                        user={card.user}
+                                        myProducts={false}
+                                        usertype={usertype}
+                                        openModal={openModal}
+                                    />
+                                }
+                                {/* Donatin button hidden */}
+                                <button key={card._id + '0'} type="button" ref={checkoutModalToggle} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={clearState}></button>
+
+                                {/* Donation modal */}
+                                <div key={card._id + '1'} className="modal fade modal-cont" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div className="modal-dialog modal-dialog-centered">
+                                        <div className="modal-content" style={{borderRadius:"0px", border:"none"}}>
+                                            <div className="modal-header paymentModalHeader">
+                                                <h5 className="modal-title " id="staticBackdropLabel">Payment Details</h5>
+                                                <button type="button" style={{color:"white"}} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-lg-7 col-xs-12 modal-body">
+                                                    <div className="d-flex flex-row">
+                                                        <div><h6>Seller&nbsp;:</h6></div>
+                                                        <div>{ userProfileBusiness.firstname + ' ' + userProfileBusiness.lastname }</div>
+                                                    </div>
+                                                    <div className="d-flex flex-row">
+                                                        <div><h6>Product&nbsp;:</h6></div> 
+                                                        <div>{ productName } </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-5 col-xs-12 modal-body">
+                                                    <div className="d-flex flex-row">
+                                                        <div><h6>Date&nbsp;:</h6></div>
+                                                        <div>{ date }</div>
+                                                    </div>
+                                                    <div className="d-flex flex-row">
+                                                        <div><h6>Time&nbsp;:</h6></div> 
+                                                        <div>{ time } </div>
+                                                    </div>
+                                                </div>
+                                                <div className="modal-body">
+                                                    <div className="mt-2"><h6>Value : <input className='inputInvalid' style={{width: "30%"}} type="number"  max={(quantity - quantityRaised)} min="0" value={myAmount} onChange={handleInputOnChange}  ></input> </h6>  </div>
+                                                    <input type="range" className="form-range" min="0" max={(quantity - quantityRaised)} step="1" id="customRange1" value={myAmount} onChange={rangeOnChange} ></input>
+                                                </div>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" style={{border:"none",backgroundColor:"transparent", margin:"0px 20px", lineHeight:'1.5'}} data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit"  onClick={(e)=>{updateQuantity(quantity, myAmount, card._id)}} className="btn btn-primary donateBtn" style={{backgroundColor: "#00ffc3", color: "black"}}>Proceed</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
                         ))
                     }{' '}
                 </div>
