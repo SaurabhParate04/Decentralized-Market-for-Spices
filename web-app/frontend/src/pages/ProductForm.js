@@ -30,6 +30,9 @@ export default function ProductForm(props) {
     const location = useLocation()
     const event = location.state.button_name
     const info = location.state.info
+    const id = location.state.id
+    const updateQuantity = location.state.updateQuantity
+    const quantityRaised = location.state.quantityRaised
 
     const [credentialProduct, setcredentialProduct] = useState({
         productName: info.productName || "",
@@ -98,6 +101,9 @@ export default function ProductForm(props) {
                         })
                     }
                 );
+                if(updateQuantity) {
+                    updateQuantityFunc()
+                }
             }
             else if (event === "update") {
                 console.log(credentialProduct)
@@ -182,6 +188,22 @@ export default function ProductForm(props) {
 
     const categoryHandler = (e) => {
         setCategory(e.target.value)
+    }
+
+    const updateQuantityFunc = async() => {
+        const url = "http://localhost:5000/api/agroproduct/updateproduct/" + id;
+        //eslint-disable-next-line
+        const response = await fetch(url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    quantityRaised: quantityRaised + info.quantity
+                })
+            }
+        );
     }
 
     return (

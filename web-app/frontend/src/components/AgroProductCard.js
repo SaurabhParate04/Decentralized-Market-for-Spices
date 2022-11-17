@@ -51,7 +51,7 @@ const AgroProductCard = (props) => {
                             myProducts && <Link to={{pathname:"/business/productform", state:{button_name:"update", info:{productName:productName, category:category, description:description, price:price, quantity:quantity, id:id}}}} className="btn-custom secondary">Update Now <i className="fas fa-arrow-right"></i> </Link>
                         }
                         {
-                            !myProducts && usertype === "Farmer" && <button onClick={() => openModal(id)} className="btn-custom secondary">Sell Now <i className="fas fa-arrow-right"></i> </button>
+                            !myProducts && usertype === "Farmer" && <button onClick={() => openModal(id)} className="btn-custom secondary">Contact Buyer & Sell<i className="fas fa-arrow-right"></i> </button>
                         }
                         {
                             !myProducts && usertype === "Trader" && <button onClick={openModal} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </button>
@@ -62,9 +62,10 @@ const AgroProductCard = (props) => {
             <div className="ct-product-body">
                 <h5 className="product-title"> <a href="/">{productName}</a> </h5>
                 <div style={{"display":"flex", "justifyContent":"space-between"}}>
-                    <span className="product-price custom-secondary">Price : {price} ₹ Per KG</span>
                     <span className="product-price custom-secondary">Quantity : {quantity} KG</span>
+                    <span className="product-price custom-secondary">Price : {price} ₹ Per KG</span>
                 </div>
+                {!myProducts && <span className="product-price custom-secondary">Remaining : {quantity - quantityRaised} KG</span>}
                 <p className="product-text"><strong>Description: </strong>{description.substring(0,200)}...</p>
             </div>
         </div>

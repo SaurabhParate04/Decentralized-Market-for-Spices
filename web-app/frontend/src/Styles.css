@@ -5774,6 +5774,10 @@ align-items: center;
 
 .agro-prod-card {
   background-color:#f7f4ee;
+  border-top: 5px solid #ddddcc;
+  border-bottom: 5px solid #ddddcc;
+  border-left: 2.5px solid #ddddcc;
+  border-right: 2.5px solid #ddddcc;
 }
 
 #staticBackdrop{

@@ -4,6 +4,7 @@ import AgroProductCard from '../components/AgroProductCard';
 import '../Styles.css'
 import Navbar from '../components/NavbarBusiness';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const MarketPlace = (props) => {
 
@@ -22,6 +23,9 @@ const MarketPlace = (props) => {
     const [quantity, setQuantity] = useState(0);
     const [quantityRaised, setQuantityRaised] = useState(0);
     const [productName, setProductName] = useState("");
+    const [price, setPrice] = useState(0);
+    const [category, setcategory] = useState("");
+    const [id, setId] = useState("");
     const [myAmount, setmyAmount] = useState(0);
     var date = new Date().toLocaleDateString();
     var time = new Date().toLocaleTimeString();
@@ -36,29 +40,15 @@ const MarketPlace = (props) => {
         setQuantity(isClicked[isClicked.length-1][0].quantity)
         setQuantityRaised(isClicked[isClicked.length-1][0].quantityRaised)
         setProductName(isClicked[isClicked.length-1][0].productName)
+        setId(isClicked[isClicked.length-1][0]._id)
+        setPrice(isClicked[isClicked.length-1][0].price)
+        setcategory(isClicked[isClicked.length-1][0].category)
         checkoutModalToggle.current.click();
     }
 
     const rangeOnChange = (e)=>{
         setmyAmount(e.target.value)
         //console.log(e.target.value)
-    }
-
-    const updateQuantity = async(oldQty, newQty, id) => {
-        const url = "http://localhost:5000/api/product/updateproduct/" + id;
-        //eslint-disable-next-line
-        const response = await fetch(url,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    quantityRaised: oldQty + newQty
-                })
-            }
-        );
-        setmyAmount(0)
     }
 
     useEffect(() => {
@@ -195,13 +185,14 @@ const MarketPlace = (props) => {
                                                     </div>
                                                 </div>
                                                 <div className="modal-body">
-                                                    <div className="mt-2"><h6>Value : <input className='inputInvalid' style={{width: "30%"}} type="number"  max={(quantity - quantityRaised)} min="0" value={myAmount} onChange={handleInputOnChange}  ></input> </h6>  </div>
+                                                    <div className="mt-2"><h6>Quantity : <input className='inputInvalid' style={{width: "30%"}} type="number"  max={(quantity - quantityRaised)} min="0" value={myAmount} onChange={handleInputOnChange}  ></input> </h6>  </div>
                                                     <input type="range" className="form-range" min="0" max={(quantity - quantityRaised)} step="1" id="customRange1" value={myAmount} onChange={rangeOnChange} ></input>
                                                 </div>
                                             </div>
                                             <div className="modal-footer">
                                                 <button type="button" style={{border:"none",backgroundColor:"transparent", margin:"0px 20px", lineHeight:'1.5'}} data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit"  onClick={(e)=>{updateQuantity(quantity, myAmount, card._id)}} className="btn btn-primary donateBtn" style={{backgroundColor: "#00ffc3", color: "black"}}>Proceed</button>
+                                                <Link type="submit" to={{pathname:"/business/productform", state:{button_name:"Add New", updateQuantity:true, id:id, quantityRaised:quantityRaised, info:{productName:productName, category:category, description:"", price:price, quantity:myAmount}}}} className="btn btn-primary donateBtn" style={{backgroundColor: "#00ffc3", color: "black"}} onClick={()=>{checkoutModalToggle.current.click()}}>Proceed</Link>
+                                                {/* onClick={(e)=>{updateQuantity(quantityRaised, myAmount, card._id)}} */}
                                             </div>
                                         </div>
                                     </div>
