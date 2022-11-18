@@ -150,6 +150,7 @@ const MarketPlace = (props) => {
                                         myProducts={false}
                                         usertype={usertype}
                                         openModal={openModal}
+                                        isSatisfied={card.isSatisfied}
                                     />
                                 }
                                 {/* Donatin button hidden */}
@@ -191,7 +192,7 @@ const MarketPlace = (props) => {
                                             </div>
                                             <div className="modal-footer">
                                                 <button type="button" style={{border:"none",backgroundColor:"transparent", margin:"0px 20px", lineHeight:'1.5'}} data-bs-dismiss="modal">Cancel</button>
-                                                <Link type="submit" to={{pathname:"/business/productform", state:{button_name:"Add New", updateQuantity:true, id:id, quantityRaised:quantityRaised, info:{productName:productName, category:category, description:"", price:price, quantity:myAmount}}}} className="btn btn-primary donateBtn" style={{backgroundColor: "#00ffc3", color: "black"}} onClick={()=>{checkoutModalToggle.current.click()}}>Proceed</Link>
+                                                <Link type="submit" to={{pathname:"/business/productform", state:{button_name:"Add New", updateQuantity:true, id:id, quantityRaised:quantityRaised, quantity:quantity, info:{productName:productName, category:category, description:"", price:price, quantity:myAmount}}}} className="btn btn-primary donateBtn" style={{backgroundColor: "#00ffc3", color: "black"}} onClick={()=>{checkoutModalToggle.current.click()}}>Proceed</Link>
                                                 {/* onClick={(e)=>{updateQuantity(quantityRaised, myAmount, card._id)}} */}
                                             </div>
                                         </div>

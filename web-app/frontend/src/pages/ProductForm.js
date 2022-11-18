@@ -33,13 +33,14 @@ export default function ProductForm(props) {
     const id = location.state.id
     const updateQuantity = location.state.updateQuantity
     const quantityRaised = location.state.quantityRaised
+    const quantity = location.state.quantity
 
     const [credentialProduct, setcredentialProduct] = useState({
         productName: info.productName || "",
         category: info.category || "",
         description: info.description || "",
-        price: info.price || "",
-        quantity: info.quantity || ""
+        price: info.price || 0,
+        quantity: info.quantity || 0,
     })
 
     //cover-image
@@ -140,17 +141,17 @@ export default function ProductForm(props) {
                     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                     
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    // console.log('Charity cover image upload is ' + progress + '% done');
+                    // console.log('Product cover image upload is ' + progress + '% done');
                     setUploadingCoverImage(true)
                     setProgressCoverImage(progress)
 
                     //eslint-disable-next-line
                     switch (snapshot.state) {
                     case 'paused':
-                        console.log('Charity cover image upload is paused');
+                        console.log('Product cover image upload is paused');
                         break;
                     case 'running':
-                        console.log('Charity cover image upload is running');
+                        console.log('Product cover image upload is running');
                         break;
                     }
                 }, 
@@ -165,7 +166,7 @@ export default function ProductForm(props) {
                 });
             }
             if(!coverImageUpload) {
-                history.go(-1)
+                // history.go(-1)
             }
         } catch (error) {
             console.error(error.message)
@@ -174,23 +175,19 @@ export default function ProductForm(props) {
 
     useEffect(() => {
         if(submitPressed && progressCoverImage === 100 && coverImageUpload) {
-            history.go(-2)
+            history.go(-1)
         }
         else if(submitPressed && !coverImageUpload) {
-            history.go(-2)
+            history.go(-1)
         }
-        else if(submitPressed && coverImageUpload) {
-            if(progressCoverImage === 100) {
-                history.go(-2)
-            }
-        }
-    }, [progressCoverImage])
+    }, [progressCoverImage, submitPressed, coverImageUpload, history])
 
     const categoryHandler = (e) => {
         setCategory(e.target.value)
     }
 
     const updateQuantityFunc = async() => {
+        console.log(quantityRaised, credentialProduct.quantity, quantity, (quantityRaised + credentialProduct.quantity) >= quantity)
         const url = "http://localhost:5000/api/agroproduct/updateproduct/" + id;
         //eslint-disable-next-line
         const response = await fetch(url,
@@ -200,7 +197,8 @@ export default function ProductForm(props) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    quantityRaised: quantityRaised + info.quantity
+                    quantityRaised: quantityRaised + credentialProduct.quantity,
+                    isSatisfied: (quantityRaised + credentialProduct.quantity) >= quantity
                 })
             }
         );

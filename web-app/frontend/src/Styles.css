@@ -5778,6 +5778,7 @@ align-items: center;
   border-bottom: 5px solid #ddddcc;
   border-left: 2.5px solid #ddddcc;
   border-right: 2.5px solid #ddddcc;
+  padding: 0 15px;
 }
 
 #staticBackdrop{
@@ -5794,3 +5795,6 @@ align-items: center;
   margin: 5px;
 }
 
+.card-faded {
+  opacity: 0.85;
+}
