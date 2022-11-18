@@ -13,12 +13,16 @@ const agroProductNotifySchema = new mongoose.Schema({
         type: Number,
         required: true
     }, 
-    name: {
-        type: String,
+    sender: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     datetime: {
         type: Date,
+        required: true
+    },
+    receiver: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     }
 })

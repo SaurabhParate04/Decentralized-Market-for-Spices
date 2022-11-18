@@ -34,6 +34,9 @@ export default function ProductForm(props) {
     const updateQuantity = location.state.updateQuantity
     const quantityRaised = location.state.quantityRaised
     const quantity = location.state.quantity
+    const sender = userid
+    const receiver = location.state.receiver
+    const notify = location.state.notify
 
     const [credentialProduct, setcredentialProduct] = useState({
         productName: info.productName || "",
@@ -165,8 +168,26 @@ export default function ProductForm(props) {
                     setUploadingCoverImage(false)
                 });
             }
-            if(!coverImageUpload) {
-                // history.go(-1)
+            if(notify) {
+                const now = new Date()
+                const url = "http://localhost:5000/api/agroproductnotify/createproductnotification"
+                //eslint-disable-next-line
+                const response = await fetch(url,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            productName: credentialProduct.productName,
+                            price: credentialProduct.price,
+                            quantity: credentialProduct.quantity,
+                            sender: sender,
+                            receiver: receiver,
+                            datetime: now
+                        })
+                    }
+                );
             }
         } catch (error) {
             console.error(error.message)

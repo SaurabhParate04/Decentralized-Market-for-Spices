@@ -23,6 +23,7 @@ const MarketPlace = (props) => {
     const [quantity, setQuantity] = useState(0);
     const [quantityRaised, setQuantityRaised] = useState(0);
     const [productName, setProductName] = useState("");
+    const [user, setUser] = useState("");
     const [price, setPrice] = useState(0);
     const [category, setcategory] = useState("");
     const [id, setId] = useState("");
@@ -43,6 +44,7 @@ const MarketPlace = (props) => {
         setId(isClicked[isClicked.length-1][0]._id)
         setPrice(isClicked[isClicked.length-1][0].price)
         setcategory(isClicked[isClicked.length-1][0].category)
+        setUser(isClicked[isClicked.length-1][0].user)
         checkoutModalToggle.current.click();
     }
 
@@ -192,7 +194,7 @@ const MarketPlace = (props) => {
                                             </div>
                                             <div className="modal-footer">
                                                 <button type="button" style={{border:"none",backgroundColor:"transparent", margin:"0px 20px", lineHeight:'1.5'}} data-bs-dismiss="modal">Cancel</button>
-                                                <Link type="submit" to={{pathname:"/business/productform", state:{button_name:"Add New", updateQuantity:true, id:id, quantityRaised:quantityRaised, quantity:quantity, info:{productName:productName, category:category, description:"", price:price, quantity:myAmount}}}} className="btn btn-primary donateBtn" style={{backgroundColor: "#00ffc3", color: "black"}} onClick={()=>{checkoutModalToggle.current.click()}}>Proceed</Link>
+                                                <Link type="submit" to={{pathname:"/business/productform", state:{button_name:"Add New", updateQuantity:true, id:id, quantityRaised:quantityRaised, quantity:quantity, notify:true, receiver:user, info:{productName:productName, category:category, description:"", price:price, quantity:myAmount}}}} className="btn btn-primary donateBtn" style={{backgroundColor: "#00ffc3", color: "black"}} onClick={()=>{checkoutModalToggle.current.click()}}>Proceed</Link>
                                                 {/* onClick={(e)=>{updateQuantity(quantityRaised, myAmount, card._id)}} */}
                                             </div>
                                         </div>

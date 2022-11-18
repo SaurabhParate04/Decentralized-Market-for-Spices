@@ -1,29 +1,17 @@
 const express = require('express')
-const AgroProduct = require('../models/AgroProduct')
+const AgroProduct = require('../models/AgroProductNotify')
 const router = express.Router()
-
-// Route 1 fetchallagroproducts get
-router.get('/fetchallproducts', async(req, res) => {
+ 
+router.get('/fetchnotifications', async(req, res) => {
     try {
-        let allAgroProducts = await AgroProduct.find();
-        res.json(allAgroProducts);
-    } catch(error) {
-        console.log(error);
-    }
-})
-
-// Route 2 fetch product from db  GET"api/agroproduct/fetchproduct" 
-router.get('/fetchproduct', async(req, res) => {
-    try {
-        let product = await AgroProduct.find({category:req.header('category')});
+        let product = await AgroProduct.find({receiver:req.header('receiver')});
         res.json(product);
     } catch(error) {
         console.log(error);
     }
 })
 
-//createproduct post
-router.post('/createproduct', async(req, res) => {
+router.post('/createproductnotification', async(req, res) => {
     try {
         let product = new AgroProduct(req.body)
         const saved = await product.save()
@@ -35,8 +23,7 @@ router.post('/createproduct', async(req, res) => {
     }
 })
 
-//updateproduct put
-router.put('/updateproduct/:id', async(req, res) => {
+router.put('/updateproductnotification/:id', async(req, res) => {
     try {
         let product = await AgroProduct.findById(req.params.id)
         if(!product) {
@@ -50,8 +37,7 @@ router.put('/updateproduct/:id', async(req, res) => {
     }
 })
 
-//deleteproduct delete
-router.delete('/deleteproduct/:id', async(req, res) => {
+router.delete('/deleteproductnotification/:id', async(req, res) => {
     try {
         let product = await AgroProduct.findById(req.params.id)
         if(!product) {
