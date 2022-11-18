@@ -31,7 +31,13 @@ const agroProductSchema = new mongoose.Schema({
     },
     quantityRaised: {
         type: Number,
-        required: false
+        required: false,
+        default:0
+    },
+    isSatisfied: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 })
 

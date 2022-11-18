@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import coverImg from '../images/No_Image.jpg'
 import prodImg from '../images/Cloves.jpg'
+import orderComplete from '../images/Order_complete.png'
 
 import { initializeApp } from "firebase/app";
 import firebaseConfig from '../config/firebaseConfig';
@@ -17,7 +18,7 @@ import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 const AgroProductCard = (props) => {
     const firebaseApp = initializeApp(firebaseConfig);
     const firebaseStorage = getStorage(firebaseApp);
-    const {productName, description, price, quantity, category, user, id, myProducts, usertype, quantityRaised, openModal} = props;
+    const {productName, description, price, quantity, category, user, id, myProducts, usertype, quantityRaised, openModal, isSatisfied} = props;
     const [Image, setImage] = useState()
     const context = useContext(userContext);
     const {getBusinessProfileInfo, userProfileBusiness} = context
@@ -42,7 +43,7 @@ const AgroProductCard = (props) => {
 
     return (
         <>
-        <div className="ct-product agro-prod-card">
+        <div className={`${isSatisfied ? "ct-product agro-prod-card card-faded": "ct-product agro-prod-card"}`}>
             <div className="ct-product-thumbnail">
                 <a href="/"><img src={Image} alt="Product Thumbnail"></img></a>
                 <div className="ct-product-controls">
@@ -51,21 +52,27 @@ const AgroProductCard = (props) => {
                             myProducts && <Link to={{pathname:"/business/productform", state:{button_name:"update", info:{productName:productName, category:category, description:description, price:price, quantity:quantity, id:id}}}} className="btn-custom secondary">Update Now <i className="fas fa-arrow-right"></i> </Link>
                         }
                         {
-                            !myProducts && usertype === "Farmer" && <button onClick={() => openModal(id)} className="btn-custom secondary">Contact Buyer & Sell<i className="fas fa-arrow-right"></i> </button>
+                            !isSatisfied && !myProducts && usertype === "Farmer" && <button onClick={() => openModal(id)} className="btn-custom secondary">Contact Buyer & Sell<i className="fas fa-arrow-right"></i> </button>
                         }
                         {
-                            !myProducts && usertype === "Trader" && <button onClick={openModal} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </button>
+                            !isSatisfied && !myProducts && usertype === "Trader" && <button onClick={openModal} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </button>
+                        }
+                        {
+                            isSatisfied && !myProducts && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
                         }
                     </div>
                 </div>
             </div>
             <div className="ct-product-body">
-                <h5 className="product-title"> <a href="/">{productName}</a> </h5>
+                <div style={{"display":"flex", "justifyContent":"space-between"}}>
+                    <h5 className="product-title"> <a href="/">{productName}</a> </h5>
+                    {isSatisfied && !myProducts &&<h7 className="product-title">Order is completed</h7>}
+                </div>
                 <div style={{"display":"flex", "justifyContent":"space-between"}}>
                     <span className="product-price custom-secondary">Quantity : {quantity} KG</span>
                     <span className="product-price custom-secondary">Price : {price} ₹ Per KG</span>
                 </div>
-                {!myProducts && <span className="product-price custom-secondary">Remaining : {quantity - quantityRaised} KG</span>}
+                {!isSatisfied && !myProducts && <span className="product-price custom-secondary">Remaining : {quantity - quantityRaised} KG</span>}
                 <p className="product-text"><strong>Description: </strong>{description.substring(0,200)}...</p>
             </div>
         </div>

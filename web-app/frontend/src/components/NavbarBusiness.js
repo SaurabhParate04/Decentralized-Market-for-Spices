@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import BusinessUserContext from '../context/User/BusinessUserContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
@@ -11,6 +11,7 @@ const NavbarBusiness = () => {
 
     const handleLogout = ()=>{
         logOutUser();
+        return(<Redirect to={"/business/home"}/>)
     }
 
     useEffect(() => {
