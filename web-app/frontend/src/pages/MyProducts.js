@@ -104,10 +104,12 @@ const MyProducts = (props) => {
                                 description={card.description}
                                 price={card.price}
                                 quantity={card.quantity}
+                                quantityRaised={card.quantityRaised}
                                 category={card.category}
                                 action={card.action}
                                 user={card.user}
                                 myProducts={true}
+                                isSatisfied={card.isSatisfied}
                             />
                         ))
                     }{' '}

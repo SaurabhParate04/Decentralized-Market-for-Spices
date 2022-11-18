@@ -11,7 +11,6 @@ const NavbarBusiness = () => {
 
     const handleLogout = ()=>{
         logOutUser();
-        return(<Redirect to={"/business/home"}/>)
     }
 
     useEffect(() => {

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import userContext from './UserContext'
+import { Redirect } from 'react-router-dom';
 
 const UserState = ({children}) => {
     
@@ -45,6 +46,7 @@ const UserState = ({children}) => {
         localStorage.removeItem('SpiceMarketjwtToken');
         setloggedIn(false);
         setuserProfile("")
+        return(<Redirect to={"/business/home"}/>)
     }
 
     const getCartInfo = async() => {

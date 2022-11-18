@@ -49,16 +49,16 @@ const AgroProductCard = (props) => {
                 <div className="ct-product-controls">
                     <div>
                         {
-                            myProducts && <Link to={{pathname:"/business/productform", state:{button_name:"update", info:{productName:productName, category:category, description:description, price:price, quantity:quantity, id:id}}}} className="btn-custom secondary">Update Now <i className="fas fa-arrow-right"></i> </Link>
+                            !isSatisfied && myProducts && <Link to={{pathname:"/business/productform", state:{button_name:"update", info:{productName:productName, category:category, description:description, price:price, quantity:quantity, id:id}}}} className="btn-custom secondary">Update Now <i className="fas fa-arrow-right"></i> </Link>
                         }
                         {
                             !isSatisfied && !myProducts && usertype === "Farmer" && <button onClick={() => openModal(id)} className="btn-custom secondary">Contact Buyer & Sell<i className="fas fa-arrow-right"></i> </button>
                         }
                         {
-                            !isSatisfied && !myProducts && usertype === "Trader" && <button onClick={openModal} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </button>
+                            !isSatisfied && !myProducts && usertype === "Trader" && <Link to={{"pathname":"/business/checkout", state:{productName:productName, category:category, description:description, price:price, quantity:quantity, user:user, id:id, usertype:usertype}}} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </Link>
                         }
                         {
-                            isSatisfied && !myProducts && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
+                            isSatisfied && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
                         }
                     </div>
                 </div>
@@ -66,7 +66,7 @@ const AgroProductCard = (props) => {
             <div className="ct-product-body">
                 <div style={{"display":"flex", "justifyContent":"space-between"}}>
                     <h5 className="product-title"> <a href="/">{productName}</a> </h5>
-                    {isSatisfied && !myProducts &&<h7 className="product-title">Order is completed</h7>}
+                    {isSatisfied &&<h7 className="product-title">Order is completed</h7>}
                 </div>
                 <div style={{"display":"flex", "justifyContent":"space-between"}}>
                     <span className="product-price custom-secondary">Quantity : {quantity} KG</span>
