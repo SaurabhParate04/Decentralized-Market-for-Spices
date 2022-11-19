@@ -24,11 +24,13 @@ const Navbar = () => {
         if (loggedIn) {
             getProfileInfo()
         }
-    }, [])
+    }, [loggedIn, getProfileInfo, userProfile])
 
     useEffect(() => {
-        getCartInfo()
-    }, [userProfile])
+        if(loggedIn) {
+            getCartInfo()
+        }
+    }, [userProfile, loggedIn, getCartInfo])
 
     return (
         <>
@@ -173,7 +175,7 @@ const Navbar = () => {
                             <ul className="header-controls-inner">
                                 <li className={`${cartToggle ? "cart-dropdown-wrapper cart-trigger open" : "cart-dropdown-wrapper cart-trigger"}`} >
                                     <FontAwesomeIcon icon={faCartShopping} style={{ fontSize: "1.5em" }} className={`${loggedIn ? "" : "d-none"}`} onClick={handleCartToggle} />
-                                    <ul className="cart-dropdown">
+                                    <ul className="cart-dropdown" style={{"maxHeight":"290px", "overflowY":"auto", "boxShadow":"0px 2px 5px 0px sandybrown"}}>
                                         {
                                             usercart.map((e, key) => {
                                                 return (

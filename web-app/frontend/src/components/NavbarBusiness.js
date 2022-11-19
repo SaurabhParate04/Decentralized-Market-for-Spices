@@ -1,23 +1,32 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import BusinessUserContext from '../context/User/BusinessUserContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { faBell } from '@fortawesome/free-solid-svg-icons'
 import logo1 from '../images/logo 1.png'
 
 const NavbarBusiness = () => {
     const context = useContext(BusinessUserContext);
-    const {loggedInBusiness, logOutUser, getBusinessProfileInfo} = context;
+    const {loggedInBusiness, logOutUser, getBusinessProfileInfo, userProfileBusiness, notifications, getNotifications} = context;
+
+    const [notifyToggle, setnotifyToggle] = useState(false)
 
     const handleLogout = ()=>{
         logOutUser();
     }
 
+    const handlenotifyToggle = () => {
+        setnotifyToggle(!notifyToggle)
+    }
+
     useEffect(() => {
         if(loggedInBusiness) {
             getBusinessProfileInfo()
+            if(userProfileBusiness.username) {
+                getNotifications()
+            }
         }
-    },[])
+    },[loggedInBusiness])
    
     return (
         <>
@@ -157,8 +166,27 @@ const NavbarBusiness = () => {
                         </ul>
                         <div className="header-controls">
                             <ul className="header-controls-inner">
-                                <li className="cart-dropdown-wrapper cart-trigger">
-                                    <FontAwesomeIcon icon={faCartShopping} style={{fontSize:"1.5em"}} className="d-none"/>
+                                <li className={`${notifyToggle ? "cart-dropdown-wrapper cart-trigger open" : "cart-dropdown-wrapper cart-trigger"}`} >
+                                    <FontAwesomeIcon icon={faBell} style={{ fontSize: "1.5em" }} className={`${loggedInBusiness ? "" : "d-none"}`} onClick={handlenotifyToggle} />
+                                    <ul className="cart-dropdown" style={{"maxHeight":"290px", "overflowY":"auto", "boxShadow":"0px 2px 5px 0px sandybrown"}}>
+                                        {
+                                            notifications.map((e, key) => {
+                                                return (
+                                                    <li className="cart-item" key={key}>
+                                                        <div className="cart-item-body">
+                                                            <a href="/">{ e.productName }</a>
+                                                            <p style={{ margin: "0px" }}>{e.sender}</p>
+                                                            <span className="custom-secondary">{e.quantity} x {e.price} ₹</span>
+                                                        </div>
+                                                    </li>
+                                                )
+                                            }
+                                        )}
+                                        
+                                        <li className="cart-buttons">
+                                            <span className="btn-custom secondary btn-sm shadow-none">Clear Notifications</span>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                             {/* <!-- Toggler --> */}

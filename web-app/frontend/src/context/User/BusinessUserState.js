@@ -12,6 +12,8 @@ const BusinessUserState = ({children}) => {
     //global state for storing profile info, to display userinfo and edit profile
     const [userProfileBusiness, setuserProfileBusiness] = useState({email:"",username:"", firstname:"", lastname:"", phoneno:"", addressl1:"", addressl2:"", landmark:"", pincode:"",  usertype:""});
 
+    const[notifications, setNotifications] = useState([])
+
     //gets userInfo
     const getBusinessProfileInfo = async() =>{
         try {
@@ -44,9 +46,36 @@ const BusinessUserState = ({children}) => {
         setloggedInBusiness(false);
         setuserProfileBusiness("")
     }
+
+    const getNotifications = async() => {
+        try {
+            // console.log(userProfileBusiness._id)
+            const url = "http://localhost:5000/api/agroproductnotify/fetchnotifications";
+            const response = await fetch(url, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept':'application/json',
+                    'receiver': userProfileBusiness._id
+                },
+            });
+            let res = await response.json();
+            // res = JSON.stringify(res)
+            // console.log(res)
+            // res = JSON.parse(res)
+            // res = JSON.stringify(res[0]['userCart'])
+            // console.log("getcartinfo: " + res)
+            // res = JSON.parse(res)
+            setNotifications(res)
+
+        } catch (error) {
+            console.error(error.message);
+            console.log('error occured in getNotifications');
+        }
+    }
             
     return (
-        <BusinessUserContext.Provider value={{globalBusinessCredentials, setglobalBusinessCredentials, loggedInBusiness, setloggedInBusiness, getBusinessProfileInfo, userProfileBusiness, setuserProfileBusiness, logOutUser}} >
+        <BusinessUserContext.Provider value={{globalBusinessCredentials, setglobalBusinessCredentials, loggedInBusiness, setloggedInBusiness, getBusinessProfileInfo, userProfileBusiness, setuserProfileBusiness, logOutUser, getNotifications, notifications}} >
             {children}
         </BusinessUserContext.Provider>
     )

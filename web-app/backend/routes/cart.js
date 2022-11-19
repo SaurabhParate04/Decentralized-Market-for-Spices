@@ -52,7 +52,7 @@ router.get('/fetchitems', fetchuser, async(req,res)=> {
     try{
         const cart = await Cart.find({username:req.header('username')});
         res.send(cart);
-        console.log("fetchitems cart: "+cart)  
+        // console.log("fetchitems cart: "+cart)  
     } catch(err) {
         console.error(err.message)
         return res.status(500).send('internal server error')
