@@ -27,7 +27,7 @@ const Navbar = () => {
     }, [loggedIn, getProfileInfo, userProfile])
 
     useEffect(() => {
-        if(loggedIn) {
+        if (loggedIn) {
             getCartInfo()
         }
     }, [userProfile, loggedIn, getCartInfo])
@@ -35,7 +35,7 @@ const Navbar = () => {
     return (
         <>
             <div className="main-header header-1 can-sticky sticky">
-                <div className="topbar">
+                {/* <div className="topbar">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-6">
@@ -100,7 +100,7 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <nav className="navbar">
                     <div className="container-fluid">
                         {/* <!-- Logo --> */}
@@ -113,7 +113,9 @@ const Navbar = () => {
                                 <span></span>
                             </div>
                         </div>
+                        
                         <ul className="navbar-nav">
+                            {/* Home pages  */}
                             <li className="menu-item menu-item-has-children">
                                 <a href="/">Home Pages</a>
                                 <ul className="submenu">
@@ -121,6 +123,8 @@ const Navbar = () => {
                                     <li className="menu-item"> <a href="home-v2.html">Home v2</a> </li>
                                 </ul>
                             </li>
+
+                            {/* Blog  */}
                             <li className="menu-item menu-item-has-children">
                                 <a href="/">Blog</a>
                                 <ul className="submenu">
@@ -142,21 +146,29 @@ const Navbar = () => {
                                     </li>
                                 </ul>
                             </li>
+
+                            {/* Pages  */}
                             <li className="menu-item menu-item-has-children">
                                 <a href="/">Pages</a>
                                 <ul className="submenu">
-                                    <li className="menu-item"> <a href="about-us.html">About Us</a> </li>
-                                    <li className="menu-item"> <a href="login.html">Login</a> </li>
-                                    <li className="menu-item"> <a href="register.html">Sign Up</a> </li>
-                                    <li className="menu-item"> <a href="/checkout">Checkout</a> </li>
-                                    <li className="menu-item"> <a href="/cart">Cart</a> </li>
-                                    <li className="menu-item"> <a href="/products">Products</a> </li>
+                                    <li className="menu-item"> <Link to="about-us.html">About Us</Link> </li>
+                                    <li className="menu-item"> <Link to="/login">Login</Link> </li>
+                                    <li className="menu-item"> <Link to="/signup">Sign Up</Link> </li>
+                                    <li className="menu-item"> <Link to="/checkout">Checkout</Link> </li>
+                                    <li className="menu-item"> <Link to="/cart">Cart</Link> </li>
+                                    <li className="menu-item"> <Link to="/products">Products</Link> </li>
                                 </ul>
                             </li>
+                            <li className="menu-item">
+                                <a href="shop.html">Shop</a>
+                            </li>
+
+                            {/* Logo */}
                             <li className="logo-wrapper">
-                                {/* <!-- Logo --> */}
                                 <a className="navbar-brand" href="/"> <img src={logo1} height="70px" alt="logo"></img> </a>
                             </li>
+
+                            {/* spicess */}
                             <li className="menu-item menu-item-has-children">
                                 <a href="/">Spicess</a>
                                 <ul className="submenu">
@@ -164,18 +176,70 @@ const Navbar = () => {
                                     <li className="menu-item"> <a href="recipe-details.html">Spices Details</a> </li>
                                 </ul>
                             </li>
-                            <li className="menu-item">
-                                <a href="shop.html">Shop</a>
-                            </li>
-                            <li className="menu-item">
+                            
+                            {/* <li className="menu-item">
                                 <a href="contact-us.html">Contact Us</a>
+                            </li> */}
+
+                            {/* Languages */}
+                            <li className="menu-item menu-item-has-children">
+                                <a href="/">Eng</a>
+                                <ul className="submenu">
+                                    <li className="menu-item">
+                                        <a href="/">English (US)</a>
+                                    </li>
+                                    <li className="menu-item">
+                                        <a href="/">English (UK)</a>
+                                    </li>
+                                    <li className="menu-item">
+                                        <a href="/">German</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            {/* Currencies */}
+                            <li className="menu-item menu-item-has-children">
+                                <a href="/">USD</a>
+                                <ul className="submenu">
+                                    <li className="menu-item">
+                                        <a href="/">USD</a>
+                                    </li>
+                                    <li className="menu-item">
+                                        <a href="/">INR</a>
+                                    </li>
+                                    <li className="menu-item">
+                                        <a href="/">KWD</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            {/* Login  */}
+                            <li className={`${loggedIn ? "d-none" : "menu-item"}`}>
+                                <Link to="/login">Login</Link>
+                            </li>
+
+                            {/* Signup  */}
+                            <li className={`${loggedIn ? "d-none" : "menu-item"}`}>
+                                <Link to="/signup">Signup</Link>
+                            </li>
+
+                            {/* Profile */}
+                            <li className={`${loggedIn ? "menu-item" : "d-none"}`}>
+                                <Link to="/profile">Profile</Link>
+                            </li>
+
+                            {/* Logout  */}
+                            <li className={`${loggedIn ? "menu-item" : "d-none"}`}>
+                                <Link onClick={handleLogout} to="/">Logout</Link>
                             </li>
                         </ul>
+
+                        {/* Cart  */}
                         <div className="header-controls">
                             <ul className="header-controls-inner">
                                 <li className={`${cartToggle ? "cart-dropdown-wrapper cart-trigger open" : "cart-dropdown-wrapper cart-trigger"}`} >
                                     <FontAwesomeIcon icon={faCartShopping} style={{ fontSize: "1.5em" }} className={`${loggedIn ? "" : "d-none"}`} onClick={handleCartToggle} />
-                                    <ul className="cart-dropdown" style={{"maxHeight":"290px", "overflowY":"auto", "boxShadow":"0px 2px 5px 0px sandybrown"}}>
+                                    <ul className="cart-dropdown" style={{ "maxHeight": "290px", "overflowY": "auto", "boxShadow": "0px 2px 5px 0px sandybrown" }}>
                                         {
                                             usercart.map((e, key) => {
                                                 return (
@@ -200,6 +264,7 @@ const Navbar = () => {
                                     </ul>
                                 </li>
                             </ul>
+
                             {/* <!-- Toggler --> */}
                             <div className="aside-toggler style-2 aside-trigger-left">
                                 <span></span>
