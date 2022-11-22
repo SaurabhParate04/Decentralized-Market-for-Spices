@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import Navbar from '../components/Navbar';
 import './Profile.css';
 import { useContext, useEffect } from 'react';
@@ -9,51 +9,22 @@ import { Link } from 'react-router-dom';
 export const Profile = () => {
     const context = useContext(userContext);
     const { getProfileInfo, userProfile, profileImg } = context;
-    const { firstname, lastname, username, address, age, phoneNumber, email, company } = userProfile;
-
-    const [donationHistory, setDonationHistory] = useState([]);
-    const donationHistoryModalToggle = useRef();
-
-    const fetchDonations = async () => {
-        const url = "http://localhost:5000/api/charitydonations/fetchdonationsbyuser"
-        const response = await fetch(url,
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'accept': 'application/json',
-                    'username': username
-                }
-            });
-        const data = await response.json()
-        // console.log(data)
-        setDonationHistory(data)
-    }
-
-    const handleDonationHistory = () => {
-        fetchDonations();
-        donationHistoryModalToggle.current.click();
-    }
+    const { firstname, lastname, username, addressl1, addressl2, phoneNumber, email, landmark, pincode } = userProfile;
 
     useEffect(() => {
         getProfileInfo();
         // eslint-disable-next-line
     }, []);
 
-    useEffect(() => {
-        fetchDonations();
-        // eslint-disable-next-line
-    });
-
     return (
         <>
             <Navbar />
 
             {/* Donation history modal button hidden */}
-            <button type="button" ref={donationHistoryModalToggle} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#donationHistory"></button>
+            {/* <button type="button" ref={donationHistoryModalToggle} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#donationHistory"></button> */}
 
             {/* Donation History Modal */}
-            <div className="modal fade donation-history-container" id="donationHistory" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="donationHistoryLabel" aria-hidden="true">
+            {/* <div className="modal fade donation-history-container" id="donationHistory" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="donationHistoryLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered donation-history-modal-dialog">
                     <div className="modal-content" style={{ borderRadius: "0px", border: "none" }}>
                         <div className="modal-header donation-history-modal-header">
@@ -74,7 +45,7 @@ export const Profile = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="main-content">
                 {/* <!-- Header --> */}
@@ -112,7 +83,7 @@ export const Profile = () => {
                                     This is your profile page. You can see and edit your profile information.
                                 </p>
                                 <Link to="/editprofile" className="btn btn-info">
-                                    Edit profile
+                                    Edit Profile
                                 </Link>
                             </div>
                         </div>
@@ -140,16 +111,10 @@ export const Profile = () => {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <div className="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-							<div className="d-flex justify-content-between">
-							<a href="/" className="btn btn-sm btn-info mr-4">Connect</a>
-							<a href="/" className="btn btn-sm btn-default float-right">Message</a>
-							</div>
-						</div> */}
                                 <div className="card-body-1 pt-0 pt-md-4">
                                     <div className="row">
                                         <div className="col mb-5"></div>
-                                    </div>       
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -267,7 +232,7 @@ export const Profile = () => {
                                                     </label>
                                                     <div>
                                                         <small className="form-text text-muted">
-                                                            {address}
+                                                            {addressl1 + ' ' + addressl2}
                                                         </small>
                                                     </div>
                                                 </div>
@@ -301,7 +266,7 @@ export const Profile = () => {
                                                     </label>
                                                     <div>
                                                         <small className="form-text text-muted">
-                                                            {company}
+                                                            {landmark}
                                                         </small>
                                                     </div>
                                                 </div>
@@ -316,7 +281,7 @@ export const Profile = () => {
                                                     </label>
                                                     <div>
                                                         <small className="form-text text-muted">
-                                                            {company}
+                                                            {pincode}
                                                         </small>
                                                     </div>
                                                 </div>
