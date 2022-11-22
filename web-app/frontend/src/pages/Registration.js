@@ -3,15 +3,6 @@ import React, { useState, useContext, useEffect } from 'react'
 import "./Registration.css"
 import userContext from '../context/User/UserContext'
 import { useHistory } from 'react-router'
-// import { useForm } from 'react-hook-form';
-
-// importing firebaseconfig
-import { initializeApp } from "firebase/app";
-import firebaseConfig from "../config/firebaseConfig";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-//initialize firebase instances
-const firebaseApp = initializeApp(firebaseConfig);
-const firebaseStorage = getStorage(firebaseApp);
 
 function Registration() {
     const history = useHistory();
@@ -19,34 +10,42 @@ function Registration() {
     const context = useContext(userContext);
     const { globalCredentials } = context;
 
-    const [credentialSignUp, setcredentialSignUp] = useState({ email: globalCredentials.email, username: globalCredentials.username, password: globalCredentials.password, rpassword: globalCredentials.rpassword, address: "", firstname: "", lastname: "", phoneNumber: "", age: "", userWallet: "", company: "" });
+    const [credentialSignUp, setcredentialSignUp] = useState({ email: globalCredentials.email, username: globalCredentials.username, password: globalCredentials.password, addressl1: "", addressl2: "", firstname: "", lastname: "", phoneNumber: "", landmark: "", pincode: ""});
 
+    useEffect(() => {
+        console.log(credentialSignUp);
+        // if (Object.keys(signupFormErrors).length === 0 && isSignupSubmit) {
+        //     console.log(credentialSignUp);
+        // }
+    }, []);
 
     const handleReg_2 = async (e) => {
         e.preventDefault();
         try {
             const url = "http://localhost:5000/api/user/createuser"
             /*eslint no-unused-vars:*/
+
             const response = await fetch(url,
                 {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-
+                        
                     },
                     body: JSON.stringify({
                         email: credentialSignUp.email,
                         username: credentialSignUp.username,
                         password: credentialSignUp.password,
-                        address: credentialSignUp.address,
+                        addressl1: credentialSignUp.addressl1,
+                        addressl2: credentialSignUp.addressl2,
                         firstname: credentialSignUp.firstname,
                         lastname: credentialSignUp.lastname,
                         phoneNumber: credentialSignUp.phoneNumber,
-                        age: credentialSignUp.age,
-                        userWallet: credentialSignUp.userWallet,
-                        company: credentialSignUp.company
+                        landmark: credentialSignUp.landmark,
+                        pincode: credentialSignUp.pincode,
                     })
                 });
+                const testjson = await response.json();
             // let imgRef = ref(firebaseStorage, `profile/${credentialSignUp.username}`);
             // uploadBytes(imgRef, profileImageReg).then(() => {
             //     console.log('image Uploaded!');
@@ -98,10 +97,10 @@ function Registration() {
                                 </div>
                                 <div className="input-box_reg" style={{width : "100%"}}>
                                     <span className="details">Address</span>
-                                    <input type="text" name="address" placeholder="Enter your Address" required />
+                                    <input type="text" name="addressl1" placeholder="Enter your Address" required />
                                 </div>
                                 <div className="input-box_reg" style={{width : "100%"}}>
-                                    <input type="text" name="address" placeholder="Enter your Address" />
+                                    <input type="text" name="addressl2" placeholder="Enter your Address" />
                                 </div>
                                 
                                 <div className="input-box_reg">
