@@ -23,6 +23,7 @@ import HomeBusiness from './pages/HomeBusiness';
 import ProductForm from './pages/ProductForm';
 import MarketPlace from './pages/Marketplace';
 import MyProducts from './pages/MyProducts';
+import { EditProfile } from './pages/EditProfile'; 
 
 function App() {
   const useScrollToTop = () => {
@@ -54,6 +55,12 @@ function App() {
             </Route>
             <Route exact path="/register">
               <Registration/>
+            </Route>
+            <Route exact path="/profile">
+              <Profile/>
+            </Route>
+            <Route exact path="/editprofile">
+              <EditProfile/>
             </Route>
             <Route exact path="/productdetails" component={ProductDetails} />
             <Route exact path="/cart" component={Cart} />
