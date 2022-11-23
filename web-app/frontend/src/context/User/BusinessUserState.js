@@ -46,7 +46,7 @@ const BusinessUserState = ({children}) => {
         localStorage.removeItem('SpiceMarketBusinessjwtToken');
         setloggedInBusiness(false);
         setuserProfileBusiness("")
-        return(<Redirect to={"/business/home"}/>)
+        return(<Redirect to={"/business"}/>)
     }
 
     const getNotifications = async() => {

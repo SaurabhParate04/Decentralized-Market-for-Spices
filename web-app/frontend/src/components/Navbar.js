@@ -258,7 +258,7 @@ const Navbar = () => {
                                             <p> <strong>Subtotal: </strong> 450 ₹</p>
                                         </li>
                                         <li className="cart-buttons">
-                                            <a href="/checkout" className="btn-custom primary btn-sm shadow-none" style={{ margin: "0 10px" }} >Checkout</a>
+                                            <a href="/cart" className="btn-custom primary btn-sm shadow-none" style={{ margin: "0 10px" }} >Checkout</a>
                                             <a href="/cart" className="btn-custom secondary btn-sm shadow-none">View Cart</a>
                                         </li>
                                     </ul>
