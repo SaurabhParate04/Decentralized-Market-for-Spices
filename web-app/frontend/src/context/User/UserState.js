@@ -46,7 +46,7 @@ const UserState = ({children}) => {
         localStorage.removeItem('SpiceMarketjwtToken');
         setloggedIn(false);
         setuserProfile("")
-        return(<Redirect to={"/business/home"}/>)
+        return(<Redirect to={"/"}/>)
     }
 
     const getCartInfo = async() => {

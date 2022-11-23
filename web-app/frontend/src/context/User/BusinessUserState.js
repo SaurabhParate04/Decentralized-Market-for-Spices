@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import BusinessUserContext from './BusinessUserContext'
+import { Redirect } from 'react-router-dom';
 
 const BusinessUserState = ({children}) => {
     
@@ -45,6 +46,7 @@ const BusinessUserState = ({children}) => {
         localStorage.removeItem('SpiceMarketBusinessjwtToken');
         setloggedInBusiness(false);
         setuserProfileBusiness("")
+        return(<Redirect to={"/business/home"}/>)
     }
 
     const getNotifications = async() => {

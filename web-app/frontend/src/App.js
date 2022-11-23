@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -16,22 +16,23 @@ import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Registration from './pages/Registration';
-import {Profile} from './pages/Profile';
+import { Profile } from './pages/Profile';
+import HomeBusiness from './pages/HomeBusiness';
 import LoginBusiness from './pages/LoginBusiness';
 import SignupBusiness from './pages/SignupBusiness';
-import HomeBusiness from './pages/HomeBusiness';
+import RegistrationBusiness from './pages/RegistrationBusiness';
 import ProductForm from './pages/ProductForm';
 import MarketPlace from './pages/Marketplace';
 import MyProducts from './pages/MyProducts';
-import { EditProfile } from './pages/EditProfile'; 
+import { EditProfile } from './pages/EditProfile';
 
 function App() {
   const useScrollToTop = () => {
     const location = useLocation();
     useEffect(() => {
       window.scrollTo({ top: 0 });
-     // scroll to the top of the browser window when changing route
-     // the window object is a normal DOM object and is safe to use in React.
+      // scroll to the top of the browser window when changing route
+      // the window object is a normal DOM object and is safe to use in React.
     }, [location]);
   };
 
@@ -44,48 +45,67 @@ function App() {
             <Route exact path="/">
               <Home useScrollToTop={useScrollToTop} />
             </Route>
-            <Route exact path="/products">
-              <Products useScrollToTop={useScrollToTop} />
-            </Route>
+
             <Route exact path="/login">
               <Login useScrollToTop={useScrollToTop} />
             </Route>
+
             <Route exact path="/signup">
               <Signup useScrollToTop={useScrollToTop} />
             </Route>
+
             <Route exact path="/register">
-              <Registration/>
+              <Registration />
             </Route>
+
             <Route exact path="/profile">
-              <Profile/>
+              <Profile />
             </Route>
+
             <Route exact path="/editprofile">
-              <EditProfile/>
+              <EditProfile />
             </Route>
+
+            <Route exact path="/products">
+              <Products useScrollToTop={useScrollToTop} />
+            </Route>
+
             <Route exact path="/productdetails" component={ProductDetails} />
+
             <Route exact path="/cart" component={Cart} />
+
             <Route exact path="/checkout" component={Checkout} />
           </Switch>
         </Router>
       </UserState>
+
       <BusinessUserState>
         <Router >
           <Switch>
-            <Route exact path="/business/login">
-              <LoginBusiness useScrollToTop={useScrollToTop} />
-            </Route>
-            <Route exact path="/business/signup">
-              <SignupBusiness useScrollToTop={useScrollToTop} />
-            </Route>
             <Route exact path="/business">
               <HomeBusiness useScrollToTop={useScrollToTop} />
             </Route>
+
+            <Route exact path="/business/login">
+              <LoginBusiness useScrollToTop={useScrollToTop} />
+            </Route>
+
+            <Route exact path="/business/signup">
+              <SignupBusiness useScrollToTop={useScrollToTop} />
+            </Route>
+
+            <Route exact path="/business/register">
+              <RegistrationBusiness useScrollToTop={useScrollToTop} />
+            </Route>
+
             <Route exact path="/business/productform">
               <ProductForm useScrollToTop={useScrollToTop} />
             </Route>
+
             <Route exact path="/business/marketplace">
               <MarketPlace useScrollToTop={useScrollToTop} />
             </Route>
+
             <Route exact path="/business/myproducts">
               <MyProducts useScrollToTop={useScrollToTop} />
             </Route>
