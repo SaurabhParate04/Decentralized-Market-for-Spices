@@ -63,7 +63,7 @@ function App() {
             </Route>
 
             <Route exact path="/editprofile">
-              <EditProfile />
+              <EditProfile useScrollToTop={useScrollToTop} />
             </Route>
 
             <Route exact path="/products">

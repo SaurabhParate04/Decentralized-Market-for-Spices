@@ -13,6 +13,8 @@ const UserState = ({children}) => {
     //global state for storing profile info, to display userinfo and edit profile
     const [userProfile, setuserProfile] = useState({email:"",username:"", firstname:"", lastname:"", phoneno:"", addressl1:"", addressl2:"", landmark:"", pincode:"",  usertype:""});
 
+    // const [profileImg, setprofileImg] = useState("");
+
     const [usercart, setUserCart] = useState([])
 
     //gets userInfo
@@ -36,6 +38,10 @@ const UserState = ({children}) => {
             //setting user profile state
             setuserProfile(json)
             console.log(json)
+
+            // let Purl = await getDownloadURL( ref(firebaseStorage, `profile/${json.username}`))
+            // setprofileImg(Purl);
+
         } catch (error) {
             console.error(error.message);
             console.log('error occured in getprofileinfo');
