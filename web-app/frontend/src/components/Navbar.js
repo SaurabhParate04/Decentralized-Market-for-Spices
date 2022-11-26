@@ -20,17 +20,34 @@ const Navbar = () => {
         setCartToggle(!cartToggle)
     }
 
-    useEffect(() => {
-        if (loggedIn) {
-            getProfileInfo()
+    const enrollAdmin = async() => {
+        try {
+            const url = "http://localhost:5000/api/blockchain/enrolladmin"
+            await fetch(url, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept':'application/json',
+                }
+            });
+        } catch(error) {
+            console.log(error)
         }
-    }, [loggedIn, getProfileInfo, userProfile])
+    }
 
     useEffect(() => {
-        if (loggedIn) {
-            getCartInfo()
+        async function getData() {
+            if(loggedIn) {
+                getProfileInfo()
+                await getCartInfo()
+            }
         }
-    }, [userProfile, loggedIn, getCartInfo])
+        getData()
+    }, [])
+
+    useEffect(() => {
+        
+    }, [usercart])
 
     return (
         <>
@@ -119,31 +136,8 @@ const Navbar = () => {
                             <li className="menu-item menu-item-has-children">
                                 <a href="/">Home Pages</a>
                                 <ul className="submenu">
-                                    <li className="menu-item"> <a href="/">Home v1</a> </li>
-                                    <li className="menu-item"> <a href="home-v2.html">Home v2</a> </li>
-                                </ul>
-                            </li>
-
-                            {/* Blog  */}
-                            <li className="menu-item menu-item-has-children">
-                                <a href="/">Blog</a>
-                                <ul className="submenu">
-                                    <li className="menu-item menu-item-has-children">
-                                        <a href="blog-grid.html">Blog Archive</a>
-                                        <ul className="submenu">
-                                            <li className="menu-item"> <a href="blog-grid.html">Grid View</a> </li>
-                                            <li className="menu-item"> <a href="blog-list.html">List View</a> </li>
-                                            <li className="menu-item"> <a href="blog-masonry.html">Masonry</a> </li>
-                                        </ul>
-                                    </li>
-                                    <li className="menu-item menu-item-has-children">
-                                        <a href="blog-single-v1.html">Blog Single</a>
-                                        <ul className="submenu">
-                                            <li className="menu-item"> <a href="blog-single-v1.html">Blog Single v1</a> </li>
-                                            <li className="menu-item"> <a href="blog-single-v2.html">Blog Single v2</a> </li>
-                                            <li className="menu-item"> <a href="blog-single-v3.html">Blog single v3</a> </li>
-                                        </ul>
-                                    </li>
+                                    <li className="menu-item"> <a href="/">Home</a> </li>
+                                    <li className="menu-item"> <a href="/business">Business</a> </li>
                                 </ul>
                             </li>
 
@@ -152,11 +146,12 @@ const Navbar = () => {
                                 <a href="/">Pages</a>
                                 <ul className="submenu">
                                     <li className="menu-item"> <Link to="about-us.html">About Us</Link> </li>
-                                    <li className="menu-item"> <Link to="/login">Login</Link> </li>
-                                    <li className="menu-item"> <Link to="/signup">Sign Up</Link> </li>
-                                    <li className="menu-item"> <Link to="/checkout">Checkout</Link> </li>
                                     <li className="menu-item"> <Link to="/cart">Cart</Link> </li>
                                     <li className="menu-item"> <Link to="/products">Products</Link> </li>
+                                    <li className="menu-item"> <button onClick={enrollAdmin}>Enroll Admin</button> </li>
+                                    {/* <li className="menu-item"> <button onClick={registerUser}>Register User</button> </li>
+                                    <li className="menu-item"> <button onClick={query}>Query</button> </li>
+                                    <li className="menu-item"> <button onClick={invoke}>Invoke</button> </li> */}
                                 </ul>
                             </li>
                             <li className="menu-item">
@@ -181,38 +176,7 @@ const Navbar = () => {
                                 <a href="contact-us.html">Contact Us</a>
                             </li> */}
 
-                            {/* Languages */}
-                            <li className="menu-item menu-item-has-children">
-                                <a href="/">Eng</a>
-                                <ul className="submenu">
-                                    <li className="menu-item">
-                                        <a href="/">English (US)</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/">English (UK)</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/">German</a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            {/* Currencies */}
-                            <li className="menu-item menu-item-has-children">
-                                <a href="/">USD</a>
-                                <ul className="submenu">
-                                    <li className="menu-item">
-                                        <a href="/">USD</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/">INR</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/">KWD</a>
-                                    </li>
-                                </ul>
-                            </li>
-
+                            
                             {/* Login  */}
                             <li className={`${loggedIn ? "d-none" : "menu-item"}`}>
                                 <Link to="/login">Login</Link>

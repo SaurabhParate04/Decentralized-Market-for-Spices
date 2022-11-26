@@ -111,31 +111,8 @@ const NavbarBusiness = () => {
                             <li className="menu-item menu-item-has-children">
                                 <a href="/">Home Pages</a>
                                 <ul className="submenu">
-                                    <li className="menu-item"> <a href="/">Home v1</a> </li>
-                                    <li className="menu-item"> <a href="home-v2.html">Home v2</a> </li>
-                                </ul>
-                            </li>
-
-                            {/* Business Blog  */}
-                            <li className="menu-item menu-item-has-children">
-                                <a href="/">Blog</a>
-                                <ul className="submenu">
-                                    <li className="menu-item menu-item-has-children">
-                                        <a href="blog-grid.html">Blog Archive</a>
-                                        <ul className="submenu">
-                                            <li className="menu-item"> <a href="blog-grid.html">Grid View</a> </li>
-                                            <li className="menu-item"> <a href="blog-list.html">List View</a> </li>
-                                            <li className="menu-item"> <a href="blog-masonry.html">Masonry</a> </li>
-                                        </ul>
-                                    </li>
-                                    <li className="menu-item menu-item-has-children">
-                                        <a href="blog-single-v1.html">Blog Single</a>
-                                        <ul className="submenu">
-                                            <li className="menu-item"> <a href="blog-single-v1.html">Blog Single v1</a> </li>
-                                            <li className="menu-item"> <a href="blog-single-v2.html">Blog Single v2</a> </li>
-                                            <li className="menu-item"> <a href="blog-single-v3.html">Blog single v3</a> </li>
-                                        </ul>
-                                    </li>
+                                    <li className="menu-item"> <a href="/">Home</a> </li>
+                                    <li className="menu-item"> <a href="/business">Business</a> </li>
                                 </ul>
                             </li>
 
@@ -144,8 +121,6 @@ const NavbarBusiness = () => {
                                 <a href="/">Pages</a>
                                 <ul className="submenu">
                                     <li className="menu-item"> <a href="about-us.html">About Us</a> </li>
-                                    <li className="menu-item"> <a href="/business/login">Login</a> </li>
-                                    <li className="menu-item"> <a href="/business/signup">Sign Up</a> </li>
                                     <li className="menu-item"> <Link to={{ pathname: "/business/productform", state: { button_name: "Add New", info: { productName: "", productBrand: "", category: "", description: "", price: "", quantity: "" } } }} >Add new product</Link> </li>
                                     <li className="menu-item"> <a href="/business/marketplace">Explore market</a> </li>
                                     <li className="menu-item"> <a href="/business/myproducts">My Products</a> </li>
@@ -175,38 +150,6 @@ const NavbarBusiness = () => {
                             {/* <li className="menu-item">
                                 <a href="contact-us.html">Contact Us</a>
                             </li> */}
-
-                            {/* Business Language  */}
-                            <li className="menu-item menu-item-has-children">
-                                <a href="/">Eng</a>
-                                <ul className="submenu">
-                                    <li className="menu-item">
-                                        <a href="/">English (US)</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/">English (UK)</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/">German</a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            {/* Business Currencies  */}
-                            <li className="menu-item menu-item-has-children">
-                                <a href="/">USD</a>
-                                <ul className="submenu">
-                                    <li className="menu-item">
-                                        <a href="/">USD</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/">INR</a>
-                                    </li>
-                                    <li className="menu-item">
-                                        <a href="/">KWD</a>
-                                    </li>
-                                </ul>
-                            </li>
 
                             {/* Business Login  */}
                             <li className={`${loggedInBusiness ? "d-none" : "menu-item"}`}>
