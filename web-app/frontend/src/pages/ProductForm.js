@@ -105,7 +105,7 @@ export default function ProductForm(props) {
                         })
                     }
                 );
-                if(updateQuantity) {
+                if (updateQuantity) {
                     updateQuantityFunc()
                 }
             }
@@ -137,38 +137,38 @@ export default function ProductForm(props) {
                 // 1. 'state_changed' observer, called any time the state changes
                 // 2. Error observer, called on failure
                 // 3. Completion observer, called on successful completion
-                
-                uploadTask.on('state_changed', 
-                (snapshot) => {
-                    // Observe state change events such as progress, pause, and resume
-                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                    
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    // console.log('Product cover image upload is ' + progress + '% done');
-                    setUploadingCoverImage(true)
-                    setProgressCoverImage(progress)
 
-                    //eslint-disable-next-line
-                    switch (snapshot.state) {
-                    case 'paused':
-                        console.log('Product cover image upload is paused');
-                        break;
-                    case 'running':
-                        console.log('Product cover image upload is running');
-                        break;
-                    }
-                }, 
-                (error) => {
-                    console.log('Error while uploading cover-image: ', error);
-                }, 
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        console.log('Cover image available at', downloadURL);
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        // Observe state change events such as progress, pause, and resume
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        // console.log('Product cover image upload is ' + progress + '% done');
+                        setUploadingCoverImage(true)
+                        setProgressCoverImage(progress)
+
+                        //eslint-disable-next-line
+                        switch (snapshot.state) {
+                            case 'paused':
+                                console.log('Product cover image upload is paused');
+                                break;
+                            case 'running':
+                                console.log('Product cover image upload is running');
+                                break;
+                        }
+                    },
+                    (error) => {
+                        console.log('Error while uploading cover-image: ', error);
+                    },
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                            console.log('Cover image available at', downloadURL);
+                        });
+                        setUploadingCoverImage(false)
                     });
-                    setUploadingCoverImage(false)
-                });
             }
-            if(notify) {
+            if (notify) {
                 const now = new Date()
                 const url = "http://localhost:5000/api/agroproductnotify/createproductnotification"
                 //eslint-disable-next-line
@@ -195,10 +195,10 @@ export default function ProductForm(props) {
     }
 
     useEffect(() => {
-        if(submitPressed && progressCoverImage === 100 && coverImageUpload) {
+        if (submitPressed && progressCoverImage === 100 && coverImageUpload) {
             history.go(-1)
         }
-        else if(submitPressed && !coverImageUpload) {
+        else if (submitPressed && !coverImageUpload) {
             history.go(-1)
         }
     }, [progressCoverImage, submitPressed, coverImageUpload, history])
@@ -207,7 +207,7 @@ export default function ProductForm(props) {
         setCategory(e.target.value)
     }
 
-    const updateQuantityFunc = async() => {
+    const updateQuantityFunc = async () => {
         console.log(quantityRaised, credentialProduct.quantity, quantity, (quantityRaised + credentialProduct.quantity) >= quantity)
         const url = "http://localhost:5000/api/agroproduct/updateproduct/" + id;
         //eslint-disable-next-line
@@ -228,8 +228,8 @@ export default function ProductForm(props) {
     return (
         <>
             {
-                (uploadingCoverImage) && 
-                <Loading 
+                (uploadingCoverImage) &&
+                <Loading
                     progressCoverImage={progressCoverImage}
                     uploadingCoverImage={uploadingCoverImage}
                 />
@@ -238,62 +238,64 @@ export default function ProductForm(props) {
             <Navbar />
 
             <div className={uploadingCoverImage ? "cf-container charity-form loading-blur" : "cf-container charity-form"}>
+            <div className='overlay'>
                 <div className="cf-container_det">
-                    <div className="cf-title">Product Form</div>
-                    <div className="cf-content">
-                        <form onSubmit={onSubmitCharity} onChange={onChangeCharity}>
-                            <div className="user-details">
-                                <div className="input-box" style={{ width: "100%" }}>
-                                    <span className="details">Product Name</span>
-                                    <input type="text" name="productName" placeholder="Enter Product Name" defaultValue={info.productName || ""} required />
-                                </div>
-                                {/* <div className="input-box" style={{width:"100%"}}>
+                        <div className="cf-title">Product Form</div>
+                        <div className="cf-content">
+                            <form onSubmit={onSubmitCharity} onChange={onChangeCharity}>
+                                <div className="user-details">
+                                    <div className="input-box" style={{ width: "100%" }}>
+                                        <span className="details">Product Name</span>
+                                        <input type="text" name="productName" placeholder="Enter Product Name" defaultValue={info.productName || ""} required />
+                                    </div>
+                                    {/* <div className="input-box" style={{width:"100%"}}>
                                     <span className="details">Cause</span>
                                     <input type="text" name="cause" placeholder="Enter Cause" defaultValue={info.cause || ""} required />
                                 </div> */}
-                                <div className="input-box" style={{ width: "100%" }}>
-                                    <span className="details">Category</span>
-                                    <div className="select">
-                                        <select className="form-select select-box select-wrapper" name="cause" defaultValue={category || "miscellaneous"} onChange={categoryHandler} required>
-                                            <option value="Leaves">Leaves</option>
-                                            <option value="Seeds">Seeds</option>
-                                            <option value="Barks">Barks</option>
-                                            <option value="Flowers/Buds">Flowers/Buds</option>
-                                            <option value="Fruits">Fruits</option>
-                                            <option value="Bulbs">Bulbs</option>
-                                            <option value="Roots">Roots</option>
-                                            <option value="Aril">Aril</option>
-                                        </select>
+                                    <div className="input-box" style={{ width: "100%" }}>
+                                        <span className="details">Category</span>
+                                        <div className="select">
+                                            <select className="form-select select-box select-wrapper" name="cause" defaultValue={category || "miscellaneous"} onChange={categoryHandler} required>
+                                                <option value="Leaves">Leaves</option>
+                                                <option value="Seeds">Seeds</option>
+                                                <option value="Barks">Barks</option>
+                                                <option value="Flowers/Buds">Flowers/Buds</option>
+                                                <option value="Fruits">Fruits</option>
+                                                <option value="Bulbs">Bulbs</option>
+                                                <option value="Roots">Roots</option>
+                                                <option value="Aril">Aril</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="input-box" style={{ width: "100%" }}>
-                                    <span className="details">Description</span>
-                                    <textarea type="text" name="description" rows="3" placeholder="Enter description" defaultValue={info.description || ""} required style={{ fontSize: "13px" }}></textarea>
-                                </div>
-                                {/* <div className="input-box">
+                                    <div className="input-box" style={{ width: "100%" }}>
+                                        <span className="details">Description</span>
+                                        <textarea type="text" name="description" rows="3" placeholder="Enter description" defaultValue={info.description || ""} required style={{ fontSize: "13px" }}></textarea>
+                                    </div>
+                                    {/* <div className="input-box">
                                     <span className="details">State</span>
                                     <input type="text" name="state" placeholder="Enter State" defaultValue={info.state || ""} required />
                                 </div> */}
-                                <div className="input-box">
-                                    <span className="details">Price</span>
-                                    <input type="number" name="price" placeholder="Enter the price per KG" defaultValue={info.price || ""} required />
+                                    <div className="input-box">
+                                        <span className="details">Price</span>
+                                        <input type="number" name="price" placeholder="Enter the price per KG" defaultValue={info.price || ""} required />
+                                    </div>
+                                    <div className="input-box">
+                                        <span className="details">Quantity</span>
+                                        <input type="number" name="quantity" placeholder="Enter the quantity in KG" defaultValue={info.quantity || ""} required />
+                                    </div>
+                                    <div className="input-box">
+                                        <span className="details">Select Cover Image</span>
+                                        <label htmlFor="cover-img-upload" className="custom-file-upload">
+                                            <i className="fa fa-cloud-upload"></i>  Upload Sample Image
+                                        </label>
+                                        <input id="cover-img-upload" accept="image/*" name="imageURL" type="file" onChange={coverImageHandler} style={{ display: "none" }} />
+                                    </div>
                                 </div>
-                                <div className="input-box">
-                                    <span className="details">Quantity</span>
-                                    <input type="number" name="quantity" placeholder="Enter the quantity in KG" defaultValue={info.quantity || ""} required />
+                                <div className="button">
+                                    <input type="submit" defaultValue={props.button_name} />
                                 </div>
-                                <div className="input-box">
-                                    <span className="details">Select Cover Image</span>
-                                    <label htmlFor="cover-img-upload" className="custom-file-upload">
-                                        <i className="fa fa-cloud-upload"></i>  Upload Sample Image
-                                    </label>
-                                    <input id="cover-img-upload" accept="image/*" name="imageURL" type="file" onChange={coverImageHandler} style={{ display: "none" }} />
-                                </div>
-                            </div>
-                            <div className="button">
-                                <input type="submit" defaultValue={props.button_name}/>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

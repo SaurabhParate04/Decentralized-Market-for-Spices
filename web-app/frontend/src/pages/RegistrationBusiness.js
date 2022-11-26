@@ -64,63 +64,65 @@ function RegistrationBusiness() {
   return (
     <div>
       <div className="reg">
-        {/* <Navbar /> */}
-        <div className="container_reg light-bg">
-          <div className="title_reg">Registration</div>
-          <div className="content_reg">
-            <form onSubmit={handleReg_2} onChange={onChangeSignUpBusiness}>
-              <div className="user-details_reg">
-                <div className="input-box_reg">
-                  <span className="details_reg">First Name</span>
-                  <input type="text" name="firstname" placeholder="Enter your First name" />
+        <div className='overlay'>
+          {/* <Navbar /> */}
+          <div className="container_reg light-bg">
+            <div className="title_reg">Registration</div>
+            <div className="content_reg">
+              <form onSubmit={handleReg_2} onChange={onChangeSignUpBusiness}>
+                <div className="user-details_reg">
+                  <div className="input-box_reg">
+                    <span className="details_reg">First Name</span>
+                    <input type="text" name="firstname" placeholder="Enter your First name" />
+                  </div>
+
+                  <div className="input-box_reg">
+                    <span className="details_reg">Last name</span>
+                    <input type="text" name="lastname" placeholder="Enter your Last name" required />
+                  </div>
+                  <div className="input-box_reg">
+                    <span className="details">Username</span>
+                    <input type="text" name="username" placeholder="Enter Username" required />
+                  </div>
+                  <div className="input-box_reg">
+                    <span className="details">Password</span>
+                    <input type="text" name="password" placeholder="Enter Password" required />
+                  </div>
+                  <div className="input-box_reg">
+                    <span className="details">Email</span>
+                    <input type="text" name="email" placeholder="Enter Email" required />
+                  </div>
+                  <div className="input-box_reg">
+                    <span className="details">Phone Number</span>
+                    <input type="text" name="phoneNumber" placeholder="Enter your Phone Number" required />
+                  </div>
+                  <div className="input-box_reg" style={{ width: "100%" }}>
+                    <span className="details">Usertype</span>
+                    <input type="text" name="usertype" placeholder="Enter your Usertype" required />
+                  </div>
+                  <div className="input-box_reg" style={{ width: "100%" }}>
+                    <span className="details">Address</span>
+                    <input type="text" name="addressl1" placeholder="Enter your Address" required />
+                  </div>
+                  <div className="input-box_reg" style={{ width: "100%" }}>
+                    <input type="text" name="addressl2" placeholder="Enter your Address" />
+                  </div>
+
+                  <div className="input-box_reg">
+                    <span className="details">Landmark</span>
+                    <input type="text" name="landmark" placeholder="Enter Landmark" required />
+                  </div>
+                  <div className="input-box_reg">
+                    <span className="details">Pincode</span>
+                    <input type="number" name="pincode" placeholder="Enter Pincode" required />
+                  </div>
                 </div>
 
-                <div className="input-box_reg">
-                  <span className="details_reg">Last name</span>
-                  <input type="text" name="lastname" placeholder="Enter your Last name" required />
+                <div className="button">
+                  <input type="submit" value="Register" />
                 </div>
-                <div className="input-box_reg">
-                  <span className="details">Username</span>
-                  <input type="text" name="username" placeholder="Enter Username" required />
-                </div>
-                <div className="input-box_reg">
-                  <span className="details">Password</span>
-                  <input type="text" name="password" placeholder="Enter Password" required />
-                </div>
-                <div className="input-box_reg">
-                  <span className="details">Email</span>
-                  <input type="text" name="email" placeholder="Enter Email" required />
-                </div>
-                <div className="input-box_reg">
-                  <span className="details">Phone Number</span>
-                  <input type="text" name="phoneNumber" placeholder="Enter your Phone Number" required />
-                </div>
-                <div className="input-box_reg" style={{ width: "100%" }}>
-                  <span className="details">Usertype</span>
-                  <input type="text" name="usertype" placeholder="Enter your Usertype" required />
-                </div>
-                <div className="input-box_reg" style={{ width: "100%" }}>
-                  <span className="details">Address</span>
-                  <input type="text" name="addressl1" placeholder="Enter your Address" required />
-                </div>
-                <div className="input-box_reg" style={{ width: "100%" }}>
-                  <input type="text" name="addressl2" placeholder="Enter your Address" />
-                </div>
-
-                <div className="input-box_reg">
-                  <span className="details">Landmark</span>
-                  <input type="text" name="landmark" placeholder="Enter Landmark" required />
-                </div>
-                <div className="input-box_reg">
-                  <span className="details">Pincode</span>
-                  <input type="number" name="pincode" placeholder="Enter Pincode" required />
-                </div>
-              </div>
-
-              <div className="button">
-                <input type="submit" value="Register" />
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>

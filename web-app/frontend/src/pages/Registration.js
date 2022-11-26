@@ -64,7 +64,7 @@ function Registration() {
     return (
         <div>
             <div className="reg">
-                <div className='overlay m-0 p-0'>
+                <div className='overlay'>
                     {/* <Navbar /> */}
                     <div className="container_reg light-bg">
                         <div className="title_reg">Registration</div>
