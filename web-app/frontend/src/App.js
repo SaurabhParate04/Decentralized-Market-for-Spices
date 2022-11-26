@@ -25,6 +25,7 @@ import ProductForm from './pages/ProductForm';
 import MarketPlace from './pages/Marketplace';
 import MyProducts from './pages/MyProducts';
 import { EditProfile } from './pages/EditProfile';
+import Myorder from './pages/Myorder';
 
 function App() {
   const useScrollToTop = () => {
@@ -71,6 +72,10 @@ function App() {
             </Route>
 
             <Route exact path="/productdetails" component={ProductDetails} />
+
+            <Route exact path="/myorder">
+              <Myorder useScrollToTop={useScrollToTop} />
+            </Route>
 
             <Route exact path="/cart" component={Cart} />
 
