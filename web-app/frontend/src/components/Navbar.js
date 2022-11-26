@@ -11,6 +11,7 @@ const Navbar = () => {
 
     const { loggedIn, setloggedIn, setuserProfile, userProfile, logOutUser, getCartInfo, usercart, getProfileInfo } = context;
     const [cartToggle, setCartToggle] = useState(false)
+    const [dataFromBlockchain, setDataFromBlockchain] = useState()
 
     const handleLogout = () => {
         logOutUser();
@@ -30,6 +31,54 @@ const Navbar = () => {
                     'accept':'application/json',
                 }
             });
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    const registerUser = async() => {
+        try {
+            const url = "http://localhost:5000/api/blockchain/registeruser"
+            await fetch(url, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept':'application/json',
+                }
+            });
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    const invoke = async() => {
+        try {
+            const url = "http://localhost:5000/api/blockchain/invoke"
+            await fetch(url, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept':'application/json',
+                }
+            });
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    const query = async() => {
+        try {
+            const url = "http://localhost:5000/api/blockchain/query"
+            const response = await fetch(url, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept':'application/json',
+                }
+            });
+            const data = await response;
+            setDataFromBlockchain(data)
+            console.log(dataFromBlockchain)
         } catch(error) {
             console.log(error)
         }
@@ -149,9 +198,9 @@ const Navbar = () => {
                                     <li className="menu-item"> <Link to="/cart">Cart</Link> </li>
                                     <li className="menu-item"> <Link to="/products">Products</Link> </li>
                                     <li className="menu-item"> <button onClick={enrollAdmin}>Enroll Admin</button> </li>
-                                    {/* <li className="menu-item"> <button onClick={registerUser}>Register User</button> </li>
+                                    <li className="menu-item"> <button onClick={registerUser}>Register User</button> </li>
                                     <li className="menu-item"> <button onClick={query}>Query</button> </li>
-                                    <li className="menu-item"> <button onClick={invoke}>Invoke</button> </li> */}
+                                    <li className="menu-item"> <button onClick={invoke}>Invoke</button> </li>
                                 </ul>
                             </li>
                             <li className="menu-item">
