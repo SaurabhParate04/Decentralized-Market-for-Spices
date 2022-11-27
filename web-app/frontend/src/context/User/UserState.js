@@ -84,7 +84,7 @@ const UserState = ({children}) => {
     }
             
     return (
-        <userContext.Provider value={{globalCredentials, setglobalCredentials, loggedIn, setloggedIn, getProfileInfo, userProfile, setuserProfile, getCartInfo, usercart, setUserCart, logOutUser}} >
+        <userContext.Provider value={{globalCredentials, setglobalCredentials, loggedIn, setloggedIn, getProfileInfo, userProfile, setuserProfile, getCartInfo, setUserCart, usercart, setUserCart, logOutUser}} >
             {children}
         </userContext.Provider>
     )

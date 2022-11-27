@@ -10,6 +10,9 @@ const { Wallets } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const fs = require('fs');
 const path = require('path');
+let args = process.argv.slice(2);
+const user = args[0];
+// console.log(user);
 
 async function registerUser() {
     try {
@@ -27,9 +30,9 @@ async function registerUser() {
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
-        const userIdentity = await wallet.get('appUser');
+        const userIdentity = await wallet.get(user);
         if (userIdentity) {
-            console.log('An identity for the user "appUser" already exists in the wallet');
+            console.log('An identity for the user "' + user + '" already exists in the wallet');
             return;
         }
 
@@ -48,11 +51,11 @@ async function registerUser() {
         // Register the user, enroll the user, and import the new identity into the wallet.
         const secret = await ca.register({
             affiliation: 'org1.department1',
-            enrollmentID: 'appUser',
+            enrollmentID: user,
             role: 'client'
         }, adminUser);
         const enrollment = await ca.enroll({
-            enrollmentID: 'appUser',
+            enrollmentID: user,
             enrollmentSecret: secret
         });
         const x509Identity = {
@@ -63,14 +66,13 @@ async function registerUser() {
             mspId: 'Org1MSP',
             type: 'X.509',
         };
-        await wallet.put('appUser', x509Identity);
-        console.log('Successfully registered and enrolled admin user "appUser" and imported it into the wallet');
+        await wallet.put(user, x509Identity);
+        console.log('Successfully registered and enrolled user "' + user + '" and imported it into the wallet');
 
     } catch (error) {
-        console.error(`Failed to register user "appUser": ${error}`);
+        console.error(`Failed to register user ${user}: ${error}`);
         process.exit(1);
     }
 }
 
-// registerUser();
-module.exports = registerUser;
+registerUser();

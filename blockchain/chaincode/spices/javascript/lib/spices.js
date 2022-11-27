@@ -14,64 +14,8 @@ class Spices extends Contract {
         console.info('============= START : Initialize Ledger ===========');
         const products = [
             {
-                color: 'blue',
-                make: 'Toyota',
-                model: 'Prius',
-                owner: 'Tomoko',
-            },
-            {
-                color: 'red',
-                make: 'Ford',
-                model: 'Mustang',
-                owner: 'Brad',
-            },
-            {
-                color: 'green',
-                make: 'Hyundai',
-                model: 'Tucson',
-                owner: 'Jin Soo',
-            },
-            {
-                color: 'yellow',
-                make: 'Volkswagen',
-                model: 'Passat',
-                owner: 'Max',
-            },
-            {
-                color: 'black',
-                make: 'Tesla',
-                model: 'S',
-                owner: 'Adriana',
-            },
-            {
-                color: 'purple',
-                make: 'Peugeot',
-                model: '205',
-                owner: 'Michel',
-            },
-            {
-                color: 'white',
-                make: 'Chery',
-                model: 'S22L',
-                owner: 'Aarav',
-            },
-            {
-                color: 'violet',
-                make: 'Fiat',
-                model: 'Punto',
-                owner: 'Pari',
-            },
-            {
-                color: 'indigo',
-                make: 'Tata',
-                model: 'Nano',
-                owner: 'Valeria',
-            },
-            {
-                color: 'brown',
-                make: 'Holden',
-                model: 'Barina',
-                owner: 'Shotaro',
+                productName: 'Demo',
+                description: 'Initializing ledger with a dummy product'
             },
         ];
 
@@ -83,27 +27,43 @@ class Spices extends Contract {
         console.info('============= END : Initialize Ledger ===========');
     }
 
-    async queryProduct(ctx, productNumber) {
-        const productAsBytes = await ctx.stub.getState(productNumber); // get the product from chaincode state
+    async queryProduct(ctx, productId) {
+        const productAsBytes = await ctx.stub.getState(productId); // get the product from chaincode state
         if (!productAsBytes || productAsBytes.length === 0) {
-            throw new Error(`${productNumber} does not exist`);
+            throw new Error(`${productId} does not exist`);
         }
         console.log(productAsBytes.toString());
         return productAsBytes.toString();
     }
 
-    async createProduct(ctx, productNumber, make, model, color, owner) {
+    async createProduct(ctx, productId, newProduct) {
         console.info('============= START : Create Product ===========');
 
         const product = {
-            color,
             docType: 'product',
-            make,
-            model,
-            owner,
+            productId: productId,
+            ProductName: newProduct.ProductName, 
+            Farmer: newProduct.Farmer, 
+            Price: newProduct.Price, 
+            Quantity: newProduct.Quantity, 
+            Field_Location: newProduct.Field_Location, 
+            Farmer_Transfer_Date: newProduct.Farmer_Transfer_Date, 
+            Trader: newProduct.Trader, 
+            Trader_Location: newProduct.Trader_Location, 
+            Trader_Transfer_Date: newProduct.Trader_Transfer_Date, 
+            Manufacturer: newProduct.Manufacturer, 
+            Manufactured_Product_Name: newProduct.Manufactured_Product_Name, 
+            Brand_Name: newProduct.Brand_Name, 
+            Manufacturing_Unit_Location: newProduct.Manufacturing_Unit_Location, 
+            Manufacturer_Transfer_Date: newProduct.Manufacturer_Transfer_Date, 
+            Wholesaler: newProduct.Wholesaler, 
+            Wholesaler_Location: newProduct.Wholesaler_Location, 
+            Wholesaler_Transfer_Date: newProduct.Wholesaler_Transfer_Date, 
+            Retailer: newProduct.Retailer, 
+            Retailer_Location: newProduct.Retailer_Location,
         };
 
-        await ctx.stub.putState(productNumber, Buffer.from(JSON.stringify(product)));
+        await ctx.stub.putState(productId, Buffer.from(JSON.stringify(product)));
         console.info('============= END : Create Product ===========');
     }
 
@@ -126,18 +86,36 @@ class Spices extends Contract {
         return JSON.stringify(allResults);
     }
 
-    async changeProductOwner(ctx, productNumber, newOwner) {
-        console.info('============= START : changeProductOwner ===========');
+    async updateProduct(ctx, productId, updatedProduct) {
+        console.info('============= START : updateProduct ===========');
 
-        const productAsBytes = await ctx.stub.getState(productNumber); // get the product from chaincode state
+        const productAsBytes = await ctx.stub.getState(productId); // get the product from chaincode state
         if (!productAsBytes || productAsBytes.length === 0) {
-            throw new Error(`${productNumber} does not exist`);
+            throw new Error(`${productId} does not exist`);
         }
         const product = JSON.parse(productAsBytes.toString());
-        product.owner = newOwner;
+        product.ProductName = updatedProduct.ProductName; 
+        product.Farmer = updatedProduct.Farmer;
+        product.Price = updatedProduct.Price;
+        product.Quantity = updatedProduct.Quantity; 
+        product.Field_Location = updatedProduct.Field_Location;
+        product.Farmer_Transfer_Date = updatedProduct.Farmer_Transfer_Date;
+        product.Trader = updatedProduct.Trader;
+        product.Trader_Location = updatedProduct.Trader_Location;
+        product.Trader_Transfer_Date = updatedProduct.Trader_Transfer_Date;
+        product.Manufacturer = updatedProduct.Manufacturer;
+        product.Manufactured_Product_Name = updatedProduct.Manufactured_Product_Name; 
+        product.Brand_Name = updatedProduct.Brand_Name;
+        product.Manufacturing_Unit_Location = updatedProduct.Manufacturing_Unit_Location;
+        product.Manufacturer_Transfer_Date = updatedProduct.Manufacturer_Transfer_Date;
+        product.Wholesaler = updatedProduct.Wholesaler;
+        product.Wholesaler_Location = updatedProduct.Wholesaler_Location;
+        product.Wholesaler_Transfer_Date = updatedProduct.Wholesaler_Transfer_Date;
+        product.Retailer = updatedProduct.Retailer; 
+        product.Retailer_Location = updatedProduct.Retailer_Location;
 
-        await ctx.stub.putState(productNumber, Buffer.from(JSON.stringify(product)));
-        console.info('============= END : changeProductOwner ===========');
+        await ctx.stub.putState(productId, Buffer.from(JSON.stringify(product)));
+        console.info('============= END : updateProduct ===========');
     }
 
 }
