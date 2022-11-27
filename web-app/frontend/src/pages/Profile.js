@@ -197,7 +197,7 @@ export const Profile = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-lg-6">
+                                            {/* <div className="col-lg-6">
                                                 <div className="form-group focused">
                                                     <label
                                                         className="form-control-label"
@@ -211,7 +211,7 @@ export const Profile = () => {
                                                         </small>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
 
