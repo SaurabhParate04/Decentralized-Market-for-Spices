@@ -9,11 +9,19 @@
 const { Gateway, Wallets } = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
-let args = process.argv.slice(2);
-const func = args[0];
-const productId = args[1];
-const obj = args[2];
-const user = args[3];
+
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
+const argv = yargs(hideBin(process.argv)).argv;
+console.log(argv);
+
+// let args = process.argv.slice(2);
+const func = argv._[argv._.length - 3];
+const productId = argv._[argv._.length - 2];
+const user = argv._[argv._.length - 1];
+const obj = argv.obj;
+console.log(func, productId, user);
+console.log('object -> field location = ' + obj.Field_Location);
 
 async function main() {
     try {
@@ -46,7 +54,7 @@ async function main() {
         const contract = network.getContract('spices');
 
         // Submit the specified transaction.
-        await contract.submitTransaction(func, productId, obj);
+        await contract.submitTransaction(func, productId, JSON.stringify(obj));
         console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.

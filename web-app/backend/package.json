@@ -18,7 +18,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.10",
     "node-cmd": "^5.0.0",
-    "razorpay": "^2.8.3"
+    "razorpay": "^2.8.3",
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
