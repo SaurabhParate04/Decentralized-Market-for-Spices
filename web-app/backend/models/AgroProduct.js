@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const agroProductSchema = new mongoose.Schema({
+    productId: {
+        type: String,
+        required: true
+    },
     productName: {
         type: String,
         required: true

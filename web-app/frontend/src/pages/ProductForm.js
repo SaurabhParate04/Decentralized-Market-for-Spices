@@ -83,6 +83,8 @@ export default function ProductForm(props) {
     const onSubmitCharity = async (e) => {
         e.preventDefault();
         try {
+            const now = String(new Date())
+            const prodId = 'Prod' + now.substring(8,10) + now.substring(11,15) + now.substring(16,18) + now.substring(19,21) + now.substring(22,24)
             setSubmitPressed(true)
             if (event === "Add New") {
                 const url = "http://localhost:5000/api/agroproduct/createproduct"
@@ -95,6 +97,7 @@ export default function ProductForm(props) {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
+                            productId: prodId,
                             productName: credentialProduct.productName,
                             category: category,
                             description: credentialProduct.description,
@@ -108,6 +111,8 @@ export default function ProductForm(props) {
                 if(updateQuantity) {
                     updateQuantityFunc()
                 }
+                const obj = `--obj.productId=${prodId} --obj.productName=${credentialProduct.productName} --obj.Farmer '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Field_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+                invoke('createProduct', prodId, obj)
             }
             else if (event === "update") {
                 console.log(credentialProduct)
@@ -223,6 +228,26 @@ export default function ProductForm(props) {
                 })
             }
         );
+    }
+
+    const invoke = async(func, prodId, obj) => {
+        try {
+            // console.log('invoke from productform' + userProfileBusiness.username)
+            const url = "http://localhost:5000/api/blockchain/invoke"
+            await fetch(url, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json',
+                    'user': String(userProfileBusiness.username),
+                    'func': func,
+                    'prodId': prodId,
+                    'obj': obj
+                }
+            });
+        } catch(error) {
+            console.log(error)
+        }
     }
 
     return (
