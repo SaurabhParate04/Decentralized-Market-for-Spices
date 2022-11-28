@@ -92,31 +92,62 @@ class Spices extends Contract {
         return JSON.stringify(allResults);
     }
 
-    async updateProduct(ctx, productId, updatedProduct) {
+    async transferProduct(ctx, productId, updatedProduct) {
         console.info('============= START : updateProduct ===========');
+        const updatedProductJson = JSON.parse(updatedProduct)
 
         const productAsBytes = await ctx.stub.getState(productId); // get the product from chaincode state
         if (!productAsBytes || productAsBytes.length === 0) {
             throw new Error(`${productId} does not exist`);
         }
+
         const product = JSON.parse(productAsBytes.toString());
-        product.ProductName = updatedProduct.ProductName; 
-        product.Farmer = updatedProduct.Farmer;
-        product.Field_Location = updatedProduct.Field_Location;
-        product.Farmer_Transfer_Date = updatedProduct.Farmer_Transfer_Date;
-        product.Trader = updatedProduct.Trader;
-        product.Trader_Location = updatedProduct.Trader_Location;
-        product.Trader_Transfer_Date = updatedProduct.Trader_Transfer_Date;
-        product.Manufacturer = updatedProduct.Manufacturer;
-        product.Manufactured_Product_Name = updatedProduct.Manufactured_Product_Name; 
-        product.Brand_Name = updatedProduct.Brand_Name;
-        product.Manufacturing_Unit_Location = updatedProduct.Manufacturing_Unit_Location;
-        product.Manufacturer_Transfer_Date = updatedProduct.Manufacturer_Transfer_Date;
-        product.Wholesaler = updatedProduct.Wholesaler;
-        product.Wholesaler_Location = updatedProduct.Wholesaler_Location;
-        product.Wholesaler_Transfer_Date = updatedProduct.Wholesaler_Transfer_Date;
-        product.Retailer = updatedProduct.Retailer; 
-        product.Retailer_Location = updatedProduct.Retailer_Location;
+
+        if(updatedProductJson.to === 'Trader') {
+            product.Farmer_Transfer_Date = updatedProductJson.Farmer_Transfer_Date;
+            product.Trader = updatedProductJson.Trader;
+            product.Trader_Location = updatedProductJson.Trader_Location;
+        }
+        else if(updatedProductJson.to === 'Farmer') {
+            product.Farmer_Transfer_Date = updatedProductJson.Farmer_Transfer_Date;
+            product.Farmer = updatedProductJson.Farmer;
+            product.Field_Location = updatedProductJson.Field_Location;
+        }
+        else if(updatedProductJson.to === 'Manufacturer') {
+            product.Trader_Transfer_Date = updatedProductJson.Trader_Transfer_Date;
+            product.Manufacturer = updatedProductJson.Manufacturer;
+            product.Manufacturing_Unit_Location = updatedProductJson.Manufacturing_Unit_Location;
+        }
+        else if(updatedProductJson.to === 'Wholesaler') {
+            product.Manufacturer_Transfer_Date = updatedProductJson.Manufacturer_Transfer_Date;
+            product.Brand_Name = product.Brand_Name;
+            product.Manufactured_Product_Name = updatedProductJson.Manufactured_Product_Name;
+            product.Wholesaler = updatedProductJson.Wholesaler;
+            product.Wholesaler_Location = updatedProductJson.Wholesaler_Location;
+        }
+        else if(updatedProductJson.to === 'Retailer') {
+            product.Wholesaler_Transfer_Date = updatedProductJson.Wholesaler_Transfer_Date;
+            product.Retailer = updatedProductJson.Retailer;
+            product.Retailer_Location = updatedProductJson.Retailer_Location;
+        }
+
+        // product.ProductName = updatedProductJson.ProductName; 
+        // product.Farmer = updatedProductJson.Farmer;
+        // product.Field_Location = updatedProductJson.Field_Location;
+        // product.Farmer_Transfer_Date = updatedProductJson.Farmer_Transfer_Date;
+        // product.Trader = updatedProductJson.Trader;
+        // product.Trader_Location = updatedProductJson.Trader_Location;
+        // product.Trader_Transfer_Date = updatedProductJson.Trader_Transfer_Date;
+        // product.Manufacturer = updatedProductJson.Manufacturer;
+        // product.Manufactured_Product_Name = updatedProductJson.Manufactured_Product_Name; 
+        // product.Brand_Name = updatedProductJson.Brand_Name;
+        // product.Manufacturing_Unit_Location = updatedProductJson.Manufacturing_Unit_Location;
+        // product.Manufacturer_Transfer_Date = updatedProductJson.Manufacturer_Transfer_Date;
+        // product.Wholesaler = updatedProductJson.Wholesaler;
+        // product.Wholesaler_Location = updatedProductJson.Wholesaler_Location;
+        // product.Wholesaler_Transfer_Date = updatedProductJson.Wholesaler_Transfer_Date;
+        // product.Retailer = updatedProductJson.Retailer; 
+        // product.Retailer_Location = updatedProductJson.Retailer_Location;
 
         await ctx.stub.putState(productId, Buffer.from(JSON.stringify(product)));
         console.info('============= END : updateProduct ===========');

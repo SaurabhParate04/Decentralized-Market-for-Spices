@@ -37,6 +37,7 @@ export default function ProductForm(props) {
     const sender = userid
     const receiver = location.state.receiver
     const notify = location.state.notify
+    let obj = ''
 
     const [credentialProduct, setcredentialProduct] = useState({
         productName: info.productName || "",
@@ -111,7 +112,12 @@ export default function ProductForm(props) {
                 if(updateQuantity) {
                     updateQuantityFunc()
                 }
-                const obj = `--obj.productId=${prodId} --obj.productName=${credentialProduct.productName} --obj.Farmer '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Field_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+                if(action === 'Farmer') {
+                    obj = `--obj.productId=${prodId} --obj.productName=${credentialProduct.productName} --obj.Farmer '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Field_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+                } 
+                else if(action === 'Trader') {
+                    obj = `--obj.productId=${prodId} --obj.productName=${credentialProduct.productName} --obj.Trader '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Trader_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='' --obj.Farmer='' --obj.Field_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+                }
                 invoke('createProduct', prodId, obj)
             }
             else if (event === "update") {
