@@ -38,29 +38,35 @@ class Spices extends Contract {
 
     async createProduct(ctx, productId, newProduct) {
         console.info('============= START : Create Product ===========');
+        // console.log('From spices chaincode createProduct function: ' + 'prodid: ' + productId + ' newprod->field: ' + newProduct.Field_Location);
+        // console.log('1: ' + newProduct)
+        // console.log('4: ' + newProduct.substring(5,14))
+        // console.log('2: ' + JSON.stringify(newProduct))
+        // console.log('20: ' + JSON.parse(newProduct))
+        // console.log('3: ' + JSON.parse(newProduct).Field_Location)
+
+        const newProductJson = JSON.parse(newProduct)
 
         const product = {
             docType: 'product',
             productId: productId,
-            ProductName: newProduct.ProductName, 
-            Farmer: newProduct.Farmer, 
-            Price: newProduct.Price, 
-            Quantity: newProduct.Quantity, 
-            Field_Location: newProduct.Field_Location, 
-            Farmer_Transfer_Date: newProduct.Farmer_Transfer_Date, 
-            Trader: newProduct.Trader, 
-            Trader_Location: newProduct.Trader_Location, 
-            Trader_Transfer_Date: newProduct.Trader_Transfer_Date, 
-            Manufacturer: newProduct.Manufacturer, 
-            Manufactured_Product_Name: newProduct.Manufactured_Product_Name, 
-            Brand_Name: newProduct.Brand_Name, 
-            Manufacturing_Unit_Location: newProduct.Manufacturing_Unit_Location, 
-            Manufacturer_Transfer_Date: newProduct.Manufacturer_Transfer_Date, 
-            Wholesaler: newProduct.Wholesaler, 
-            Wholesaler_Location: newProduct.Wholesaler_Location, 
-            Wholesaler_Transfer_Date: newProduct.Wholesaler_Transfer_Date, 
-            Retailer: newProduct.Retailer, 
-            Retailer_Location: newProduct.Retailer_Location,
+            ProductName: newProductJson.ProductName, 
+            Farmer: newProductJson.Farmer,  
+            Field_Location: newProductJson.Field_Location, 
+            Farmer_Transfer_Date: newProductJson.Farmer_Transfer_Date, 
+            Trader: newProductJson.Trader, 
+            Trader_Location: newProductJson.Trader_Location, 
+            Trader_Transfer_Date: newProductJson.Trader_Transfer_Date, 
+            Manufacturer: newProductJson.Manufacturer, 
+            Manufactured_Product_Name: newProductJson.Manufactured_Product_Name, 
+            Brand_Name: newProductJson.Brand_Name, 
+            Manufacturing_Unit_Location: newProductJson.Manufacturing_Unit_Location, 
+            Manufacturer_Transfer_Date: newProductJson.Manufacturer_Transfer_Date, 
+            Wholesaler: newProductJson.Wholesaler, 
+            Wholesaler_Location: newProductJson.Wholesaler_Location, 
+            Wholesaler_Transfer_Date: newProductJson.Wholesaler_Transfer_Date, 
+            Retailer: newProductJson.Retailer, 
+            Retailer_Location: newProductJson.Retailer_Location,
         };
 
         await ctx.stub.putState(productId, Buffer.from(JSON.stringify(product)));
@@ -96,8 +102,6 @@ class Spices extends Contract {
         const product = JSON.parse(productAsBytes.toString());
         product.ProductName = updatedProduct.ProductName; 
         product.Farmer = updatedProduct.Farmer;
-        product.Price = updatedProduct.Price;
-        product.Quantity = updatedProduct.Quantity; 
         product.Field_Location = updatedProduct.Field_Location;
         product.Farmer_Transfer_Date = updatedProduct.Farmer_Transfer_Date;
         product.Trader = updatedProduct.Trader;

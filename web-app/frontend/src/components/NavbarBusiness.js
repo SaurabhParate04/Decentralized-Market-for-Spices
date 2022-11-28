@@ -78,9 +78,15 @@ const NavbarBusiness = () => {
 
     const query = async() => {
         try {
+            console.log(userProfileBusiness.username)
             const url = "http://localhost:5000/api/blockchain/query"
             const response = await fetch(url, {
                 method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept':'application/json',
+                    'user': userProfileBusiness.username
+                }
             });
             const data = await response;
             setDataFromBlockchain(data)
