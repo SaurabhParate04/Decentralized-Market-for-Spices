@@ -1,21 +1,50 @@
 import React, { useEffect, useContext, useState } from "react";
 import '../Styles.css'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/NavbarBusiness'
 import Footer from '../components/Footer'
 import thumb from '../images/Cloves.jpg'
-import userContext from "../context/User/UserContext";
+import userContext from "../context/User/BusinessUserContext";
+import { useHistory, useLocation } from "react-router-dom";
 
-export default function Checkout(props) {
+export default function CheckoutBusiness(props) {
 
     const context = useContext(userContext);
-    const { userProfile } = context;
+    const { userProfileBusiness, getBusinessProfileInfo } = context;
+    const location = useLocation()
+    const history = useHistory()
 
-    const usercart = props.location.state.usercart
-    const quantity = props.location.state.quantity
-    const total = props.location.state.total
+    const [sellerCredentials, setSellerCredentials] = useState()
+    const [quantity, setQuantity] = useState(1)
+    const maxQty = location.state.quantity
+    const price = location.state.price
+    const category = location.state.category
+    const description = location.state.description
+    let total = quantity * price
+    const productName = location.state.productName
+    const seller = location.state.seller
+    const [sellerContact, setSellerContact] = useState('+91 9876543210')
+    const prodId = location.state.prodId
+    const id = location.state.id
+
+
+    const writeOnChain = async() => {
+        let obj = ''
+        const now = String(new Date())
+        if(userProfileBusiness.usertype === 'Farmer') {
+            obj = `--obj.Farmer '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Field_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+        } 
+        else if(userProfileBusiness.usertype === 'Trader') {
+            obj = `--obj.to='"Trader"' --obj.Trader '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Trader_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='"${now.replace(/ /g,"_")}"'`
+        }
+        if(maxQty - quantity >= 0) {
+            updateProd()
+        }
+        invoke('transferProduct', prodId, obj)
+    }
 
     const initiatePayment = async () => {
-        // console.log("Payment initialized")
+        await writeOnChain()
+        console.log("Payment initialized")
         try {
             const url = "http://localhost:5000/api/payment/orders";
             const response = await fetch(url, {
@@ -34,9 +63,10 @@ export default function Checkout(props) {
     }
 
     const completePayment = () => {
+        const amt = total * 100
         const options = {
             key: 'rzp_test_tELMr5dwofTrc1',
-            amount: total * 100,
+            amount: amt,
             currency: 'INR',
             handler: async (response) => {
                 try {
@@ -49,7 +79,9 @@ export default function Checkout(props) {
                         },
                         body: response
                     })
+                    // const data = res.json()
                     console.log(res)
+                    history.go(-1)
                 } catch (error) {
                     console.log(error)
                 }
@@ -59,13 +91,113 @@ export default function Checkout(props) {
         rzpay.open()
     }
 
+    const invoke = async(func, prodId, objp) => {
+        try {
+            console.log('invoke from checkoutBusiness' + func, prodId, objp)
+            const url = "http://localhost:5000/api/blockchain/invoke"
+            await fetch(url, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json',
+                    'user': String(userProfileBusiness.username),
+                    'func': String(func),
+                    'prodId': prodId,
+                    'obj': objp
+                }
+            });
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    const updateProd = async() => {
+        try {
+            let objcreate = ''
+            console.log('Update product after transaction')
+            const now = String(new Date())
+            const newId = 'Prod' + now.substring(8,10) + now.substring(11,15) + now.substring(16,18) + now.substring(19,21) + now.substring(22,24)
+            console.log('old id: ' + prodId + ' new id: ' + newId)
+            const url = "http://localhost:5000/api/agroproduct/updateproduct/" + id;
+            //eslint-disable-next-line
+            const response = await fetch(url,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        productId: newId,
+                        quantity: maxQty - quantity
+                    })
+                }
+            );
+            // console.log(sellerCredentials.firstname + '_' + sellerCredentials.lastname)
+            const loc = (sellerCredentials.location).replace(/ /g,"_")
+            // console.log(loc)
+            // console.log(userProfileBusiness.usertype)
+            if(userProfileBusiness.usertype === 'Farmer') {
+                objcreate = `--obj.productId=${newId} --obj.productName=${productName} --obj.Trader '"${sellerCredentials.firstname + '_' + sellerCredentials.lastname}"' --obj.Trader_Location='"${loc}"' --obj.Farmer_Transfer_Date='' --obj.Farmer='' --obj.Field_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+            } 
+            else if(userProfileBusiness.usertype === 'Trader') {
+                objcreate = `--obj.productId=${newId} --obj.productName=${productName} --obj.Farmer '"${sellerCredentials.firstname + '_' + sellerCredentials.lastname}"' --obj.Field_Location='"${loc}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+            }
+            // console.log(objcreate)
+            invoke('createProduct', newId, objcreate)
+        } catch(error) {
+            console.error(error)
+        }
+    }
+
+    const getSellerInfo = async() => {
+        try {
+            const url = "http://localhost:5000/api/businessuser/fetchuserx/"
+            const response = await fetch(url,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'id': seller
+                    }
+                }
+            );
+            const data = await response.json()
+            setSellerCredentials(data[0])
+            console.log(data[0])
+            setSellerContact(data[0].phoneNumber)
+        } catch(error) {
+            console.error(error)
+        }
+    }
+        
+
     const handlePayment = (e) => {
         e.preventDefault()
         initiatePayment()
     }
 
+    const quantityHandler = (e) => {
+        e.preventDefault()
+        if(e.target.value > maxQty) {
+            e.target.value = maxQty
+        }
+        setQuantity(e.target.value)
+    }
+
+    const getSeller = async() => {
+        getSellerInfo()
+    }
+
     useEffect(() => {
         window.scrollTo({ top: 0 })
+    }, [])
+
+    useEffect(() => {
+        getSeller()
+    }, [])
+
+    useEffect(() => {
+        getBusinessProfileInfo()
     }, [])
 
     return (
@@ -83,11 +215,11 @@ export default function Checkout(props) {
                                 <div className="row">
                                     <div className="form-group col-xl-6">
                                         <label>First Name <span className="text-danger">*</span></label>
-                                        <input type="text" placeholder="First Name" name="fname" className="form-control" defaultValue={userProfile.firstname} required=""></input>
+                                        <input type="text" placeholder="First Name" name="fname" className="form-control" defaultValue={userProfileBusiness.firstname} required=""></input>
                                     </div>
                                     <div className="form-group col-xl-6">
                                         <label>Last Name <span className="text-danger">*</span></label>
-                                        <input type="text" placeholder="Last Name" name="lname" className="form-control" defaultValue={userProfile.lastname} required=""></input>
+                                        <input type="text" placeholder="Last Name" name="lname" className="form-control" defaultValue={userProfileBusiness.lastname} required=""></input>
                                     </div>
                                     <div className="form-group col-xl-12">
                                         <label>Company Name</label>
@@ -345,23 +477,23 @@ export default function Checkout(props) {
                                     </div>
                                     <div className="form-group col-xl-6">
                                         <label>Street Address 1 <span className="text-danger">*</span></label>
-                                        <input type="text" placeholder="Street Address One" name="addr-1" className="form-control" defaultValue={userProfile.addressl1} required=""></input>
+                                        <input type="text" placeholder="Street Address One" name="addr-1" className="form-control" defaultValue={userProfileBusiness.addressl1} required=""></input>
                                     </div>
                                     <div className="form-group col-xl-6">
                                         <label>Street Address 2</label>
-                                        <input type="text" placeholder="Street Address Two (Optional)" name="addr-1" className="form-control" defaultValue={userProfile.addressl2}></input>
+                                        <input type="text" placeholder="Street Address Two (Optional)" name="addr-1" className="form-control" defaultValue={userProfileBusiness.addressl2}></input>
                                     </div>
                                     <div className="form-group col-xl-12">
                                         <label>Town / City <span className="text-danger">*</span></label>
-                                        <input type="text" placeholder="Town/City" name="town" className="form-control" defaultValue={userProfile.landmark} required=""></input>
+                                        <input type="text" placeholder="Town/City" name="town" className="form-control" defaultValue={userProfileBusiness.landmark} required=""></input>
                                     </div>
                                     <div className="form-group col-xl-6">
                                         <label>Phone Number <span className="text-danger">*</span></label>
-                                        <input type="text" placeholder="Phone Number" name="phone" className="form-control" defaultValue={userProfile.phoneNumber} required=""></input>
+                                        <input type="text" placeholder="Phone Number" name="phone" className="form-control" defaultValue={userProfileBusiness.phoneNumber} required=""></input>
                                     </div>
                                     <div className="form-group col-xl-6">
                                         <label>Email Address <span className="text-danger">*</span></label>
-                                        <input type="email" placeholder="Email Address" name="email" className="form-control" defaultValue={userProfile.email} required=""></input>
+                                        <input type="email" placeholder="Email Address" name="email" className="form-control" defaultValue={userProfileBusiness.email} required=""></input>
                                     </div>
                                     <div className="form-group col-xl-12 mb-0">
                                         <label>Order Notes</label>
@@ -384,25 +516,20 @@ export default function Checkout(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {
-                                            usercart.map((e, key) => {
-                                                return (
-                                                    <tr key={key}>
-                                                        <td data-title="Product">
-                                                            <div className="cart-product-wrapper">
-                                                                <img src={thumb} alt="prod1"></img>
-                                                                <div className="cart-product-body">
-                                                                    <h6> <a href="/">{e.productBrand + ' ' + e.productName}</a> </h6>
-                                                                    <p>{e.varient}</p>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td data-title="Quantity"> x {quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient] / e.price} </td>
-                                                        <td data-title="Total">{quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient]} ₹</td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
+                                        <tr>
+                                            <td data-title="Product">
+                                                <div className="cart-product-wrapper">
+                                                    <img src={thumb} alt="prod1"></img>
+                                                    <div className="cart-product-body">
+                                                        <h6> <a href="/">{productName}</a> </h6>
+                                                        <p>{seller}</p>
+                                                        <p>{sellerContact}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td data-title="Quantity"> <input type="number" name="quantity" onChange={quantityHandler} defaultValue={quantity} min={1} max={maxQty} required/> KG</td>
+                                            <td data-title="Total">₹ {total}</td>
+                                        </tr>
                                         <tr>
                                             <td data-title="Product">
                                                 <div className="cart-product-wrapper">
