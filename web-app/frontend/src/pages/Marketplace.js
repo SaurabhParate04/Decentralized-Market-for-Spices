@@ -153,6 +153,7 @@ const MarketPlace = (props) => {
                                         usertype={usertype}
                                         openModal={openModal}
                                         isSatisfied={card.isSatisfied}
+                                        prodId={card.productId}
                                     />
                                 }
                                 {/* Donatin button hidden */}

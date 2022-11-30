@@ -51,7 +51,16 @@ router.post('/createuser',[
 //Route 2 fetch user from db using id of the user  GET"api/user/fetchuser"  --login required
 router.get('/fetchuser', fetchuser, async(req,res)=>{
     const user = await User.findById(req.user.id);
-    res.send(user);
+    res.json(user);
+})
+
+router.get('/fetchuserx', async(req,res)=>{
+    try {
+        const user = await User.find({_id:req.header('id')});
+        res.json(user);
+    } catch(err) {
+        console.error(err)
+    }
 })
 
 //Route 3 update user data using userid PUT "api/user/updateuser"  --login required

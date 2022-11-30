@@ -18,7 +18,7 @@ import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 const AgroProductCard = (props) => {
     const firebaseApp = initializeApp(firebaseConfig);
     const firebaseStorage = getStorage(firebaseApp);
-    const {productName, description, price, quantity, category, user, id, myProducts, usertype, quantityRaised, openModal, isSatisfied} = props;
+    const {productName, description, price, quantity, category, user, id, myProducts, usertype, quantityRaised, openModal, isSatisfied, prodId} = props;
     const [Image, setImage] = useState()
     const context = useContext(userContext);
     const {getBusinessProfileInfo, userProfileBusiness} = context
@@ -55,7 +55,7 @@ const AgroProductCard = (props) => {
                             !isSatisfied && !myProducts && usertype === "Farmer" && <button onClick={() => openModal(id)} className="btn-custom secondary">Contact Buyer & Sell<i className="fas fa-arrow-right"></i> </button>
                         }
                         {
-                            !isSatisfied && !myProducts && usertype === "Trader" && <Link to={{"pathname":"/business/checkout", state:{productName:productName, category:category, description:description, price:price, quantity:quantity, user:user, id:id, usertype:usertype}}} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </Link>
+                            !isSatisfied && !myProducts && usertype === "Trader" && <Link to={{pathname:"/business/checkout", state:{prodId:prodId, productName:productName, category:category, description:description, price:price, quantity:quantity, seller:user, usertype:usertype, id:id}}} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </Link>
                         }
                         {
                             isSatisfied && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
