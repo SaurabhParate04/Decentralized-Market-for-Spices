@@ -103,7 +103,9 @@ export default function CheckoutBusiness(props) {
                     'user': String(userProfileBusiness.username),
                     'func': String(func),
                     'prodId': prodId,
-                    'obj': objp
+                    'obj': objp,
+                    'usertype': String(userProfileBusiness.usertype),
+                    'channel': 'mychannel'
                 }
             });
         } catch(error) {

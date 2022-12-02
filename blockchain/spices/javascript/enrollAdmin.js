@@ -11,19 +11,45 @@ const { Wallets } = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
 
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
+const argv = yargs(hideBin(process.argv)).argv;
+console.log(argv);
+
+// let args = process.argv.slice(2);
+const usertype = argv._[0];
+console.log(usertype);
+let org = '';
+
+if(usertype === 'Farmer') {
+    org = '1';
+}
+else if(usertype === 'Trader') {
+    org = '2';
+}
+else if(usertype === 'Manufacturer') {
+    org = '3';
+}
+else if(usertype === 'Wholesaler') {
+    org = '4';
+}
+else if(usertype === 'Retailer') {
+    org = '5';
+}
+
 async function main() {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', `org${org}.example.com`, `connection-org${org}.json`);
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new CA client for interacting with the CA.
-        const caInfo = ccp.certificateAuthorities['ca.org1.example.com'];
+        const caInfo = ccp.certificateAuthorities[`ca.org${org}.example.com`];
         const caTLSCACerts = caInfo.tlsCACerts.pem;
         const ca = new FabricCAServices(caInfo.url, { trustedRoots: caTLSCACerts, verify: false }, caInfo.caName);
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(__dirname, 'wallet');
+        const walletPath = path.join(__dirname, `wallet${org}`);
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
@@ -41,7 +67,7 @@ async function main() {
                 certificate: enrollment.certificate,
                 privateKey: enrollment.key.toBytes(),
             },
-            mspId: 'Org1MSP',
+            mspId: `Org${org}MSP`,
             type: 'X.509',
         };
         await wallet.put('admin', x509Identity);

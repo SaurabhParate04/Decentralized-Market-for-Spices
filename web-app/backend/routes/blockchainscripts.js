@@ -8,7 +8,7 @@ router.get('/enrolladmin', async(req, res) => {
         console.log('from enroll admin api')
         // powershell -------> wsl -d Ubuntu -- cd '/mnt/d/Final Year/Major Project/Project Files/Decentralized-Market-for-Spices/blockchain/spices/javascript' `&`& node enrollAdmin.js
         // cmd -------> wsl -e sh -c "cd '/mnt/d/Final Year/Major Project/Project Files/Decentralized-Market-for-Spices/blockchain/spices/javascript' && node enrollAdmin.js"
-        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node enrollAdmin.js"`, function(err, data, stderr) {
+        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node enrollAdmin.js ${req.header('usertype')}"`, function(err, data, stderr) {
             console.log(data)
             if(err) {
                 console.log(err)
@@ -25,7 +25,7 @@ router.get('/enrolladmin', async(req, res) => {
 router.get('/registeruser', async(req, res) => {
     try {
         console.log('from register user api')
-        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node registerUser.js ${req.header('user')}"`, function(err, data, stderr) {
+        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node registerUser.js ${req.header('user')} ${req.header('usertype')}"`, function(err, data, stderr) {
             console.log(data)
             if(err) {
                 console.log(err)
@@ -41,7 +41,7 @@ router.get('/registeruser', async(req, res) => {
 router.get('/invoke', async(req, res) => {
     try {
         console.log('from invoke api')
-        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node invoke.js ${req.header('obj')} ${req.header('func')} ${req.header('prodId')} ${req.header('user')}"`, function(err, data, stderr) {
+        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node invoke.js ${req.header('obj')} ${req.header('usertype')} ${req.header('channel')} ${req.header('func')} ${req.header('prodId')} ${req.header('user')}"`, function(err, data, stderr) {
             console.log(data)
             if(err) {
                 console.log(err)
@@ -57,7 +57,7 @@ router.get('/invoke', async(req, res) => {
 router.get('/query', async(req, res) => {
     try {
         console.log('from query api')
-        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node query.js ${req.header('user')}"`, function(err, data, stderr) {
+        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node query.js ${req.header('user')} ${req.header('usertype')} ${req.header('channel')}"`, function(err, data, stderr) {
             console.log(data)
             res.send(data)
             if(err) {

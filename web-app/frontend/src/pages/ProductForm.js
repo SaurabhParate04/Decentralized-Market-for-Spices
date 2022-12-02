@@ -248,7 +248,9 @@ export default function ProductForm(props) {
                     'user': String(userProfileBusiness.username),
                     'func': func,
                     'prodId': prodId,
-                    'obj': obj
+                    'obj': obj,
+                    'usertype': String(userProfileBusiness.usertype),
+                    'channel': 'mychannel'
                 }
             });
         } catch(error) {

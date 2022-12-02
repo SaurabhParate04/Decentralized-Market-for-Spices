@@ -30,13 +30,15 @@ const NavbarBusiness = () => {
     }, [loggedInBusiness])
 
     const enrollAdmin = async() => {
+        console.log(userProfileBusiness.usertype)
         try {
             const url = "http://localhost:5000/api/blockchain/enrolladmin"
             await fetch(url, {
                 method: 'GET', 
                 headers: {
                     'Content-Type': 'application/json',
-                    'accept':'application/json',
+                    'accept': 'application/json',
+                    'usertype': userProfileBusiness.usertype
                 }
             });
         } catch(error) {
@@ -53,7 +55,8 @@ const NavbarBusiness = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'accept':'application/json',
-                    'user': userProfileBusiness.username
+                    'user': userProfileBusiness.username,
+                    'usertype': userProfileBusiness.usertype
                 }
             });
         } catch(error) {
@@ -85,7 +88,9 @@ const NavbarBusiness = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'accept':'application/json',
-                    'user': userProfileBusiness.username
+                    'user': userProfileBusiness.username,
+                    'usertype': userProfileBusiness.usertype,
+                    'channel': 'mychannel'
                 }
             });
             const data = await response;

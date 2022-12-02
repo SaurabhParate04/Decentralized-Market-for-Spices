@@ -12,20 +12,39 @@ const fs = require('fs');
 const path = require('path');
 let args = process.argv.slice(2);
 const user = args[0];
+const usertype = args[1];
 // console.log(user);
+
+let org = '';
+
+if(usertype === 'Farmer') {
+    org = '1';
+}
+else if(usertype === 'Trader') {
+    org = '2';
+}
+else if(usertype === 'Manufacturer') {
+    org = '3';
+}
+else if(usertype === 'Wholesaler') {
+    org = '4';
+}
+else if(usertype === 'Retailer') {
+    org = '5';
+}
 
 async function registerUser() {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', `org${org}.example.com`, `connection-org${org}.json`);
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new CA client for interacting with the CA.
-        const caURL = ccp.certificateAuthorities['ca.org1.example.com'].url;
+        const caURL = ccp.certificateAuthorities[`ca.org${org}.example.com`].url;
         const ca = new FabricCAServices(caURL);
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(__dirname, 'wallet');
+        const walletPath = path.join(__dirname, `wallet${org}`);
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
@@ -50,7 +69,7 @@ async function registerUser() {
 
         // Register the user, enroll the user, and import the new identity into the wallet.
         const secret = await ca.register({
-            affiliation: 'org1.department1',
+            affiliation: `org${org}.department1`,
             enrollmentID: user,
             role: 'client'
         }, adminUser);
@@ -63,7 +82,7 @@ async function registerUser() {
                 certificate: enrollment.certificate,
                 privateKey: enrollment.key.toBytes(),
             },
-            mspId: 'Org1MSP',
+            mspId: `Org${org}MSP`,
             type: 'X.509',
         };
         await wallet.put(user, x509Identity);

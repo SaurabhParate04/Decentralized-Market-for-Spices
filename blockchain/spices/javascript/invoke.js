@@ -20,17 +20,37 @@ const func = argv._[argv._.length - 3];
 const productId = argv._[argv._.length - 2];
 const user = argv._[argv._.length - 1];
 const obj = argv.obj;
-console.log(func, productId, user);
-console.log('object -> field location = ' + obj.Field_Location);
+const usertype = argv._[argv._.length - 5];
+const channel = argv._[argv._.length - 4];
+
+console.log(func, productId, user, usertype);
+
+let org = '';
+
+if(usertype === 'Farmer') {
+    org = '1';
+}
+else if(usertype === 'Trader') {
+    org = '2';
+}
+else if(usertype === 'Manufacturer') {
+    org = '3';
+}
+else if(usertype === 'Wholesaler') {
+    org = '4';
+}
+else if(usertype === 'Retailer') {
+    org = '5';
+}
 
 async function main() {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', `org${org}.example.com`, `connection-org${org}.json`);
         let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(__dirname, 'wallet');
+        const walletPath = path.join(__dirname, `wallet${org}`);
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
@@ -48,7 +68,7 @@ async function main() {
         await gateway.connect(ccp, { wallet, identity: user, discovery: { enabled: true, asLocalhost: true } });
 
         // Get the network (channel) our contract is deployed to.
-        const network = await gateway.getNetwork('mychannel');
+        const network = await gateway.getNetwork(`${channel}`);
 
         // Get the contract from the network.
         const contract = network.getContract('spices');
