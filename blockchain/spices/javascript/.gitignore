@@ -76,5 +76,13 @@ typings/
 # Serverless directories
 .serverless
 
-wallet
-!wallet/.gitkeep
+wallet1
+!wallet1/.gitkeep
+wallet2
+!wallet2/.gitkeep
+wallet3
+!wallet3/.gitkeep
+wallet4
+!wallet4/.gitkeep
+wallet5
+!wallet5/.gitkeep

@@ -23,9 +23,11 @@ fi
 
 # clean out any old identites in the wallets
 rm -rf javascript/wallet/*
-rm -rf java/wallet/*
-rm -rf typescript/wallet/*
-rm -rf go/wallet/*
+rm -rf javascript/wallet1/*
+rm -rf javascript/wallet2/*
+rm -rf javascript/wallet3/*
+rm -rf javascript/wallet4/*
+rm -rf javascript/wallet5/*
 
 # launch network; create channel and join peer to channel
 pushd ../test-network
