@@ -29,6 +29,7 @@ export default function CheckoutBusiness(props) {
 
     const writeOnChain = async() => {
         let obj = ''
+        let channel = 'mychannel'
         const now = String(new Date())
         if(userProfileBusiness.usertype === 'Farmer') {
             obj = `--obj.Farmer '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Field_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
@@ -36,10 +37,15 @@ export default function CheckoutBusiness(props) {
         else if(userProfileBusiness.usertype === 'Trader') {
             obj = `--obj.to='"Trader"' --obj.Trader '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Trader_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='"${now.replace(/ /g,"_")}"'`
         }
-        if(maxQty - quantity >= 0) {
+        if((maxQty - quantity >= 0) && maxQty !== 0) {
             updateProd()
         }
-        invoke('transferProduct', prodId, obj)
+        if(userProfileBusiness.usertype === 'Manufacturer') {
+            obj = `--obj.to='"Manufacturer"' --obj.Manufacturer '"${(userProfileBusiness.companyname).replace(/ /g,"_")}"' --obj.Manufacturing_Unit_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Trader_Transfer_Date='"${now.replace(/ /g,"_")}"'`
+            addManufacturer()
+            channel = 'channel2'
+        }
+        invoke('transferProduct', prodId, obj, channel)
     }
 
     const initiatePayment = async () => {
@@ -91,7 +97,7 @@ export default function CheckoutBusiness(props) {
         rzpay.open()
     }
 
-    const invoke = async(func, prodId, objp) => {
+    const invoke = async(func, prodId, objp, channel) => {
         try {
             console.log('invoke from checkoutBusiness' + func, prodId, objp)
             const url = "http://localhost:5000/api/blockchain/invoke"
@@ -105,7 +111,7 @@ export default function CheckoutBusiness(props) {
                     'prodId': prodId,
                     'obj': objp,
                     'usertype': String(userProfileBusiness.usertype),
-                    'channel': 'mychannel'
+                    'channel': channel
                 }
             });
         } catch(error) {
@@ -120,6 +126,7 @@ export default function CheckoutBusiness(props) {
             const now = String(new Date())
             const newId = 'Prod' + now.substring(8,10) + now.substring(11,15) + now.substring(16,18) + now.substring(19,21) + now.substring(22,24)
             console.log('old id: ' + prodId + ' new id: ' + newId)
+            const status = ((maxQty - quantity) === 0)
             const url = "http://localhost:5000/api/agroproduct/updateproduct/" + id;
             //eslint-disable-next-line
             const response = await fetch(url,
@@ -130,7 +137,8 @@ export default function CheckoutBusiness(props) {
                     },
                     body: JSON.stringify({
                         productId: newId,
-                        quantity: maxQty - quantity
+                        quantity: maxQty - quantity,
+                        isSatiafied: status
                     })
                 }
             );
@@ -145,7 +153,7 @@ export default function CheckoutBusiness(props) {
                 objcreate = `--obj.productId=${newId} --obj.productName=${productName} --obj.Farmer '"${sellerCredentials.firstname + '_' + sellerCredentials.lastname}"' --obj.Field_Location='"${loc}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
             }
             // console.log(objcreate)
-            invoke('createProduct', newId, objcreate)
+            invoke('createProduct', newId, objcreate, 'mychannel')
         } catch(error) {
             console.error(error)
         }
@@ -171,7 +179,22 @@ export default function CheckoutBusiness(props) {
             console.error(error)
         }
     }
-        
+    
+    const addManufacturer = async() => {
+        const url = "http://localhost:5000/api/agroproduct/updateproduct/" + id;
+        //eslint-disable-next-line
+        const response = await fetch(url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    manufacturer: userProfileBusiness.username
+                })
+            }
+        );
+    }
 
     const handlePayment = (e) => {
         e.preventDefault()
@@ -529,7 +552,8 @@ export default function CheckoutBusiness(props) {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td data-title="Quantity"> <input type="number" name="quantity" onChange={quantityHandler} defaultValue={quantity} min={1} max={maxQty} required/> KG</td>
+                                            {userProfileBusiness.usertype !== 'Manufacturer' && <td data-title="Quantity"> <input type="number" name="quantity" onChange={quantityHandler} defaultValue={quantity} min={1} max={maxQty} required/> KG</td>}
+                                            {userProfileBusiness.usertype === 'Manufacturer' && <td data-title="Quantity"> <input type="number" name="quantity" defaultValue={maxQty} min={maxQty} max={maxQty} required/> KG</td>}
                                             <td data-title="Total">₹ {total}</td>
                                         </tr>
                                         <tr>

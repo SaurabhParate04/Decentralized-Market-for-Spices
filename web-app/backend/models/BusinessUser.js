@@ -45,6 +45,10 @@ const businessUserSchema = new mongoose.Schema({
     location:{
         type:String,
         required: true
+    },
+    companyname:{
+        type:String,
+        default: ''
     }
 });
 

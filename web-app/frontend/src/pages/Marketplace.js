@@ -138,7 +138,7 @@ const MarketPlace = (props) => {
                         }).map(card => (
                             <>
                                 {
-                                    (card.action !== usertype) && <AgroProductCard
+                                    ((usertype === 'Farmer' && card.action === 'Trader') || (usertype === 'Trader' && card.action === 'Farmer') || (usertype === 'Manufacturer' && card.isSatisfied === true)) && <AgroProductCard
                                         key={card._id + "5"}
                                         id={card._id}
                                         productName={card.productName}
@@ -154,6 +154,7 @@ const MarketPlace = (props) => {
                                         openModal={openModal}
                                         isSatisfied={card.isSatisfied}
                                         prodId={card.productId}
+                                        originalQty={card.originalQty}
                                     />
                                 }
                                 {/* Donatin button hidden */}

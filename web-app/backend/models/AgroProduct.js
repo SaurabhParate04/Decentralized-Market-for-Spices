@@ -42,6 +42,14 @@ const agroProductSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    manufacturer: {
+        type: String,
+        required: false,
+        default: ""
+    },
+    originalQty: {
+        type: Number
     }
 })
 

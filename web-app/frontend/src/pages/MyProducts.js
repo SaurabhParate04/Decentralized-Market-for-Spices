@@ -97,7 +97,7 @@ const MyProducts = (props) => {
                         allCardsInfo.filter(card =>{
                             return cardFilter(card.category);
                         }).map(card => (
-                            card.user === _id && <AgroProductCard
+                            (card.user === _id || (userProfileBusiness.usertype === 'Manufacturer' && card.manufacturer === userProfileBusiness.companyname)) && <AgroProductCard
                                 key={card._id + "5"}
                                 id={card._id}
                                 productName={card.productName}
@@ -110,6 +110,7 @@ const MyProducts = (props) => {
                                 user={card.user}
                                 myProducts={true}
                                 isSatisfied={card.isSatisfied}
+                                originalQty={card.originalQty}
                             />
                         ))
                     }{' '}

@@ -196,7 +196,8 @@ const NavbarBusiness = () => {
                                     <li className="menu-item"> <a href="about-us.html">About Us</a> </li>
                                     <li className="menu-item"> <Link to={{ pathname: "/business/productform", state: { button_name: "Add New", info: { productName: "", productBrand: "", category: "", description: "", price: "", quantity: "" } } }} >Add new product</Link> </li>
                                     <li className="menu-item"> <a href="/business/marketplace">Explore market</a> </li>
-                                    <li className="menu-item"> <a href="/business/myproducts">My Products</a> </li>
+                                    {(userProfileBusiness.usertype === 'Farmer' || userProfileBusiness.usertype === 'Trader') && <li className="menu-item"> <a href="/business/myproducts">My Products</a> </li>}
+                                    {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <a href="/business/myproducts">Inventory</a> </li>}
                                     <li className="menu-item"> <button onClick={enrollAdmin}>Enroll Admin</button> </li>
                                     <li className="menu-item"> <button onClick={registerUser}>Register User</button> </li>
                                     <li className="menu-item"> <button onClick={query}>Query</button> </li>
