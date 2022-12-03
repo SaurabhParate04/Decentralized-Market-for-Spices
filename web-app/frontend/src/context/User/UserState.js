@@ -1,6 +1,14 @@
 import React, {useState} from 'react'
 import userContext from './UserContext'
 import { Redirect } from 'react-router-dom';
+//initialize firebase instances
+import { initializeApp } from "firebase/app";
+import firebaseConfig from '../../config/firebaseConfig';
+import { getStorage, ref,getDownloadURL } from "firebase/storage";
+
+
+const firebaseApp = initializeApp(firebaseConfig);
+const firebaseStorage = getStorage(firebaseApp);
 
 const UserState = ({children}) => {
     
@@ -13,9 +21,9 @@ const UserState = ({children}) => {
     //global state for storing profile info, to display userinfo and edit profile
     const [userProfile, setuserProfile] = useState({email:"",username:"", firstname:"", lastname:"", phoneno:"", addressl1:"", addressl2:"", landmark:"", pincode:"",  usertype:""});
 
-    // const [profileImg, setprofileImg] = useState("");
+    const [profileImg, setprofileImg] = useState("");
 
-    const [usercart, setUserCart] = useState([])
+    const [usercart, setUserCart] = useState([]);
 
     //gets userInfo
     const getProfileInfo = async() =>{
@@ -39,8 +47,8 @@ const UserState = ({children}) => {
             setuserProfile(json)
             console.log(json)
 
-            // let Purl = await getDownloadURL( ref(firebaseStorage, `profile/${json.username}`))
-            // setprofileImg(Purl);
+            let Purl = await getDownloadURL( ref(firebaseStorage, `profile/${json.username}`))
+            setprofileImg(Purl);
 
         } catch (error) {
             console.error(error.message);

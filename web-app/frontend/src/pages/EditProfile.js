@@ -201,7 +201,7 @@ export const EditProfile = (props) => {
                   </div>
 
                   <div className="row">
-                    <div className="mb-1 col-md-6">
+                    <div className="mb-1 col-md-12">
                       <label htmlFor="landmark" className="form-label">
                         <div>Landmark</div>
                       </label>
@@ -216,7 +216,7 @@ export const EditProfile = (props) => {
                   </div>
 
                   <div className="row">
-                    <div className="mb-1 col-md-6">
+                    <div className="mb-1 col-md-12">
                       <label htmlFor="pincode" className="form-label">
                         <div>Pincode</div>
                       </label>

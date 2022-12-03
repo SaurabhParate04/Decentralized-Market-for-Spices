@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import '../Styles.css'
 import Navbar from '../components/NavbarBusiness'
 import Footer from '../components/Footer'
+import Carousel from '../components/Carousel'
 
 
 const HomeBusiness = (props) => {
@@ -16,6 +17,8 @@ const HomeBusiness = (props) => {
     return (
         <div>
             <Navbar />
+
+            <Carousel/>
                         
             <Footer />            
         </div>
