@@ -5798,3 +5798,9 @@ align-items: center;
 .card-faded {
   opacity: 0.85;
 }
+
+.slider-text{
+  opacity: 1;
+  width: 5040px;
+  transform: translate3d(-720px, 0px, 0px);
+}
