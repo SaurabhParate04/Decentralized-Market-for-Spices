@@ -28,6 +28,7 @@ import { EditProfile } from './pages/EditProfile';
 import CheckoutBusiness from './pages/CheckoutBusiness';
 import Myorder from './pages/Myorder';
 
+
 function App() {
   const useScrollToTop = () => {
     const location = useLocation();
