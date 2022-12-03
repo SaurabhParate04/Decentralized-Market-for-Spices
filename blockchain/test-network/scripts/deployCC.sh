@@ -14,9 +14,11 @@ CC_COLL_CONFIG=${9:-"NA"}
 DELAY=${10:-"3"}
 MAX_RETRY=${11:-"5"}
 VERBOSE=${12:-"false"}
+CHANNEL2_NAME=${13:-"channel2"}
 
 println "executing with the following"
 println "- CHANNEL_NAME: ${C_GREEN}${CHANNEL_NAME}${C_RESET}"
+println "- CHANNEL2_NAME: ${C_GREEN}${CHANNEL2_NAME}${C_RESET}"
 println "- CC_NAME: ${C_GREEN}${CC_NAME}${C_RESET}"
 println "- CC_SRC_PATH: ${C_GREEN}${CC_SRC_PATH}${C_RESET}"
 println "- CC_SRC_LANGUAGE: ${C_GREEN}${CC_SRC_LANGUAGE}${C_RESET}"
@@ -130,6 +132,8 @@ infoln "Installing chaincode on peer0.org1..."
 installChaincode 1
 infoln "Install chaincode on peer0.org2..."
 installChaincode 2
+infoln "Install chaincode on peer0.org3..."
+installChaincode 3
 
 ## query whether the chaincode is installed
 queryInstalled 1
@@ -150,12 +154,23 @@ approveForMyOrg 2
 checkCommitReadiness 1 "\"Org1MSP\": true" "\"Org2MSP\": true"
 checkCommitReadiness 2 "\"Org1MSP\": true" "\"Org2MSP\": true"
 
+approveForMyOrg2 2
+checkCommitReadiness2 2 "\"Org2MSP\": true" "\"Org3MSP\": false"
+checkCommitReadiness2 3 "\"Org2MSP\": true" "\"Org3MSP\": false"
+
+approveForMyOrg2 3
+checkCommitReadiness2 2 "\"Org2MSP\": true" "\"Org3MSP\": true"
+checkCommitReadiness2 3 "\"Org2MSP\": true" "\"Org3MSP\": true"
+
 ## now that we know for sure both orgs have approved, commit the definition
 commitChaincodeDefinition 1 2
+commitChaincodeDefinition2 2 3
 
 ## query on both orgs to see that the definition committed successfully
 queryCommitted 1
 queryCommitted 2
+queryCommitted2 2
+queryCommitted2 3
 
 ## Invoke the chaincode - this does require that the chaincode have the 'initLedger'
 ## method defined
@@ -163,6 +178,7 @@ if [ "$CC_INIT_FCN" = "NA" ]; then
   infoln "Chaincode initialization is not required"
 else
   chaincodeInvokeInit 1 2
+  chaincodeInvokeInit2 2 3
 fi
 
 exit 0
