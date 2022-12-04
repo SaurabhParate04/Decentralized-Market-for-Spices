@@ -46,6 +46,21 @@ function Registration() {
                     })
                 });
             const testjson = await response.json();
+
+
+            const urlcart = "http://localhost:5000/api/cart/createcart"
+
+            const responsecart = await fetch(urlcart, 
+                {
+                    method : 'POST',
+                    headers : {
+                        'Content-Type': 'application/json',
+                    },
+                    body : JSON.stringify({
+                        username: credentialSignUp.username,
+                    })
+                });
+            const testjsoncart = await responsecart.json();
             // let imgRef = ref(firebaseStorage, `profile/${credentialSignUp.username}`);
             // uploadBytes(imgRef, profileImageReg).then(() => {
             //     console.log('image Uploaded!');
