@@ -15,7 +15,7 @@ function Myorder(props) {
             <div className="h-100 gradient-custom" style={{marginTop:"100px"}}>
                 <div className="container py-5 h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
-                        <div className="col-lg-10 col-xl-8">
+                        <div className="col-lg-10 col-xl-11">
                             <div className="card my-order-card-container">
                                 <div className="card-body p-4">
                                     <div className="card shadow-0 border mb-4">
@@ -46,16 +46,16 @@ function Myorder(props) {
                                                     <p className="text-muted mb-0">Nutmeg powder</p>
                                                 </div>
                                                 <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                    <p className="text-muted mb-0 small">United Spices</p>
+                                                    <p className="text-muted mb-0 ">United Spices</p>
                                                 </div>
                                                 <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
                                                     {/* <p className="text-muted mb-0 small">Capacity: 64GB</p> */}
                                                 </div>
                                                 <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                    <p className="text-muted mb-0 small">Qty: 150g</p>
+                                                    <p className="text-muted mb-0 ">Qty: 150g</p>
                                                 </div>
                                                 <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                                    <p className="text-muted mb-0 small">Rs 150</p>
+                                                    <p className="text-muted mb-0">Rs 150</p>
                                                 </div>
                                             </div>
                                         </div>
