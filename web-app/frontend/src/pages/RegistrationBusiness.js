@@ -12,7 +12,7 @@ function RegistrationBusiness() {
 
   const [credentialSignUpBusiness, setcredentialSignUpBusiness] = useState({ email: globalBusinessCredentials.email, username: globalBusinessCredentials.username, password: globalBusinessCredentials.password, addressl1: "", addressl2: "", firstname: "", lastname: "", phoneNumber: "", landmark: "", pincode: "", usertype: "" });
 
-  const [usertype, setusertype] = useState(credentialSignUpBusiness.usertype)
+  const [usertype, setUsertype] = useState(credentialSignUpBusiness.usertype)
 
   useEffect(() => {
     console.log(credentialSignUpBusiness);
@@ -22,8 +22,8 @@ function RegistrationBusiness() {
   }, []);
 
   const handleUsertype = (e) => {
-    setusertype(e.target.value)
-    console.log(e)
+    setUsertype(e.target.value)
+    console.log(e);
 }
 
   const handleReg_2 = async (e) => {
@@ -50,7 +50,7 @@ function RegistrationBusiness() {
             phoneNumber: credentialSignUpBusiness.phoneNumber,
             landmark: credentialSignUpBusiness.landmark,
             pincode: credentialSignUpBusiness.pincode,
-            usertype: usertype,
+            usertype: credentialSignUpBusiness.usertype || usertype,
           })
         });
       const testjson = await response.json();
@@ -106,12 +106,13 @@ function RegistrationBusiness() {
                   </div>
                   <div className="input-box_reg" >
                     <span className="details">Usertype</span>
-                    <select className="form-select" name = "usertype" defaultValue={usertype} onchange = {handleUsertype}aria-label="Default select example" required>
-                      <option value="Farmer" name = "Farmer">Farmer</option>
-                      <option value="Trader" name = "Trader">Trader</option>
-                      <option value="Manufacturer" name = "Manufacturer">Manufacturer</option>
-                      <option value="Wholesaler" name = "Wholesaler" >Wholesaler</option>
-                      <option value="Retailer" name = "Retailer" >Retailer</option>
+                    <select className="form-select select-details" name = "usertype" defaultValue={usertype || "select"} onchange = {handleUsertype}  required>
+                      <option selected value="select" >select</option>
+                      <option value="Farmer" >Farmer</option>
+                      <option value="Trader" >Trader</option>
+                      <option value="Manufacturer">Manufacturer</option>
+                      <option value="Wholesaler"  >Wholesaler</option>
+                      <option value="Retailer" >Retailer</option>
                     </select>
                   </div>
                   <div className="input-box_reg" style={{ width: "100%" }}>

@@ -95,17 +95,17 @@ function Registration() {
                                         <span className="details_reg">Last name</span>
                                         <input type="text" name="lastname" placeholder="Enter your Last name" required />
                                     </div>
-                                    <div className="input-box_reg">
+                                    {/* <div className="input-box_reg">
                                         <span className="details">Username</span>
                                         <input type="text" name="username" placeholder="Enter Username" required />
                                     </div>
                                     <div className="input-box_reg">
                                         <span className="details">Password</span>
                                         <input type="text" name="password" placeholder="Enter Password" required />
-                                    </div>
+                                    </div> */}
                                     <div className="input-box_reg">
                                         <span className="details">Email</span>
-                                        <input type="text" name="email" placeholder="Enter Email" required />
+                                        <input type="text" name="email" placeholder="Enter Email" defaultValue={credentialSignUp.email} required />
                                     </div>
                                     <div className="input-box_reg">
                                         <span className="details">Phone Number</span>
