@@ -27,6 +27,7 @@ import MyProducts from './pages/MyProducts';
 import { EditProfile } from './pages/EditProfile';
 import CheckoutBusiness from './pages/CheckoutBusiness';
 import Myorder from './pages/Myorder';
+import RawMaterial from './pages/RawMaterial';
 
 
 function App() {
@@ -111,6 +112,10 @@ function App() {
 
             <Route exact path="/business/marketplace">
               <MarketPlace useScrollToTop={useScrollToTop} />
+            </Route>
+
+            <Route exact path="/business/rawmaterial">
+              <RawMaterial useScrollToTop={useScrollToTop} />
             </Route>
 
             <Route exact path="/business/myproducts">
