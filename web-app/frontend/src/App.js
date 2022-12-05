@@ -28,6 +28,7 @@ import { EditProfile } from './pages/EditProfile';
 import CheckoutBusiness from './pages/CheckoutBusiness';
 import Myorder from './pages/Myorder';
 import RawMaterial from './pages/RawMaterial';
+import Inventory from './pages/Inventory';
 
 
 function App() {
@@ -120,6 +121,10 @@ function App() {
 
             <Route exact path="/business/myproducts">
               <MyProducts useScrollToTop={useScrollToTop} />
+            </Route>
+
+            <Route exact path="/business/inventory">
+              <Inventory useScrollToTop={useScrollToTop} />
             </Route>
 
             <Route exact path="/business/checkout">

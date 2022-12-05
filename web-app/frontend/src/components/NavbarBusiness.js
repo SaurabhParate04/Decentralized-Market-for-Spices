@@ -202,7 +202,7 @@ const NavbarBusiness = () => {
                                     {(userProfileBusiness.usertype === 'Farmer' || userProfileBusiness.usertype === 'Trader') && <li className="menu-item"> <a href="/business/marketplace">Explore market</a> </li>}
                                     {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <a href="/business/rawmaterial">Explore market</a> </li>}
                                     {(userProfileBusiness.usertype === 'Farmer' || userProfileBusiness.usertype === 'Trader') && <li className="menu-item"> <a href="/business/myproducts">My Products</a> </li>}
-                                    {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <a href="/business/myproducts">Inventory</a> </li>}
+                                    {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <a href="/business/inventory">Inventory</a> </li>}
                                     <li className="menu-item"> <button onClick={enrollAdmin}>Enroll Admin</button> </li>
                                     <li className="menu-item"> <button onClick={registerUser}>Register User</button> </li>
                                     <li className="menu-item"> <button onClick={query}>Query</button> </li>

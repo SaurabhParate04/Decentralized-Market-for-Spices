@@ -43,6 +43,7 @@ function RegistrationBusiness() {
             landmark: credentialSignUpBusiness.landmark,
             pincode: credentialSignUpBusiness.pincode,
             usertype: credentialSignUpBusiness.usertype,
+            location: 'business 5 manufacturing unit location'
           })
         });
       const testjson = await response.json();
