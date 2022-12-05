@@ -14,8 +14,8 @@ export default function CheckoutBusiness(props) {
     const history = useHistory()
 
     const [sellerCredentials, setSellerCredentials] = useState()
-    const [quantity, setQuantity] = useState(1)
     const maxQty = location.state.quantity
+    const [quantity, setQuantity] = useState(maxQty)
     const price = location.state.price
     const category = location.state.category
     const description = location.state.description
@@ -25,6 +25,7 @@ export default function CheckoutBusiness(props) {
     const [sellerContact, setSellerContact] = useState('+91 9876543210')
     const prodId = location.state.prodId
     const id = location.state.id
+    const [dataFromBlockchain, setDataFromBlockchain] = useState({})
 
 
     const writeOnChain = async() => {
@@ -37,10 +38,11 @@ export default function CheckoutBusiness(props) {
         else if(userProfileBusiness.usertype === 'Trader') {
             obj = `--obj.to='"Trader"' --obj.Trader '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Trader_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='"${now.replace(/ /g,"_")}"'`
         }
-        if((maxQty - quantity >= 0) && maxQty !== 0) {
+        if(userProfileBusiness.usertype !== 'Manufacturer' && (maxQty - quantity >= 0) && maxQty !== 0) {
             updateProd()
+            createNewProdInChannel2(prodId)
         }
-        if(userProfileBusiness.usertype === 'Manufacturer') {
+        else if(userProfileBusiness.usertype === 'Manufacturer') {
             obj = `--obj.to='"Manufacturer"' --obj.Manufacturer '"${(userProfileBusiness.companyname).replace(/ /g,"_")}"' --obj.Manufacturing_Unit_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Trader_Transfer_Date='"${now.replace(/ /g,"_")}"'`
             addManufacturer()
             channel = 'channel2'
@@ -99,7 +101,7 @@ export default function CheckoutBusiness(props) {
 
     const invoke = async(func, prodId, objp, channel) => {
         try {
-            console.log('invoke from checkoutBusiness' + func, prodId, objp)
+            console.log('invoke from checkoutBusiness' + func, prodId)
             const url = "http://localhost:5000/api/blockchain/invoke"
             await fetch(url, {
                 method: 'GET', 
@@ -126,7 +128,8 @@ export default function CheckoutBusiness(props) {
             const now = String(new Date())
             const newId = 'Prod' + now.substring(8,10) + now.substring(11,15) + now.substring(16,18) + now.substring(19,21) + now.substring(22,24)
             console.log('old id: ' + prodId + ' new id: ' + newId)
-            const status = ((maxQty - quantity) === 0)
+            const status = ((maxQty - quantity) === 0)? true: false
+            console.log(status)
             const url = "http://localhost:5000/api/agroproduct/updateproduct/" + id;
             //eslint-disable-next-line
             const response = await fetch(url,
@@ -142,6 +145,27 @@ export default function CheckoutBusiness(props) {
                     })
                 }
             );
+
+            const url2 = "http://localhost:5000/api/rawmaterial/createproduct"
+            //eslint-disable-next-line
+            const response2 = await fetch(url2,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        productId: prodId,
+                        productName: productName,
+                        price: price,
+                        quantity: quantity,
+                        manufacturer: '',
+                        description: description,
+                        user: seller
+                    })
+                }
+            );
+
             // console.log(sellerCredentials.firstname + '_' + sellerCredentials.lastname)
             const loc = (sellerCredentials.location).replace(/ /g,"_")
             // console.log(loc)
@@ -181,7 +205,7 @@ export default function CheckoutBusiness(props) {
     }
     
     const addManufacturer = async() => {
-        const url = "http://localhost:5000/api/agroproduct/updateproduct/" + id;
+        const url = "http://localhost:5000/api/rawmaterial/updateproduct/" + id;
         //eslint-disable-next-line
         const response = await fetch(url,
             {
@@ -194,6 +218,38 @@ export default function CheckoutBusiness(props) {
                 })
             }
         );
+    }
+
+    const createNewProdInChannel2 = async(prodId) => {
+        // await query(prodId, 'mychannel')
+        // console.log(dataFromBlockchain.productName)
+        let obj = `--obj.productId=${prodId} --obj.productName='' --obj.Farmer '' --obj.Field_Location='' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+        await invoke('createProduct', prodId, obj, 'channel2')
+    }
+
+    const query = async(prodId, channel) => {
+        try {
+            console.log('query from checkoutBusiness' + prodId)
+            const url = "http://localhost:5000/api/blockchain/query"
+            const response = await fetch(url, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json',
+                    'user': String(userProfileBusiness.username),
+                    'prodId': prodId,
+                    'usertype': String(userProfileBusiness.usertype),
+                    'channel': channel
+                }
+            });
+            const data = await response.json();
+            // console.log(data.substring(42))
+            const obj = JSON.parse(data.substring(42))
+            setDataFromBlockchain(obj)
+            console.log(obj.productName)
+        } catch(error) {
+            console.log(error)
+        }
     }
 
     const handlePayment = (e) => {
