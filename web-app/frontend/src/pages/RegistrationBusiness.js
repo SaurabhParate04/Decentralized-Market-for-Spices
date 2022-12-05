@@ -9,7 +9,10 @@ function RegistrationBusiness() {
   const context = useContext(BusinessUserContext);
   const { globalBusinessCredentials } = context;
 
+
   const [credentialSignUpBusiness, setcredentialSignUpBusiness] = useState({ email: globalBusinessCredentials.email, username: globalBusinessCredentials.username, password: globalBusinessCredentials.password, addressl1: "", addressl2: "", firstname: "", lastname: "", phoneNumber: "", landmark: "", pincode: "", usertype: "" });
+
+  const [usertype, setusertype] = useState(credentialSignUpBusiness.usertype)
 
   useEffect(() => {
     console.log(credentialSignUpBusiness);
@@ -17,6 +20,11 @@ function RegistrationBusiness() {
     //     console.log(credentialSignUp);
     // }
   }, []);
+
+  const handleUsertype = (e) => {
+    setusertype(e.target.value)
+    console.log(e)
+}
 
   const handleReg_2 = async (e) => {
     e.preventDefault();
@@ -42,7 +50,7 @@ function RegistrationBusiness() {
             phoneNumber: credentialSignUpBusiness.phoneNumber,
             landmark: credentialSignUpBusiness.landmark,
             pincode: credentialSignUpBusiness.pincode,
-            usertype: credentialSignUpBusiness.usertype,
+            usertype: usertype,
           })
         });
       const testjson = await response.json();
@@ -80,25 +88,31 @@ function RegistrationBusiness() {
                     <span className="details_reg">Last name</span>
                     <input type="text" name="lastname" placeholder="Enter your Last name" required />
                   </div>
-                  <div className="input-box_reg">
+                  {/* <div className="input-box_reg">
                     <span className="details">Username</span>
                     <input type="text" name="username" placeholder="Enter Username" required />
                   </div>
                   <div className="input-box_reg">
                     <span className="details">Password</span>
                     <input type="text" name="password" placeholder="Enter Password" required />
-                  </div>
-                  <div className="input-box_reg">
+                  </div> */}
+                  {/* <div className="input-box_reg">
                     <span className="details">Email</span>
                     <input type="text" name="email" placeholder="Enter Email" required />
-                  </div>
+                  </div> */}
                   <div className="input-box_reg">
                     <span className="details">Phone Number</span>
                     <input type="text" name="phoneNumber" placeholder="Enter your Phone Number" required />
                   </div>
-                  <div className="input-box_reg" style={{ width: "100%" }}>
+                  <div className="input-box_reg" >
                     <span className="details">Usertype</span>
-                    <input type="text" name="usertype" placeholder="Enter your Usertype" required />
+                    <select className="form-select" name = "usertype" defaultValue={usertype} onchange = {handleUsertype}aria-label="Default select example" required>
+                      <option value="Farmer" name = "Farmer">Farmer</option>
+                      <option value="Trader" name = "Trader">Trader</option>
+                      <option value="Manufacturer" name = "Manufacturer">Manufacturer</option>
+                      <option value="Wholesaler" name = "Wholesaler" >Wholesaler</option>
+                      <option value="Retailer" name = "Retailer" >Retailer</option>
+                    </select>
                   </div>
                   <div className="input-box_reg" style={{ width: "100%" }}>
                     <span className="details">Address</span>
