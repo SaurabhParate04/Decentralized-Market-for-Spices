@@ -111,6 +111,7 @@ const MyProducts = (props) => {
                                 myProducts={true}
                                 isSatisfied={card.isSatisfied}
                                 originalQty={card.originalQty}
+                                manufacturer={card.manufacturer}
                             />
                         ))
                     }{' '}

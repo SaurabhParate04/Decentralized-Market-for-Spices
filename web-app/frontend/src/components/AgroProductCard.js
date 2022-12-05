@@ -61,13 +61,13 @@ const AgroProductCard = (props) => {
                             isSatisfied && usertype !== "Manufacturer" && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
                         }
                         {
-                            isSatisfied && !myProducts && usertype === "Manufacturer" && manufacturer === '' && <Link to={{pathname:"/business/checkout", state:{prodId:prodId, productName:productName, category:category, description:description, price:(price + price * 0.2), quantity:originalQty, seller:user, usertype:usertype, id:id}}} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </Link>
+                            !myProducts && usertype === "Manufacturer" && manufacturer === '' && <Link to={{pathname:"/business/checkout", state:{prodId:prodId, productName:productName, category:category, description:description, price:(price + price * 0.2), quantity:quantity, seller:user, usertype:usertype, id:id}}} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </Link>
                         }
                         {
-                            isSatisfied && !myProducts && usertype === "Manufacturer" && manufacturer !== '' && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
+                            !myProducts && usertype === "Manufacturer" && manufacturer !== '' && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
                         }
                         {
-                            isSatisfied && myProducts && usertype === "Manufacturer" && manufacturer !== '' && <div></div>
+                            myProducts && usertype === "Manufacturer" && manufacturer !== '' && <div></div>
                         }
                     </div>
                 </div>
@@ -75,13 +75,12 @@ const AgroProductCard = (props) => {
             <div className="ct-product-body">
                 <div style={{"display":"flex", "justifyContent":"space-between"}}>
                     <h5 className="product-title"> <a href="/">{productName}</a> </h5>
-                    {(isSatisfied && usertype !== 'Manufacturer') &&<h7 className="product-title">Order is completed</h7>}
+                    {(isSatisfied && usertype !== 'Manufacturer') &&<h6 className="product-title">Order is completed</h6>}
                 </div>
                 <div style={{"display":"flex", "justifyContent":"space-between"}}>
-                    <span className="product-price custom-secondary">Quantity : {(usertype === 'Manufacturer')? originalQty: quantity} KG</span>
+                    <span className="product-price custom-secondary">Quantity : {quantity} KG</span>
                     <span className="product-price custom-secondary">Price : {(usertype === 'Manufacturer')? (price + (price * 0.20)): price} ₹ Per KG</span>
                 </div>
-                {!isSatisfied && !myProducts && <span className="product-price custom-secondary">Remaining : {quantity - quantityRaised} KG</span>}
                 <p className="product-text"><strong>Description: </strong>{description.substring(0,200)}...</p>
             </div>
         </div>

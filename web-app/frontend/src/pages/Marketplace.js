@@ -155,6 +155,7 @@ const MarketPlace = (props) => {
                                         isSatisfied={card.isSatisfied}
                                         prodId={card.productId}
                                         originalQty={card.originalQty}
+                                        manufacturer={card.manufacturer}
                                     />
                                 }
                                 {/* Donatin button hidden */}

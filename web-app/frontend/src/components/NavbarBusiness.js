@@ -14,6 +14,7 @@ const NavbarBusiness = () => {
 
     const handleLogout = () => {
         logOutUser();
+        <Redirect to={"/business"}/>
     }
 
     const handlenotifyToggle = () => {
@@ -90,12 +91,15 @@ const NavbarBusiness = () => {
                     'accept':'application/json',
                     'user': userProfileBusiness.username,
                     'usertype': userProfileBusiness.usertype,
-                    'channel': 'mychannel'
+                    'channel': 'mychannel',
+                    'prodId': 'Product0'
                 }
             });
-            const data = await response;
-            setDataFromBlockchain(data)
-            console.log(dataFromBlockchain)
+            const data = await response.json();
+            // console.log(data.substring(42))
+            const obj = JSON.parse(data.substring(42))
+            setDataFromBlockchain(obj)
+            console.log(obj.productName)
         } catch(error) {
             console.log(error)
         }
@@ -195,7 +199,8 @@ const NavbarBusiness = () => {
                                 <ul className="submenu">
                                     <li className="menu-item"> <a href="about-us.html">About Us</a> </li>
                                     <li className="menu-item"> <Link to={{ pathname: "/business/productform", state: { button_name: "Add New", info: { productName: "", productBrand: "", category: "", description: "", price: "", quantity: "" } } }} >Add new product</Link> </li>
-                                    <li className="menu-item"> <a href="/business/marketplace">Explore market</a> </li>
+                                    {(userProfileBusiness.usertype === 'Farmer' || userProfileBusiness.usertype === 'Trader') && <li className="menu-item"> <a href="/business/marketplace">Explore market</a> </li>}
+                                    {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <a href="/business/rawmaterial">Explore market</a> </li>}
                                     {(userProfileBusiness.usertype === 'Farmer' || userProfileBusiness.usertype === 'Trader') && <li className="menu-item"> <a href="/business/myproducts">My Products</a> </li>}
                                     {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <a href="/business/myproducts">Inventory</a> </li>}
                                     <li className="menu-item"> <button onClick={enrollAdmin}>Enroll Admin</button> </li>

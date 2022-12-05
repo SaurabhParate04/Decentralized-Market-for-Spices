@@ -90,7 +90,7 @@ const LoginBusiness = (props) => {
             const json = await response.json();
             if (response.ok) {
                 localStorage.setItem('SpiceMarketBusinessjwtToken', json.jwtToken);
-                console.log(credentialLogin.username + " logged in; token: " + json.jwtToken);
+                // console.log(credentialLogin.username + " logged in; token: " + json.jwtToken);
                 setloggedInBusiness(true);
                 history.push('/business');
             }
