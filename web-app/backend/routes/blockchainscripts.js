@@ -57,9 +57,9 @@ router.get('/invoke', async(req, res) => {
 router.get('/query', async(req, res) => {
     try {
         console.log('from query api')
-        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node query.js ${req.header('user')} ${req.header('usertype')} ${req.header('channel')}"`, function(err, data, stderr) {
-            console.log(data)
-            res.send(data)
+        cmd.run(`wsl -e sh -c "cd \"./blockchain/spices/javascript\" && node query.js ${req.header('user')} ${req.header('usertype')} ${req.header('channel')} ${req.header('prodId')}"`, function(err, data, stderr) {
+            // console.log('data from blockchainscripts query: ', data)
+            res.json(data)
             if(err) {
                 console.log(err)
             }

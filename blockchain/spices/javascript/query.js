@@ -13,8 +13,9 @@ let args = process.argv.slice(2);
 const user = args[0];
 const usertype = args[1];
 const channel = args[2];
+const prodId = args[3];
 
-console.log(user, usertype, channel);
+// console.log(user, usertype, channel, prodId);
 
 let org = '';
 
@@ -44,7 +45,7 @@ async function main() {
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(__dirname, `wallet${org}`);
         const wallet = await Wallets.newFileSystemWallet(walletPath);
-        console.log(`Wallet path: ${walletPath}`);
+        // console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get(user);
@@ -67,7 +68,7 @@ async function main() {
         // Evaluate the specified transaction.
         // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
         // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-        const result = await contract.evaluateTransaction('queryAllProducts');
+        const result = await contract.evaluateTransaction('queryProduct', prodId);
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.
