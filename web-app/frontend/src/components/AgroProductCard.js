@@ -43,9 +43,9 @@ const AgroProductCard = (props) => {
 
     return (
         <>
-        <div className={`${isSatisfied ? "ct-product agro-prod-card card-faded": "ct-product agro-prod-card"}`}>
-            <div className="ct-product-thumbnail">
-                <a href="/"><img src={Image} alt="Product Thumbnail"></img></a>
+        <div className={`${isSatisfied ? "ct-product  card-faded": "ct-product "}`}>
+            <div className="ct-product-thumbnail-Agro">
+                <a className= "image-fluid"  href="/"><img src={Image} alt="Product Thumbnail"  style={{borderRadius : "5px",width : "431px",height : "280px" }}></img></a>
                 <div className="ct-product-controls">
                     <div>
                         {

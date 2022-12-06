@@ -95,7 +95,7 @@ const Products = (props) => {
                     Popular Products
                 </div>
                 <button className="clear-btn top-0 end-0" onClick={clearFilter}> clear filter</button> */}
-                <div className=" row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mx-0 justify-content-evenly card-container gx-5">
+                <div className=" row row-cols-1  g-4 row-cols-md-2 row-cols-lg-3  mx-0 justify-content-evenly card-container gx-5">
                     {
                         allCardsInfo.filter(card =>{
                             return cardFilter(card.category);

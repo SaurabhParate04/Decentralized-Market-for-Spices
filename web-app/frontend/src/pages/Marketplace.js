@@ -126,12 +126,12 @@ const MarketPlace = (props) => {
             {/* </div> */}
             {/* <div className="filler_map"></div> */}
             
-            <section style={{marginTop:"180px"}} className="card-conatiner-warpper">
+            <section style={{marginTop:"150px"}} className="card-conatiner-warpper">
                 {/* <div className="cards-container-title top-0 ">
                     Popular Products
                 </div>
                 <button className="clear-btn top-0 end-0" onClick={clearFilter}> clear filter</button> */}
-                <div className=" row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mx-0 justify-content-evenly card-container gx-5">
+                <div className=" row row-cols-1 row-cols-md-2 g-4 row-cols-lg-3  mx-0 justify-content-evenly card-container gx-5">
                     {
                         allCardsInfo.filter(card =>{
                             return cardFilter(card.category);
