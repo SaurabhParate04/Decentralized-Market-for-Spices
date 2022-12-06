@@ -13,7 +13,7 @@ node enrollAdmin.js Farmer
 node enrollAdmin.js Trader
 node enrollAdmin.js Manufacturer
 node enrollAdmin.js Wholesaler
-# node enrollAdmin.js Retailer
+node enrollAdmin.js Retailer
 
 node registerUser.js saurabhparatebusiness Farmer
 node registerUser.js saurabhparatebusiness2 Trader

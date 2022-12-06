@@ -61,6 +61,20 @@ services:
       - ${DOCKER_SOCK}:/host/var/run/docker.sock
       # - /var/saurabh/peer0-org4:/var/hyperledger/production
 
+  peer0.org5.example.com:
+    container_name: peer0.org5.example.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      #Generic peer variables
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric_test
+    volumes:
+      - ./docker/peercfg:/etc/hyperledger/peercfg
+      - ${DOCKER_SOCK}:/host/var/run/docker.sock
+      # - /var/saurabh/peer0-org5:/var/hyperledger/production
+
   cli:
     container_name: cli
     image: hyperledger/fabric-tools:latest

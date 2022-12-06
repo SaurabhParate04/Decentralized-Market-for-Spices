@@ -189,6 +189,16 @@ function createOrgs() {
       fatalln "Failed to generate certificates..."
     fi
 
+    infoln "Creating Org5 Identities"
+
+    set -x
+    cryptogen generate --config=./organizations/cryptogen/crypto-config-org5.yaml --output="organizations"
+    res=$?
+    { set +x; } 2>/dev/null
+    if [ $res -ne 0 ]; then
+      fatalln "Failed to generate certificates..."
+    fi
+
     infoln "Creating Orderer Org Identities"
 
     set -x
@@ -232,6 +242,10 @@ function createOrgs() {
     infoln "Creating Org4 Identities"
 
     createOrg4
+
+    infoln "Creating Org5 Identities"
+
+    createOrg5
 
     infoln "Creating Orderer Org Identities"
 
@@ -320,13 +334,13 @@ function createChannel() {
 
   # now run the script that creates a channel. This script uses configtxgen once
   # to create the channel creation transaction and the anchor peer updates.
-  scripts/createChannel.sh $CHANNEL_NAME $CLI_DELAY $MAX_RETRY $VERBOSE $CHANNEL2_NAME $CHANNEL3_NAME
+  scripts/createChannel.sh $CHANNEL_NAME $CLI_DELAY $MAX_RETRY $VERBOSE $CHANNEL2_NAME $CHANNEL3_NAME $CHANNEL4_NAME
 }
 
 
 ## Call the script to deploy a chaincode to the channel
 function deployCC() {
-  scripts/deployCC.sh $CHANNEL_NAME $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $CLI_DELAY $MAX_RETRY $VERBOSE $CHANNEL2_NAME $CHANNEL3_NAME
+  scripts/deployCC.sh $CHANNEL_NAME $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $CLI_DELAY $MAX_RETRY $VERBOSE $CHANNEL2_NAME $CHANNEL3_NAME $CHANNEL4_NAME
 
   if [ $? -ne 0 ]; then
     fatalln "Deploying chaincode failed"
@@ -335,7 +349,7 @@ function deployCC() {
 
 ## Call the script to deploy a chaincode to the channel
 function deployCCAAS() {
-  scripts/deployCCAAS.sh $CHANNEL_NAME $CC_NAME $CC_SRC_PATH $CCAAS_DOCKER_RUN $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $CLI_DELAY $MAX_RETRY $VERBOSE $CCAAS_DOCKER_RUN $CHANNEL2_NAME $CHANNEL3_NAME
+  scripts/deployCCAAS.sh $CHANNEL_NAME $CC_NAME $CC_SRC_PATH $CCAAS_DOCKER_RUN $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $CLI_DELAY $MAX_RETRY $VERBOSE $CCAAS_DOCKER_RUN $CHANNEL2_NAME $CHANNEL3_NAME $CHANNEL4_NAME
 
   if [ $? -ne 0 ]; then
     fatalln "Deploying chaincode-as-a-service failed"
@@ -368,7 +382,7 @@ function networkDown() {
   # Don't remove the generated artifacts -- note, the ledgers are always removed
   if [ "$MODE" != "restart" ]; then
     # Bring down the network, deleting the volumes
-    ${CONTAINER_CLI} volume rm docker_orderer.example.com docker_peer0.org1.example.com docker_peer0.org2.example.com docker_peer0.org3.example.com docker_peer0.org4.example.com
+    ${CONTAINER_CLI} volume rm docker_orderer.example.com docker_peer0.org1.example.com docker_peer0.org2.example.com docker_peer0.org3.example.com docker_peer0.org4.example.com docker_peer0.org5.example.com
     #Cleanup the chaincode containers
     clearContainers
     #Cleanup images
@@ -398,6 +412,7 @@ CLI_DELAY=3
 CHANNEL_NAME="mychannel"
 CHANNEL2_NAME="channel2"
 CHANNEL3_NAME="channel3"
+CHANNEL4_NAME="channel4"
 # chaincode name defaults to "NA"
 CC_NAME="NA"
 # chaincode path defaults to "NA"

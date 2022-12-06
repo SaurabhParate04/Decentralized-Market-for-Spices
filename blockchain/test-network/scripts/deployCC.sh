@@ -16,11 +16,13 @@ MAX_RETRY=${11:-"5"}
 VERBOSE=${12:-"false"}
 CHANNEL2_NAME=${13:-"channel2"}
 CHANNEL3_NAME=${14:-"channel3"}
+CHANNEL4_NAME=${15:-"channel4"}
 
 println "executing with the following"
 println "- CHANNEL_NAME: ${C_GREEN}${CHANNEL_NAME}${C_RESET}"
 println "- CHANNEL2_NAME: ${C_GREEN}${CHANNEL2_NAME}${C_RESET}"
 println "- CHANNEL3_NAME: ${C_GREEN}${CHANNEL3_NAME}${C_RESET}"
+println "- CHANNEL4_NAME: ${C_GREEN}${CHANNEL4_NAME}${C_RESET}"
 println "- CC_NAME: ${C_GREEN}${CC_NAME}${C_RESET}"
 println "- CC_SRC_PATH: ${C_GREEN}${CC_SRC_PATH}${C_RESET}"
 println "- CC_SRC_LANGUAGE: ${C_GREEN}${CC_SRC_LANGUAGE}${C_RESET}"
@@ -138,6 +140,8 @@ infoln "Install chaincode on peer0.org3..."
 installChaincode 3
 infoln "Install chaincode on peer0.org4..."
 installChaincode 4
+infoln "Install chaincode on peer0.org5..."
+installChaincode 5
 
 ## query whether the chaincode is installed
 queryInstalled 1
@@ -174,10 +178,19 @@ approveForMyOrg3 4
 checkCommitReadiness3 3 "\"Org3MSP\": true" "\"Org4MSP\": true"
 checkCommitReadiness3 4 "\"Org3MSP\": true" "\"Org4MSP\": true"
 
+approveForMyOrg4 4
+checkCommitReadiness4 4 "\"Org4MSP\": true" "\"Org5MSP\": false"
+checkCommitReadiness4 5 "\"Org4MSP\": true" "\"Org5MSP\": false"
+
+approveForMyOrg4 5
+checkCommitReadiness4 4 "\"Org4MSP\": true" "\"Org5MSP\": true"
+checkCommitReadiness4 5 "\"Org4MSP\": true" "\"Org5MSP\": true"
+
 ## now that we know for sure both orgs have approved, commit the definition
 commitChaincodeDefinition 1 2
 commitChaincodeDefinition2 2 3
 commitChaincodeDefinition3 3 4
+commitChaincodeDefinition4 4 5
 
 ## query on both orgs to see that the definition committed successfully
 queryCommitted 1
@@ -186,6 +199,8 @@ queryCommitted2 2
 queryCommitted2 3
 queryCommitted3 3
 queryCommitted3 4
+queryCommitted4 4
+queryCommitted4 5
 
 ## Invoke the chaincode - this does require that the chaincode have the 'initLedger'
 ## method defined
@@ -195,6 +210,7 @@ else
   chaincodeInvokeInit 1 2
   chaincodeInvokeInit2 2 3
   chaincodeInvokeInit3 3 4
+  chaincodeInvokeInit4 4 5
 fi
 
 exit 0
