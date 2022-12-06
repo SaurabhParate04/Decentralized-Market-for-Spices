@@ -189,3 +189,17 @@ form .button input{
 .light-bg{
     background-color: #f7f4ee;
 }
+
+.user-details_reg .input-box_reg select{
+  border-radius: 0px;
+  height: 45px;
+  font-size: 14px;
+}
+
+.user-details_reg .input-box_reg select::placeholder{
+  font-size: 0.8rem;
+}
+
+.user-details_reg .input-box_reg select:focus{
+  border-color: black;
+}

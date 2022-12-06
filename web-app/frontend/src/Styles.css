@@ -2905,6 +2905,13 @@ table img{
   position: relative;
   text-align: center;
 }
+
+.ct-product-thumbnail-Agro{
+  /* background-color: #f7f4ee; */
+  border-radius: 8px;
+  position: relative;
+  text-align: center;
+}
 .ct-product-controls{
   position: absolute;
   top: 0;
@@ -2936,6 +2943,8 @@ table img{
   visibility: visible;
 }
 .ct-product-body{
+  margin-left : 12px;
+  margin-right : 12px;
   margin-top: 15px;
 }
 .ct-product-body .product-title{

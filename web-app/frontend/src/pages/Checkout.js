@@ -14,7 +14,7 @@ export default function Checkout(props) {
     const quantity = props.location.state.quantity
     const total = props.location.state.total
 
-    const initiatePayment = async () => {
+    const initiatePayment = async () => { 
         // console.log("Payment initialized")
         try {
             const url = "http://localhost:5000/api/payment/orders";
