@@ -21,6 +21,7 @@ DELAY=${10:-"3"}
 MAX_RETRY=${11:-"5"}
 VERBOSE=${12:-"false"}
 CHANNEL2_NAME=${13:-"channel2"}
+CHANNEL3_NAME=${14:-"channel3"}
 
 CCAAS_SERVER_PORT=9999
 
@@ -30,7 +31,8 @@ infoln "Using ${CONTAINER_CLI} and ${CONTAINER_CLI_COMPOSE}"
 
 println "executing with the following"
 println "- CHANNEL_NAME: ${C_GREEN}${CHANNEL_NAME}${C_RESET}"
-println "- CHANNE2L_NAME: ${C_GREEN}${CHANNEL2_NAME}${C_RESET}"
+println "- CHANNEL2_NAME: ${C_GREEN}${CHANNEL2_NAME}${C_RESET}"
+println "- CHANNEL3_NAME: ${C_GREEN}${CHANNEL3_NAME}${C_RESET}"
 println "- CC_NAME: ${C_GREEN}${CC_NAME}${C_RESET}"
 println "- CC_SRC_PATH: ${C_GREEN}${CC_SRC_PATH}${C_RESET}"
 println "- CC_VERSION: ${C_GREEN}${CC_VERSION}${C_RESET}"
@@ -150,6 +152,11 @@ startDockerContainer() {
                   -e CHAINCODE_SERVER_ADDRESS=0.0.0.0:${CCAAS_SERVER_PORT} \
                   -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
                     ${CC_NAME}_ccaas_image:latest
+    ${CONTAINER_CLI} run  --rm -d --name peer0org4_${CC_NAME}_ccaas \
+                  --network fabric_test \
+                  -e CHAINCODE_SERVER_ADDRESS=0.0.0.0:${CCAAS_SERVER_PORT} \
+                  -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
+                    ${CC_NAME}_ccaas_image:latest
     res=$?
     { set +x; } 2>/dev/null
     cat log.txt
@@ -173,6 +180,11 @@ startDockerContainer() {
                   -e CHAINCODE_SERVER_ADDRESS=0.0.0.0:${CCAAS_SERVER_PORT} \
                   -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
                     ${CC_NAME}_ccaas_image:latest"
+    infoln "    ${CONTAINER_CLI} run --rm -d --name peer0org4_${CC_NAME}_ccaas  \
+                  --network fabric_test \
+                  -e CHAINCODE_SERVER_ADDRESS=0.0.0.0:${CCAAS_SERVER_PORT} \
+                  -e CHAINCODE_ID=$PACKAGE_ID -e CORE_CHAINCODE_ID_NAME=$PACKAGE_ID \
+                    ${CC_NAME}_ccaas_image:latest"
   fi
 }
 
@@ -187,8 +199,10 @@ infoln "Installing chaincode on peer0.org1..."
 installChaincode 1
 infoln "Install chaincode on peer0.org2..."
 installChaincode 2
-infoln "Install chaincode on peer0.org2..."
+infoln "Install chaincode on peer0.org3..."
 installChaincode 3
+infoln "Install chaincode on peer0.org4..."
+installChaincode 4
 
 ## query whether the chaincode is installed
 queryInstalled 1
@@ -217,15 +231,26 @@ approveForMyOrg2 3
 checkCommitReadiness2 2 "\"Org2MSP\": true" "\"Org3MSP\": true"
 checkCommitReadiness2 3 "\"Org2MSP\": true" "\"Org3MSP\": true"
 
+approveForMyOrg3 3
+checkCommitReadiness3 3 "\"Org3MSP\": true" "\"Org4MSP\": false"
+checkCommitReadiness3 4 "\"Org3MSP\": true" "\"Org4MSP\": false"
+
+approveForMyOrg3 4
+checkCommitReadiness3 3 "\"Org3MSP\": true" "\"Org4MSP\": true"
+checkCommitReadiness3 4 "\"Org3MSP\": true" "\"Org4MSP\": true"
+
 ## now that we know for sure both orgs have approved, commit the definition
 commitChaincodeDefinition 1 2
 commitChaincodeDefinition2 2 3
+commitChaincodeDefinition3 3 4
 
 ## query on both orgs to see that the definition committed successfully
 queryCommitted 1
 queryCommitted 2
 queryCommitted2 2
 queryCommitted2 3
+queryCommitted3 3
+queryCommitted3 4
 
 # start the container
 startDockerContainer
@@ -237,6 +262,7 @@ if [ "$CC_INIT_FCN" = "NA" ]; then
 else
   chaincodeInvokeInit 1 2
   chaincodeInvokeInit2 2 3
+  chaincodeInvokeInit3 3 4
 fi
 
 exit 0
