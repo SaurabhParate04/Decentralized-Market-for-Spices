@@ -29,6 +29,8 @@ import CheckoutBusiness from './pages/CheckoutBusiness';
 import Myorder from './pages/Myorder';
 import RawMaterial from './pages/RawMaterial';
 import Inventory from './pages/Inventory';
+import ManufacturerProductForm from './pages/ManufacturerProductForm';
+import ManufacturedProducts from './pages/ManufacturedProducts';
 
 
 function App() {
@@ -130,6 +132,15 @@ function App() {
             <Route exact path="/business/checkout">
               <CheckoutBusiness useScrollToTop={useScrollToTop} />
             </Route>
+
+            <Route exact path="/business/manufacturerproductform">
+              <ManufacturerProductForm useScrollToTop={useScrollToTop} />
+            </Route>
+
+            <Route exact path="/business/manufacturedproducts">
+              <ManufacturedProducts useScrollToTop={useScrollToTop} />
+            </Route>
+
           </Switch>
         </Router>
       </BusinessUserState>

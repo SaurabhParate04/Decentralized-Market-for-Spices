@@ -1,5 +1,5 @@
 const express = require('express')
-const AgroProduct = require('../models/RawMaterial')
+const AgroProduct = require('../models/ManufacturedProduct')
 const router = express.Router()
 
 // Route 1 fetchallagroproducts get
@@ -15,7 +15,17 @@ router.get('/fetchallproducts', async(req, res) => {
 // Route 2 fetch product from db  GET"api/agroproduct/fetchproduct" 
 router.get('/fetchproduct', async(req, res) => {
     try {
-        let product = await AgroProduct.find({manufacturer:req.header('manufacturer')});
+        let product = await AgroProduct.find({category:req.header('category')});
+        res.json(product);
+    } catch(error) {
+        console.log(error);
+    }
+})
+
+// Route 2 fetch product from db  GET"api/agroproduct/fetchproduct" 
+router.get('/fetchmyproducts', async(req, res) => {
+    try {
+        let product = await AgroProduct.find({manufacturer:req.header('username')});
         res.json(product);
     } catch(error) {
         console.log(error);
@@ -36,22 +46,14 @@ router.post('/createproduct', async(req, res) => {
 })
 
 //updateproduct put
-router.put('/updateproduct', async(req, res) => {
-    try {
-        let product = await AgroProduct.findOneAndUpdate({productId: req.header('prodId')}, req.body)
-    } catch(err) {
-        console.log(err)
-    }
-})
-
-router.put('/updateproductbyid/:id', async(req, res) => {
+router.put('/updateproduct/:id', async(req, res) => {
     try {
         let product = await AgroProduct.findById(req.params.id)
         if(!product) {
             res.status(400).send('Bad request, no such product exists')
         } else {
             product = await AgroProduct.findByIdAndUpdate(req.params.id, req.body)
-            res.send("AgroProduct updated successfully")
+            res.send("Updated the agroproduct information")
         }
     } catch(err) {
         console.log(err)

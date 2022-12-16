@@ -41,12 +41,14 @@ const AgroProductCard = (props) => {
         }
     }
 
+    console.log(productName, isSatisfied, myProducts, usertype)
+
     return (
         <>
             
-        <div className={`${(isSatisfied && usertype !== 'Manufacturer')? "ct-product card-faded": "ct-product "}`}>
-            <div className="ct-product-thumbnail-Agro">
-                <a className= "image-fluid"  href="/"><img src={Image} alt="Product Thumbnail"  style={{borderRadius : "5px",width : "431px",height : "280px" }}></img></a>
+        <div className={`${(isSatisfied && usertype !== 'Manufacturer')? "ct-product card-faded": "ct-product agro-prod-card"}`} style={{"backgroundColor": "cornsilk", "paddingTop": "20px", "paddingBottom": "20px"}}>
+            <div className="ct-product-thumbnail">
+                <div className= "image-fluid"><img src={Image} alt="Product Thumbnail"  style={{borderRadius : "5px",width : "431px",height : "280px" }}></img></div>
                 <div className="ct-product-controls">
                     <div>
                         {
@@ -56,7 +58,10 @@ const AgroProductCard = (props) => {
                             !isSatisfied && !myProducts && usertype === "Farmer" && <button onClick={() => openModal(id)} className="btn-custom secondary">Contact Buyer & Sell<i className="fas fa-arrow-right"></i> </button>
                         }
                         {
-                            !isSatisfied && !myProducts && usertype === "Trader" && <Link to={{pathname:"/business/checkout", state:{prodId:prodId, productName:productName, category:category, description:description, price:price, quantity:quantity, seller:user, usertype:usertype, id:id}}} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </Link>
+                            !isSatisfied && !myProducts && usertype === "Trader" && quantity !== 0 && <Link to={{pathname:"/business/checkout", state:{prodId:prodId, productName:productName, category:category, description:description, price:price, quantity:quantity, seller:user, usertype:usertype, id:id}}} className="btn-custom secondary">Buy Now<i className="fas fa-arrow-right"></i> </Link>
+                        }
+                        {
+                            !isSatisfied && !myProducts && usertype === "Trader" && quantity === 0 && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
                         }
                         {
                             isSatisfied && usertype !== "Manufacturer" && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
