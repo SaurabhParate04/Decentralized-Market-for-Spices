@@ -36,6 +36,14 @@ const manufacturedProductSchema = new mongoose.Schema({
     manufacturer: {
         type:String,
         required: true
+    },
+    wholesaler: {
+        type:String,
+        required: true
+    },
+    retailer: {
+        type:String,
+        required: true
     }
 })
 

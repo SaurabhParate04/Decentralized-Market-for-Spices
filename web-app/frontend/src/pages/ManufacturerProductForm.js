@@ -398,13 +398,6 @@ export default function ManufacturerProductForm(props) {
 
 
 
-
-
-
-
-
-
-
                                     {/* Add field for packet size one fixed in grams, add field for price per packet Add these things in model also add manufacturer field to catch username; work on manufacturedproduct page change fetchallproducts to fetch products where you are manufacturer create explore page for wholesaler there fetchallproducts from manufacturedproducts create myproducts for wholesaler; add to products schema for consumer side whatever the one and only retailer buys */}
                                     <div className="input-box">
                                         <span className="details">Select Product Image</span>

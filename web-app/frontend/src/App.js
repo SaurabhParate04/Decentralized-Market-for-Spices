@@ -31,6 +31,8 @@ import RawMaterial from './pages/RawMaterial';
 import Inventory from './pages/Inventory';
 import ManufacturerProductForm from './pages/ManufacturerProductForm';
 import ManufacturedProducts from './pages/ManufacturedProducts';
+import Market from './pages/Market';
+import CheckoutBusinessTransfer from './pages/CheckoutBusinessTransfer';
 
 
 function App() {
@@ -139,6 +141,18 @@ function App() {
 
             <Route exact path="/business/manufacturedproducts">
               <ManufacturedProducts useScrollToTop={useScrollToTop} />
+            </Route>
+
+            <Route exact path="/business/transfer/market">
+              <Market useScrollToTop={useScrollToTop} />
+            </Route>
+
+            <Route exact path="/business/transfer/myproducts">
+              <ManufacturedProducts useScrollToTop={useScrollToTop} />
+            </Route>
+
+            <Route exact path="/business/transfer/checkout">
+              <CheckoutBusinessTransfer useScrollToTop={useScrollToTop} />
             </Route>
 
           </Switch>

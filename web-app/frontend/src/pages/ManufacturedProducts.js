@@ -83,7 +83,7 @@ const ManufacturedProducts = (props) => {
                                 price={card.price}
                                 packetSize={card.packetSize}
                                 quantity={card.quantity}
-                                // qrcode={card.qrcode}
+                                myProducts={true}
                             />
                         ))
                     }{' '}

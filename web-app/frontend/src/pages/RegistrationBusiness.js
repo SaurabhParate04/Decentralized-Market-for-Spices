@@ -50,7 +50,7 @@ function RegistrationBusiness() {
             phoneNumber: credentialSignUpBusiness.phoneNumber,
             landmark: credentialSignUpBusiness.landmark,
             pincode: credentialSignUpBusiness.pincode,
-            location: 'business 5 manufacturing unit location',
+            location: credentialSignUpBusiness.addressl1 + ' , ' + credentialSignUpBusiness.addressl2,
             usertype: credentialSignUpBusiness.usertype || usertype
           })
         });
