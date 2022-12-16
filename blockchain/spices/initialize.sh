@@ -17,8 +17,7 @@ node enrollAdmin.js Retailer
 
 node registerUser.js saurabhparatebusiness Farmer
 node registerUser.js saurabhparatebusiness2 Trader
-node registerUser.js saurabhparatebusiness3 Trader
-node registerUser.js saurabhparatebusiness4 Manufacturer
-node registerUser.js saurabhparatebusiness5 Wholesaler
+node registerUser.js saurabhparatebusiness3 Farmer
+# node registerUser.js saurabhparatebusiness4 Manufacturer
+# node registerUser.js saurabhparatebusiness5 Wholesaler
 
-EOF

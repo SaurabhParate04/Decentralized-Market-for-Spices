@@ -60,6 +60,7 @@ class Spices extends Contract {
             Manufacturer: newProductJson.Manufacturer, 
             Manufactured_Product_Name: newProductJson.Manufactured_Product_Name, 
             Brand_Name: newProductJson.Brand_Name, 
+            Manufactured_Product_Ingredients: newProductJson.Manufactured_Product_Ingredients,
             Manufacturing_Unit_Location: newProductJson.Manufacturing_Unit_Location, 
             Manufacturer_Transfer_Date: newProductJson.Manufacturer_Transfer_Date, 
             Wholesaler: newProductJson.Wholesaler, 
@@ -117,6 +118,7 @@ class Spices extends Contract {
             product.Trader_Transfer_Date = updatedProductJson.Trader_Transfer_Date;
             product.Manufacturer = updatedProductJson.Manufacturer;
             product.Manufacturing_Unit_Location = updatedProductJson.Manufacturing_Unit_Location;
+            product.Manufactured_Product_Ingredients = updatedProductJson.Manufactured_Product_Ingredients;
         }
         else if(updatedProductJson.to === 'Wholesaler') {
             product.Manufacturer_Transfer_Date = updatedProductJson.Manufacturer_Transfer_Date;
