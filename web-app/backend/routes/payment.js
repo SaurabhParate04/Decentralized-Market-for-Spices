@@ -18,14 +18,14 @@ router.post('/orders', async (req, res) => {
 
 		instance.orders.create(options, (error, order) => {
 			if (error) {
-				console.log("error from /payment/order api: ", error);
+				// console.log("error from /payment/order api: ", error);
 				return res.status(500).json({ message: "Something Went Wrong!" });
 			}
 			res.status(200).json({ data: order });
 		});
 	} catch (error) {
 		res.status(500).json({ message: "Internal Server Error!" });
-		console.log("error from /payment/order api: ",error);
+		// console.log("error from /payment/order api: ",error);
 	}
 });
 
@@ -46,7 +46,7 @@ router.post("/verify", async (req, res) => {
 		}
 	} catch (error) {
 		res.status(500).json({ message: "Internal Server Error!" });
-		console.log("error from paymeny/verify api: ", error);
+		// console.log("error from paymeny/verify api: ", error);
 	}
 });
 

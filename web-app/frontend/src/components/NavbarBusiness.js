@@ -197,16 +197,17 @@ const NavbarBusiness = () => {
                             <li className="menu-item menu-item-has-children">
                                 <a href="/">Pages</a>
                                 <ul className="submenu">
-                                    <li className="menu-item"> <a href="about-us.html">About Us</a> </li>
-                                    <li className="menu-item"> <Link to={{ pathname: "/business/productform", state: { button_name: "Add New", info: { productName: "", productBrand: "", category: "", description: "", price: "", quantity: "" } } }} >Add new product</Link> </li>
+                                    {(userProfileBusiness.usertype !== 'Manufacturer') && <li className="menu-item"> <Link to={{ pathname: "/business/productform", state: { button_name: "Add New", info: { productName: "", productBrand: "", category: "", description: "", price: "", quantity: "" } } }} >Add new product</Link> </li>}
+                                    {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <Link to={{ pathname: "/business/manufacturerproductform", state: { button_name: "Add New", info: { productName: "", description: "", price: "", quantity: "" } } }} >Add new product</Link> </li>}
                                     {(userProfileBusiness.usertype === 'Farmer' || userProfileBusiness.usertype === 'Trader') && <li className="menu-item"> <a href="/business/marketplace">Explore market</a> </li>}
                                     {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <a href="/business/rawmaterial">Explore market</a> </li>}
                                     {(userProfileBusiness.usertype === 'Farmer' || userProfileBusiness.usertype === 'Trader') && <li className="menu-item"> <a href="/business/myproducts">My Products</a> </li>}
                                     {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <a href="/business/inventory">Inventory</a> </li>}
-                                    <li className="menu-item"> <button onClick={enrollAdmin}>Enroll Admin</button> </li>
+                                    {(userProfileBusiness.usertype === 'Manufacturer') && <li className="menu-item"> <a href="/business/manufacturedproducts">Manufactured Products</a> </li>}
+                                    {/* <li className="menu-item"> <button onClick={enrollAdmin}>Enroll Admin</button> </li>
                                     <li className="menu-item"> <button onClick={registerUser}>Register User</button> </li>
                                     <li className="menu-item"> <button onClick={query}>Query</button> </li>
-                                    <li className="menu-item"> <button onClick={invoke}>Invoke</button> </li>
+                                    <li className="menu-item"> <button onClick={invoke}>Invoke</button> </li> */}
                                 </ul>
                             </li>
 

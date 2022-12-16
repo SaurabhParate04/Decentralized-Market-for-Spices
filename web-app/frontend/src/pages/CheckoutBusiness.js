@@ -171,10 +171,10 @@ export default function CheckoutBusiness(props) {
             // console.log(loc)
             // console.log(userProfileBusiness.usertype)
             if(userProfileBusiness.usertype === 'Farmer') {
-                objcreate = `--obj.productId=${newId} --obj.productName=${productName} --obj.Trader '"${sellerCredentials.firstname + '_' + sellerCredentials.lastname}"' --obj.Trader_Location='"${loc}"' --obj.Farmer_Transfer_Date='' --obj.Farmer='' --obj.Field_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+                objcreate = `--obj.productId=${newId} --obj.ProductName=${productName} --obj.Trader '"${sellerCredentials.firstname + '_' + sellerCredentials.lastname}"' --obj.Trader_Location='"${loc}"' --obj.Farmer_Transfer_Date='' --obj.Farmer='' --obj.Field_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
             } 
             else if(userProfileBusiness.usertype === 'Trader') {
-                objcreate = `--obj.productId=${newId} --obj.productName=${productName} --obj.Farmer '"${sellerCredentials.firstname + '_' + sellerCredentials.lastname}"' --obj.Field_Location='"${loc}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+                objcreate = `--obj.productId=${newId} --obj.ProductName=${productName} --obj.Farmer '"${sellerCredentials.firstname + '_' + sellerCredentials.lastname}"' --obj.Field_Location='"${loc}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
             }
             // console.log(objcreate)
             invoke('createProduct', newId, objcreate, 'mychannel')
@@ -205,7 +205,7 @@ export default function CheckoutBusiness(props) {
     }
     
     const addManufacturer = async() => {
-        const url = "http://localhost:5000/api/rawmaterial/updateproduct/" + id;
+        const url = "http://localhost:5000/api/rawmaterial/updateproductbyid/" + id;
         //eslint-disable-next-line
         const response = await fetch(url,
             {
@@ -223,7 +223,7 @@ export default function CheckoutBusiness(props) {
     const createNewProdInChannel2 = async(prodId) => {
         // await query(prodId, 'mychannel')
         // console.log(dataFromBlockchain.productName)
-        let obj = `--obj.productId=${prodId} --obj.productName='' --obj.Farmer '' --obj.Field_Location='' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+        let obj = `--obj.productId=${prodId} --obj.ProductName='' --obj.Farmer '' --obj.Field_Location='' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
         await invoke('createProduct', prodId, obj, 'channel2')
     }
 
