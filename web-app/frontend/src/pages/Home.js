@@ -2,7 +2,7 @@ import React from 'react'
 import '../Styles.css'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import Carousel from '../components/Carousel'
+import HomePage from '../components/HomePage'
 
 const Home = (props) => {
     props.useScrollToTop();
@@ -11,7 +11,8 @@ const Home = (props) => {
         <div>
             <Navbar />
 
-            <Carousel/>
+            <HomePage/>
+
                         
             <Footer />            
         </div>

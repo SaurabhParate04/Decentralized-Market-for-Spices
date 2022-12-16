@@ -727,10 +727,17 @@ blockquote p{
 ========================*/
 .section {
   position: relative;
-  padding: 80px 0;
+  padding: 50px 0;
+}
+.section-home {
+  position: relative;
+  padding: 10px 0;
 }
 .section.section-padding{
   padding: 80px 0 50px;
+}
+.section.section-padding-home{
+  padding: 30px 0 50px;
 }
 .section.extra-padding,
 .section.section-padding.extra-padding{
@@ -1353,6 +1360,16 @@ table img{
   width: 170px;
   margin: 0;
   padding: 0;
+}
+.navbar-brand-mainlogo {
+  width: 120px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-brand-mainlogo img {
+  width: 100px;
+  display: inline-block;
 }
 
 .navbar-nav {
@@ -2249,14 +2266,14 @@ table img{
 }
 .banner .subtitle{
   color: #848486;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 600;
   margin-bottom: 25px;
 }
 .banner-inner{
   max-width: 700px;
   margin: 0 auto;
-  padding-top: 180px;
+  padding-top: 210px;
 }
 
 .banner .slick-arrow{
@@ -3403,6 +3420,12 @@ table img{
       -ms-flex-align: start;
           align-items: flex-start;
 }
+.sidebar-widget-home .media{
+  margin-bottom: 40px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
 .sidebar-widget .media:last-child{
   margin-bottom: 0;
 }
@@ -3416,6 +3439,13 @@ table img{
 .sidebar-widget .media img{
   width: 100%;
   border-radius: 8px;
+}
+.sidebar-widget-home .media img{
+  width: 45%;
+  border-radius: 8px;
+}
+.sidebar-widget-home .media {
+  display: flex;
 }
 .sidebar-widget .media h6 a{
   color: #1D2228;
@@ -4668,12 +4698,12 @@ align-items: center;
 
 /* Why Us 2 */
 
-/* .why-us-2{
-  background-image: url("../img/why-us-bg.jpg");
+.why-us-2{
+  background-image: url("http://metropolitanhost.com/themes/templatemoster/html/masala/assets/img/why-us-bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-} */
+}
 
 .why-us-2 .section-title-wrap .icon{
   font-size: 60px;
@@ -4690,7 +4720,7 @@ align-items: center;
 .why-us-2 .section-title-wrap .contact-info h4{
   color: #fff;
   font-size: 28px;
-  margin-bottom: 0;
+  margin-bottom: 100px;
 }
 
 .sigma_progress{
@@ -4742,7 +4772,7 @@ align-items: center;
 .progress-icon .icon-wrapper{
   padding: 15px;
   background-color: #9f4103;
-  margin-top: -200px;
+  margin-top: -150px;
   position: relative;
   z-index: 8;
 }
@@ -5146,7 +5176,7 @@ align-items: center;
     padding: 30px 16px;
   }
   .about-sec.style-3{
-    padding: 80px 0;
+    padding: 10px 0;
   }
 
   /* why us 2 */
@@ -5812,4 +5842,8 @@ align-items: center;
   opacity: 1;
   width: 5040px;
   transform: translate3d(-720px, 0px, 0px);
+}
+
+.Start{
+  background-color: #f7f4ee;
 }

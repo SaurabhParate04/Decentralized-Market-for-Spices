@@ -4,7 +4,7 @@ import footerImg from '../images/footer-bottom-img.png'
 const Footer = () => {
     return(
         // For testing purpose margin top is added
-        <footer style={{marginTop:"206px"}} className="ct-footer footer-3 footer-dark">
+        <footer  className="ct-footer footer-3 footer-dark">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-7">

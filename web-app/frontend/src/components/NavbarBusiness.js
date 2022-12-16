@@ -4,6 +4,7 @@ import BusinessUserContext from '../context/User/BusinessUserContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
 import logo1 from '../images/logo 1.png'
+import mainLogo from '../images/MainLogo.png'
 
 const NavbarBusiness = () => {
     const context = useContext(BusinessUserContext);
@@ -174,15 +175,8 @@ const NavbarBusiness = () => {
                 <nav className="navbar">
                     <div className="container-fluid">
                         {/* <!-- Logo --> */}
-                        <a className="navbar-brand d-lg-none" href="/"> <img src={logo1} alt="logo"></img> </a>
+                        <div className="navbar-brand-mainlogo d-lg" href="/"> <img src={mainLogo} alt="logo"></img> </div>
                         {/* <!-- Menu --> */}
-                        <div className="header-control-left">
-                            <div className="aside-toggler aside-trigger-right desktop-toggler">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
                         <ul className="navbar-nav">
                             {/* Business Home page  */}
                             <li className="menu-item menu-item-has-children">

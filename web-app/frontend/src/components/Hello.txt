@@ -1,20 +1,4 @@
-import React from 'react'
-import vid from '../images/video.mp4'
-// import img from '../images/Image.jpg'
-
-export default function Carousel() {
-    return (
-        <div>
-            {/* <div id="videoDiv2">
-                <video style={{ width: "100%" }} preload="" autoPlay="" muted="" playsinline="" loop="">
-                    <source src={vid} type="video/mp4" />
-                </video>
-            </div> */}
-            <div className="banner banner-video dark-overlay">
-                <video autoPlay="" muted="" loop="" id="myVideo">
-                    <source src={vid} type="video/mp4" />
-                </video>
-                {/* <!-- Prev Arrow --> */}
+ {/* <!-- Prev Arrow --> */}
                 <i className="slider-prev fas fa-arrow-left slick-arrow" style={{}}></i>
                 <div className="container">
                     <div className="banner-slider slick-initialized slick-slider">
@@ -75,7 +59,3 @@ export default function Carousel() {
                 </div>
                 {/* <!-- Next Arrow --> */}
                 <i className="slider-next fas fa-arrow-right slick-arrow" style={{}}></i>
-            </div>
-        </div>
-    )
-}
