@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import '../Styles.css'
+import "./LoginSignup.css"
 import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
 import { useHistory } from 'react-router'
 import userContext from '../context/User/UserContext'
 
@@ -93,9 +93,9 @@ const Signup = (props) => {
             //console.log(credentialSignUp);
             setglobalCredentials(credentialSignUp);
             //console.log(globalCredentials);
-              if(Object.keys(signupFormErrors).length === 0 && isSignupSubmit === true)
+            if (Object.keys(signupFormErrors).length === 0 && isSignupSubmit === true)
                 history.push("/register")
-              else
+            else
                 console.log("Invalid Input!");
             // history.push("/register")
 
@@ -107,42 +107,46 @@ const Signup = (props) => {
     return (
         <>
             <Navbar />
-            <section className="section auth-section login-sec bg-cover">
-                <div className="container">
-                    <form onSubmit={handleSignUp} className="auth-form light-bg" method="post">
-                        <h1>Sign Up</h1>
-                        <div className="form-group">
-                            <label>Username</label>
-                            <input type="text" className="form-control" placeholder="Username" name="username" id="label-susername" onChange={onChangeSignUp} value={credentialSignUp.username} defaultValue="" ></input>
-                        </div>
-                        {signupFormErrors.username && <p className="error-text">{signupFormErrors.username}</p>}
+            <div className="image">
+                <div className="image-overlay">
+                    <section className="section auth-section login-sec bg-cover ">
+                        <div className="container">
+                            <form onSubmit={handleSignUp} className="auth-form light-bg" method="post">
+                                <h1>Sign Up</h1>
+                                <div className="form-group">
+                                    <label>Username</label>
+                                    <input type="text" className="form-control" placeholder="Username" name="username" id="label-susername" onChange={onChangeSignUp} value={credentialSignUp.username} defaultValue="" ></input>
+                                </div>
+                                {signupFormErrors.username && <p className="error-text">{signupFormErrors.username}</p>}
 
-                        <div className="form-group">
-                            <label>Email</label>
-                            <input type="email" className="form-control" placeholder="Email Address" name="email" id="label-semail" onChange={onChangeSignUp} value={credentialSignUp.email} defaultValue=""></input>
-                        </div>
-                        {signupFormErrors.email && <p className="error-text">{signupFormErrors.email}</p>}
+                                <div className="form-group">
+                                    <label>Email</label>
+                                    <input type="email" className="form-control" placeholder="Email Address" name="email" id="label-semail" onChange={onChangeSignUp} value={credentialSignUp.email} defaultValue=""></input>
+                                </div>
+                                {signupFormErrors.email && <p className="error-text">{signupFormErrors.email}</p>}
 
-                        <div className="form-group">
-                            <label>Password</label>
-                            <input type="password" className="form-control" placeholder="Password" name="password" id="label-spassword" onChange={onChangeSignUp} value={credentialSignUp.password} defaultValue=""></input>
-                        </div>
-                        {signupFormErrors.password && <p className="error-text">{signupFormErrors.password}</p>}
+                                <div className="form-group">
+                                    <label>Password</label>
+                                    <input type="password" className="form-control" placeholder="Password" name="password" id="label-spassword" onChange={onChangeSignUp} value={credentialSignUp.password} defaultValue=""></input>
+                                </div>
+                                {signupFormErrors.password && <p className="error-text">{signupFormErrors.password}</p>}
 
-                        <div className="auth-controls form-group">
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="rememberMe"></input>
-                                <label className="custom-control-label fw-400" htmlFor="rememberMe">Agree to our <a href="/" className="btn-link">terms &amp; conditions</a> </label>
-                            </div>
+                                <div className="auth-controls form-group">
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id="rememberMe"></input>
+                                        <label className="custom-control-label fw-400" htmlFor="rememberMe">Agree to our <a href="/" className="btn-link">terms &amp; conditions</a> </label>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <button type="submit" className="btn-custom primary btn-block">Sign Up</button>
+                                </div>
+                                <p className="form-group text-center">Already have an account? <a href="/login" className="btn-link">Login</a> </p>
+                            </form>
                         </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn-custom primary btn-block">Sign Up</button>
-                        </div>
-                        <p className="form-group text-center">Already have an account? <a href="/login" className="btn-link">Login</a> </p>
-                    </form>
+                    </section>
                 </div>
-            </section>
-            <Footer />
+            </div>
+            {/* <Footer/> */}
         </>
     )
 }

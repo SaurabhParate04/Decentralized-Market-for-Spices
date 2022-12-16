@@ -4,6 +4,7 @@ import userContext from '../context/User/UserContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import logo1 from '../images/logo 1.png'
+import mainLogo from '../images/MainLogo.png'
 
 const Navbar = () => {
     const context = useContext(userContext);
@@ -104,15 +105,10 @@ const Navbar = () => {
                 <nav className="navbar">
                     <div className="container-fluid">
                         {/* <!-- Logo --> */}
-                        <a className="navbar-brand d-lg-none" href="/"> <img src={logo1} alt="logo"></img> </a>
+                        
+                        <div className="navbar-brand-mainlogo d-lg" href="/"> <img src={mainLogo} alt="logo"></img> </div>
                         {/* <!-- Menu --> */}
-                        <div className="header-control-left">
-                            <div className="aside-toggler aside-trigger-right desktop-toggler">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
+                        
                         
                         <ul className="navbar-nav">
                             {/* Home pages  */}
