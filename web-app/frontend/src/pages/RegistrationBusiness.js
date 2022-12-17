@@ -54,6 +54,7 @@ function RegistrationBusiness() {
             usertype: credentialSignUpBusiness.usertype || usertype
           })
         });
+        registerUser()
       const testjson = await response.json();
       // let imgRef = ref(firebaseStorage, `profile/${credentialSignUp.username}`);
       // uploadBytes(imgRef, profileImageReg).then(() => {
@@ -68,6 +69,23 @@ function RegistrationBusiness() {
   const onChangeSignUpBusiness = (e) => {
     setcredentialSignUpBusiness({ ...credentialSignUpBusiness, [e.target.name]: e.target.value })
     //console.log([e.target.name],e.target.value)
+  }
+
+  const registerUser = async() => {
+    try {
+        const url = "http://localhost:5000/api/blockchain/registeruser"
+        await fetch(url, {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json',
+                'accept':'application/json',
+                'user': credentialSignUpBusiness.username,
+                'usertype': credentialSignUpBusiness.usertype
+            }
+        });
+    } catch(error) {
+        console.log(error)
+    }
   }
 
   return (

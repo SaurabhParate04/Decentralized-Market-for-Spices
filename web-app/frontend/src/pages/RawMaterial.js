@@ -65,10 +65,10 @@ const RawMaterial = (props) => {
                                         quantity={card.quantity}
                                         myProducts={false}
                                         usertype={usertype}
+                                        user={card.user}
                                         prodId={card.productId}
                                         manufacturer={card.manufacturer}
                                         description={card.description}
-                                        user={card.seller}
                                     />
                                 }
                             </>

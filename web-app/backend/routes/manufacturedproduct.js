@@ -46,7 +46,7 @@ router.post('/createproduct', async(req, res) => {
 })
 
 //updateproduct put
-router.put('/updateproduct/:id', async(req, res) => {
+router.put('/updateproductbyid/:id', async(req, res) => {
     try {
         let product = await AgroProduct.findById(req.params.id)
         if(!product) {

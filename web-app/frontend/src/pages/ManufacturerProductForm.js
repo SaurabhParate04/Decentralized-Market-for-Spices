@@ -134,7 +134,7 @@ export default function ManufacturerProductForm(props) {
             }
 
             if (coverImageUpload) {
-                let coverImgRef = ref(firebaseStorage, `agroproductcover/${credentialProduct.productName + ' ' + userProfileBusiness._id}`);
+                let coverImgRef = ref(firebaseStorage, `Products/${userProfileBusiness.companyname + ' ' + credentialProduct.productName}`);
                 const uploadTask = uploadBytesResumable(coverImgRef, img)
                 // Register three observers:
                 // 1. 'state_changed' observer, called any time the state changes

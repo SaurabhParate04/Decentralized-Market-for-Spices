@@ -50,6 +50,14 @@ const agroProductSchema = new mongoose.Schema({
     },
     originalQty: {
         type: Number
+    }, 
+    trader: {
+        type: String,
+        default: ""
+    },
+    farmer: {
+        type: String,
+        default: ""
     }
 })
 

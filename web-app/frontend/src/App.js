@@ -33,6 +33,7 @@ import ManufacturerProductForm from './pages/ManufacturerProductForm';
 import ManufacturedProducts from './pages/ManufacturedProducts';
 import Market from './pages/Market';
 import CheckoutBusinessTransfer from './pages/CheckoutBusinessTransfer';
+import MyProductsTransfer from './pages/MyProductsTransfer';
 
 
 function App() {
@@ -148,7 +149,7 @@ function App() {
             </Route>
 
             <Route exact path="/business/transfer/myproducts">
-              <ManufacturedProducts useScrollToTop={useScrollToTop} />
+              <MyProductsTransfer useScrollToTop={useScrollToTop} />
             </Route>
 
             <Route exact path="/business/transfer/checkout">

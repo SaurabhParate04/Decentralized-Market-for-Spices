@@ -39,11 +39,11 @@ const manufacturedProductSchema = new mongoose.Schema({
     },
     wholesaler: {
         type:String,
-        required: true
+        default: ""
     },
     retailer: {
         type:String,
-        required: true
+        default: ""
     }
 })
 

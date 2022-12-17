@@ -72,7 +72,7 @@ const Market = (props) => {
                         }).map(card => (
                             <>
                                 {
-                                    ((userProfileBusiness.usertype === 'Wholesaler' && card.wholesaler === '') || (userProfileBusiness.usertype === 'Retailer' && card.retailer === '')) && <AgroProductCard
+                                    ((userProfileBusiness.usertype === 'Wholesaler' && card.wholesaler === '') || (userProfileBusiness.usertype === 'Retailer' && card.retailer === '' && card.wholesaler !== '')) && <AgroProductCard
                                         key={card._id + "k"}
                                         id={card._id}
                                         productName={card.productName}

@@ -19,9 +19,10 @@ export default function CheckoutBusinessTransfer(props) {
     const price = location.state.price
     const wholesalerPrice = Math.floor(Number(price) * 0.2 + Number(price))
     const retailerPrice = Math.floor(Number(wholesalerPrice) * 0.15 + Number(wholesalerPrice))
-    const totalPrice = (userProfileBusiness.usertype === 'Wholesaler')? total * wholesalerPrice: total * retailerPrice
+    const totalPrice = (userProfileBusiness.usertype === 'Retailer')? total * wholesalerPrice: total * price
     const description = location.state.description
     const productName = location.state.productName
+    const productBrand = location.state.productBrand
     const prodId = location.state.prodId
     const id = location.state.id
     const [dataFromBlockchain, setDataFromBlockchain] = useState({})
@@ -32,14 +33,16 @@ export default function CheckoutBusinessTransfer(props) {
         let channel = ''
         const now = String(new Date())
         if(userProfileBusiness.usertype === 'Wholesaler') {
-            channel = 'channel2'
+            channel = 'channel3'
             addWholesaler()
-            // obj = `--obj.Farmer '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Field_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
+            createNewProdInChannel4(prodId)
+            obj = `--obj.to='"Wholesaler"' --obj.Wholesaler '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Wholesaler_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Manufacturer_Transfer_Date='"${now.replace(/ /g,"_")}"' --obj.Manufactured_Product_Name='"${productName.replace(/ /g,"_")}"' --obj.Brand_Name='"${productBrand.replace(/ /g,"_")}"'`
         } 
         else if(userProfileBusiness.usertype === 'Retailer') {
-            channel = 'channel3'
+            channel = 'channel4'
             addRetailer()
-            // obj = `--obj.to='"Trader"' --obj.Trader '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Trader_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='"${now.replace(/ /g,"_")}"'`
+            addProduct()
+            obj = `--obj.to='"Retailer"' --obj.Retailer '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Retailer_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Wholesaler_Transfer_Date='"${now.replace(/ /g,"_")}"'`
         }
         invoke('transferProduct', prodId, obj, channel)
     }
@@ -55,7 +58,7 @@ export default function CheckoutBusinessTransfer(props) {
                     'Content-Type': 'application/json',
                     'accept': 'application/json',
                 },
-                body: JSON.parse(JSON.stringify({ amount: total }))
+                body: JSON.parse(JSON.stringify({ amount: totalPrice }))
             });
             // console.log(response)
             completePayment()
@@ -65,7 +68,7 @@ export default function CheckoutBusinessTransfer(props) {
     }
 
     const completePayment = () => {
-        const amt = total * 100
+        const amt = totalPrice * 100
         const options = {
             key: 'rzp_test_tELMr5dwofTrc1',
             amount: amt,
@@ -147,11 +150,6 @@ export default function CheckoutBusinessTransfer(props) {
         );
     }
 
-    const createNewProdInChannel3 = async(prodId) => {
-        let obj = `--obj.productId=${prodId} --obj.ProductName='' --obj.Farmer '' --obj.Field_Location='' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
-        await invoke('createProduct', prodId, obj, 'channel3')
-    }
-
     const createNewProdInChannel4 = async(prodId) => {
         let obj = `--obj.productId=${prodId} --obj.ProductName='' --obj.Farmer '' --obj.Field_Location='' --obj.Farmer_Transfer_Date='' --obj.Trader='' --obj.Trader_Location='' --obj.Trader_Transfer_Date='' --obj.Manufacturer='' --obj.Manufactured_Product_Name='' --obj.Brand_Name='' --obj.Manufacturing_Unit_Location='' --obj.Manufacturer_Transfer_Date='' --obj.Wholesaler='' --obj.Wholesaler_Location='' --obj.Wholesaler_Transfer_Date='' --obj.Retailer='' --obj.Retailer_Location=''`
         await invoke('createProduct', prodId, obj, 'channel4')
@@ -185,6 +183,27 @@ export default function CheckoutBusinessTransfer(props) {
     const handlePayment = (e) => {
         e.preventDefault()
         initiatePayment()
+    }
+
+    const addProduct = async() => {
+        const url = "http://localhost:5000/api/product/createproduct"
+        //eslint-disable-next-line
+        const response = await fetch(url,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    productBrand: productBrand,
+                    productName: productName,
+                    description: description,
+                    price: retailerPrice,
+                    packetSize: packetSize,
+                    quantity: total
+                })
+            }
+        );
     }
 
     useEffect(() => {
@@ -516,7 +535,7 @@ export default function CheckoutBusinessTransfer(props) {
                                                 <div className="cart-product-wrapper">
                                                     <img src={thumb} alt="prod1"></img>
                                                     <div className="cart-product-body">
-                                                        <h6> <a href="/">{productName}</a> </h6>
+                                                        <h6> <a href="/">{productBrand + ' ' + productName}</a> </h6>
                                                     </div>
                                                 </div>
                                             </td>

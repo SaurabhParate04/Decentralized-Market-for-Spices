@@ -28,7 +28,7 @@ const ProductCard = (props) => {
 
     const getCardInfo = async() => {
         try {
-            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `Products/${productBrand + ' ' + productName }.png`))
+            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `Products/${productBrand + ' ' + productName }`))
             setImage(imgLoaded)
         } catch(FirebaseError) {
             setImage(coverImg)

@@ -33,7 +33,7 @@ const ManufacturedProductCard = (props) => {
 
     const getCardInfo = async() => {
         try {
-            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `Products/${productBrand + ' ' + productName }.png`))
+            let imgLoaded = await getDownloadURL( ref(firebaseStorage, `Products/${productBrand + ' ' + productName }`))
             setImage(imgLoaded)
         } catch(FirebaseError) {
             setImage(coverImg)
@@ -58,9 +58,9 @@ const ManufacturedProductCard = (props) => {
             <div className="ct-product-body">
                 <h5 className="product-title"> <a href="/">{productBrand + ' ' + productName}</a> </h5>
                 <div style={{"display": "flex", "justifyContent": "space-between"}}>
-                    { userProfileBusiness.usertype === 'Manufacturer' && <span className="product-price custom-secondary">{price} ₹</span>}
-                    { userProfileBusiness.usertype === 'Wholesaler' && <span className="product-price custom-secondary">{wholesalerPrice} ₹</span>}
-                    { userProfileBusiness.usertype === 'Retailer' && <span className="product-price custom-secondary">{retailerPrice} ₹</span>}
+                    { !myProducts && userProfileBusiness.usertype === 'Manufacturer' && <span className="product-price custom-secondary">{price} ₹</span>}
+                    { !myProducts && userProfileBusiness.usertype === 'Wholesaler' && <span className="product-price custom-secondary">{wholesalerPrice} ₹</span>}
+                    { !myProducts && userProfileBusiness.usertype === 'Retailer' && <span className="product-price custom-secondary">{retailerPrice} ₹</span>}
                     <span className="product-price custom-secondary">{packetSize} g</span>
                     <span className="product-price custom-secondary">{total} Items</span>
                 </div>

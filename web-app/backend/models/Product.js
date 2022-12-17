@@ -14,17 +14,21 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     category: {
-        type: String,
-        required: true
+        type: String
     },
     price: {
         type: Number,
         required: true
     },
     options: [{
-        type: String,
-        required: true
-    }]
+        type: String
+    }],
+    packetSize: {
+        type: Number
+    },
+    quantity: {
+        type: Number
+    }
 })
 
 module.exports = mongoose.model("Product", productSchema)

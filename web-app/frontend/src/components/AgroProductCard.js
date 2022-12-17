@@ -64,6 +64,9 @@ const AgroProductCard = (props) => {
                             !isSatisfied && !myProducts && usertype === "Trader" && quantity === 0 && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
                         }
                         {
+                            !isSatisfied && myProducts && usertype === "Trader" && <div></div>
+                        }
+                        {
                             isSatisfied && usertype !== "Manufacturer" && <img src={orderComplete} alt="Order is completed" width={"100px"} style={{"opacity":"1"}}></img>
                         }
                         {
@@ -84,7 +87,7 @@ const AgroProductCard = (props) => {
                     {(isSatisfied && usertype !== 'Manufacturer') &&<h6 className="product-title">Order is completed</h6>}
                 </div>
                 <div style={{"display":"flex", "justifyContent":"space-between"}}>
-                    <span className="product-price custom-secondary">Quantity : {quantity} KG</span>
+                    {!myProducts && <span className="product-price custom-secondary">Quantity : {quantity} KG</span>}
                     <span className="product-price custom-secondary">Price : {(usertype === 'Manufacturer')? (price + (price * 0.20)): price} ₹ Per KG</span>
                 </div>
                 <p className="product-text"><strong>Description: </strong>{description.substring(0,200)}...</p>

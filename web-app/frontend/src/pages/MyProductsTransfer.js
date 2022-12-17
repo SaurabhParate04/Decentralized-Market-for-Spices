@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react'
 import userContext from '../context/User/BusinessUserContext';
-import AgroProductCard from '../components/AgroProductCard';
+import AgroProductCard from '../components/ManufacturedProductCard';
 import '../Styles.css'
 import Navbar from '../components/NavbarBusiness';
 import Footer from '../components/Footer';
 
-const MyProducts = (props) => {
+const MyProductsTransfer = (props) => {
 
     //state declaration
     props.useScrollToTop();
@@ -28,7 +28,7 @@ const MyProducts = (props) => {
 
     const getAllProducts = async() => {
         try {
-            const url = "http://localhost:5000/api/agroproduct/fetchallproducts"
+            const url = "http://localhost:5000/api/manufacturedproduct/fetchallproducts"
             const response = await fetch(url, {
                 method: 'GET', 
                 headers: {
@@ -97,23 +97,23 @@ const MyProducts = (props) => {
                         allCardsInfo.filter(card =>{
                             return cardFilter(card.category);
                         }).map(card => (
-                            ((userProfileBusiness.usertype === 'Trader' && userProfileBusiness.username === card.trader) || (userProfileBusiness.usertype === 'Farmer' && userProfileBusiness.username === card.farmer)) && <AgroProductCard
-                                key={card._id + "5"}
+                            ((userProfileBusiness.usertype === 'Wholesaler' && card.wholesaler === userProfileBusiness.username) || (userProfileBusiness.usertype === 'Retailer' && card.retailer === userProfileBusiness.username)) && <AgroProductCard
+                                key={card._id + "k"}
                                 id={card._id}
                                 productName={card.productName}
+                                productBrand={card.productBrand}
                                 description={card.description}
                                 price={card.price}
+                                packetSize={card.packetSize}
                                 quantity={card.quantity}
-                                quantityRaised={card.quantityRaised}
-                                category={card.category}
-                                action={card.action}
-                                user={card.user}
                                 myProducts={true}
-                                isSatisfied={card.isSatisfied}
-                                originalQty={card.originalQty}
+                                usertype={userProfileBusiness.usertype}
+                                prodId={card.productId}
                                 manufacturer={card.manufacturer}
-                            />
-                        ))
+                                wholesaler={card.wholesaler}
+                                retailer={card.retailer}
+                                />
+                            ))
                     }{' '}
                 </div>
             </section>
@@ -123,4 +123,4 @@ const MyProducts = (props) => {
     )
 }
 
-export default MyProducts
+export default MyProductsTransfer

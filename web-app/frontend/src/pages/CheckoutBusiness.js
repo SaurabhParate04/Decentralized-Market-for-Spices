@@ -37,6 +37,7 @@ export default function CheckoutBusiness(props) {
         } 
         else if(userProfileBusiness.usertype === 'Trader') {
             obj = `--obj.to='"Trader"' --obj.Trader '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Trader_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Farmer_Transfer_Date='"${now.replace(/ /g,"_")}"'`
+            updateUser()
         }
         if(userProfileBusiness.usertype !== 'Manufacturer' && (maxQty - quantity >= 0) && maxQty !== 0) {
             updateProd()
@@ -215,6 +216,22 @@ export default function CheckoutBusiness(props) {
                 },
                 body: JSON.stringify({
                     manufacturer: userProfileBusiness.username
+                })
+            }
+        );
+    }
+
+    const updateUser = async() => {
+        const url = "http://localhost:5000/api/agroproduct/updateproduct/" + id;
+        //eslint-disable-next-line
+        const response = await fetch(url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    trader: userProfileBusiness.username
                 })
             }
         );
