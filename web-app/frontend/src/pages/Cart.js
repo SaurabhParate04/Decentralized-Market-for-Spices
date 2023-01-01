@@ -15,11 +15,15 @@ export default function Cart(props) {
     const [total, setTotal] = useState(0)
 
     const handleQuantity = (name, price) => (e) => {
+        let t = e.target.value;
+        if(t>10) {
+            t=10
+        }
         setQuantity(prev => ({
             ...prev,
-            [name]: e.target.value * price
+            [name]: t * price
         }))
-        handleTotal(name, e.target.value * price)
+        handleTotal(name, t * price)
     }
 
     const handleTotal = (name, price) => {
@@ -91,7 +95,7 @@ export default function Cart(props) {
                                     </td>
                                     <td data-title="Price">{e.price} ₹</td>
                                     <td className="quantity" data-title="Quantity">
-                                        <input type="number" className="qty form-control" min={1} defaultValue="1" onChange={handleQuantity(e.productBrand + ' ' + e.productName + ' ' + e.varient, e.price)}></input>
+                                        <input type="number" className="qty form-control" min={1} max={10} defaultValue="1" onChange={handleQuantity(e.productBrand + ' ' + e.productName + ' ' + e.varient, e.price)}></input>
                                     </td>
                                     <td data-title="Total">{quantity[e.productBrand + ' ' + e.productName + ' ' + e.varient] || e.price} ₹ </td>
                                 </tr>

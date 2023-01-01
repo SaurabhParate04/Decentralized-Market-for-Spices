@@ -47,8 +47,8 @@ const UserState = ({children}) => {
             setuserProfile(json)
             console.log(json)
 
-            let Purl = await getDownloadURL( ref(firebaseStorage, `profile/${json.username}`))
-            setprofileImg(Purl);
+            // let Purl = await getDownloadURL( ref(firebaseStorage, `profile/${json.username}`))
+            // setprofileImg(Purl);
 
         } catch (error) {
             console.error(error.message);

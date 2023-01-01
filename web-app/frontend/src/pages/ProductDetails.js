@@ -20,6 +20,8 @@ export default function ProductDetails(props) {
     const productName = props.location.state.productName
     const price = props.location.state.price
     const options = props.location.state.options
+    const packetSize = props.location.packetSize
+    const quantity = props.location.availableQty
     const [selectedOption, setSelectedOption] = useState('')
     const [oneclick, setOneclick] = useState(false)
 
@@ -129,6 +131,8 @@ export default function ProductDetails(props) {
                                                 return <option key={key} value={e}>{e}</option>
                                             }
                                         )}
+                                        {packetSize && <option value={packetSize}>{packetSize} g</option>}
+                                        {!packetSize && <option value={200}>200 g</option>}
                                     </select>
                                 </div>
                                 

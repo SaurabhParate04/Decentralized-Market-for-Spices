@@ -17,8 +17,8 @@ export default function CheckoutBusinessTransfer(props) {
     const packetSize = location.state.packetSize
     let total = Math.floor(maxQty * 1000 / packetSize)
     const price = location.state.price
-    const wholesalerPrice = Math.floor(Number(price) * 0.2 + Number(price))
-    const retailerPrice = Math.floor(Number(wholesalerPrice) * 0.15 + Number(wholesalerPrice))
+    const wholesalerPrice = Math.floor(Number(price) * 0.1 + Number(price))
+    const retailerPrice = Math.floor(Number(wholesalerPrice) * 0.1 + Number(wholesalerPrice))
     const totalPrice = (userProfileBusiness.usertype === 'Retailer')? total * wholesalerPrice: total * price
     const description = location.state.description
     const productName = location.state.productName
@@ -35,16 +35,17 @@ export default function CheckoutBusinessTransfer(props) {
         if(userProfileBusiness.usertype === 'Wholesaler') {
             channel = 'channel3'
             addWholesaler()
-            createNewProdInChannel4(prodId)
             obj = `--obj.to='"Wholesaler"' --obj.Wholesaler '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Wholesaler_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Manufacturer_Transfer_Date='"${now.replace(/ /g,"_")}"' --obj.Manufactured_Product_Name='"${productName.replace(/ /g,"_")}"' --obj.Brand_Name='"${productBrand.replace(/ /g,"_")}"'`
+            invoke('transferProduct', prodId, obj, channel)
+            createNewProdInChannel4(prodId)
         } 
         else if(userProfileBusiness.usertype === 'Retailer') {
             channel = 'channel4'
             addRetailer()
             addProduct()
             obj = `--obj.to='"Retailer"' --obj.Retailer '"${userProfileBusiness.firstname + '_' + userProfileBusiness.lastname}"' --obj.Retailer_Location='"${(userProfileBusiness.location).replace(/ /g,"_")}"' --obj.Wholesaler_Transfer_Date='"${now.replace(/ /g,"_")}"'`
+            invoke('transferProduct', prodId, obj, channel)
         }
-        invoke('transferProduct', prodId, obj, channel)
     }
 
     const initiatePayment = async () => {

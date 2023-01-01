@@ -106,7 +106,8 @@ export default function ProductForm(props) {
                             quantity: credentialProduct.quantity,
                             action: action,
                             user: userid,
-                            originalQty: credentialProduct.quantity
+                            originalQty: credentialProduct.quantity,
+                            farmer: userProfileBusiness.username
                         })
                     }
                 );

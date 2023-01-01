@@ -110,11 +110,12 @@ const Products = (props) => {
                                 ratingPts={card.ratingPts}
                                 ratingCnt={card.ratingCnt}
                                 sizes={card.sizes}
-                                avilableQty={card.avilableQty}
+                                availableQty={card.quantity}
                                 category={card.category}
                                 reviews={card.reviews}
                                 reviewsCnt={card.reviewsCnt}
                                 options={card.options}
+                                packetSize={card.packetSize}
                                 // qrcode={card.qrcode}
                             />
                         ))

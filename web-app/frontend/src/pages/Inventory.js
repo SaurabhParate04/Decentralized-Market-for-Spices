@@ -72,7 +72,7 @@ const Inventory = (props) => {
                         allCardsInfo.filter(card =>{
                             return cardFilter(card.category);
                         }).map(card => (
-                            (card.manufacturer === userProfileBusiness.username) && <AgroProductCard
+                            (card.manufacturer === userProfileBusiness.username && card.quantity > 0) && <AgroProductCard
                                 key={card._id + "5"}
                                 id={card._id}
                                 productName={card.productName}
